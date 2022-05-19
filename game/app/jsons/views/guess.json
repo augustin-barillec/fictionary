@@ -1,0 +1,34 @@
+{
+    "type": "modal",
+    "callback_id": "{}",
+	"title": {
+		"type": "plain_text",
+		"text": "bluffer",
+		"emoji": true
+	},
+	"submit": {
+		"type": "plain_text",
+		"text": "Submit",
+		"emoji": true
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Cancel",
+		"emoji": true
+	},
+	"blocks": [
+		{
+			"type": "input",
+            "block_id": "guess",
+			"element": {
+				"type": "plain_text_input",
+                "action_id": "guess"
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Guess",
+				"emoji": true
+			}
+		}
+	]
+}

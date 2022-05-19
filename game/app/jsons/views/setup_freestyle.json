@@ -1,0 +1,57 @@
+{
+	"type": "modal",
+	"callback_id": "{}",
+	"title": {
+		"type": "plain_text",
+		"text": "bluffer",
+		"emoji": true
+	},
+	"submit": {
+		"type": "plain_text",
+		"text": "Submit",
+		"emoji": true
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "Cancel",
+		"emoji": true
+	},
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Set up a game*"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "input",
+			"block_id": "question",
+			"label": {
+				"type": "plain_text",
+				"text": "Question",
+				"emoji": true
+			},
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "question"
+			}
+		},
+		{
+			"type": "input",
+			"block_id": "truth",
+			"label": {
+				"type": "plain_text",
+				"text": "Answer",
+				"emoji": true
+			},
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "truth"
+			}
+		}
+	]
+}

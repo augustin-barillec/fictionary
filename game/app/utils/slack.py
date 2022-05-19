@@ -1,0 +1,188 @@
+import reusable
+from app.utils import blocks, users, views
+
+
+def get_conversation_infos(slack_client, channel_id):
+    return reusable.slack_api.conversations_info(
+        slack_client, channel_id)['channel']
+
+
+def post_message(slack_client, channel_id, blocks_):
+    return reusable.slack_api.chat_postmessage(
+        slack_client, channel_id, blocks_)['ts']
+
+
+def post_ephemeral(slack_client, channel_id, user_id, msg):
+    reusable.slack_api.chat_postephemeral(
+        slack_client, channel_id, user_id, msg)
+
+
+def update_message(slack_client, channel_id, blocks_, ts):
+    reusable.slack_api.chat_update(slack_client, channel_id, blocks_, ts)
+
+
+def open_view(slack_client, trigger_id, view):
+    reusable.slack_api.views_open(slack_client, trigger_id, view)
+
+
+def update_view(slack_client, view_id, view):
+    reusable.slack_api.views_update(slack_client, view_id, view)
+
+
+def open_exception_view(slack_client, trigger_id, msg):
+    exception_view = views.build_exception_view(msg)
+    open_view(slack_client, trigger_id, exception_view)
+
+
+def get_app_conversations(slack_client):
+    return reusable.slack_api.users_conversations(slack_client)['channels']
+
+
+class SlackOperator:
+    def __init__(self, game):
+        self.game = game
+        self.block_builder = blocks.BlockBuilder(game)
+        self.view_builder = views.ViewBuilder(game)
+
+    def get_conversation_infos(self):
+        return get_conversation_infos(
+            self.game.slack_client, self.game.channel_id)
+
+    def post_message(self, blocks_):
+        return post_message(
+            self.game.slack_client, self.game.channel_id, blocks_)
+
+    def post_ephemeral(self, user_id, msg):
+        post_ephemeral(
+            self.game.slack_client, self.game.channel_id, user_id, msg)
+
+    def update_message(self, blocks_, ts):
+        update_message(self.game.slack_client, self.game.channel_id,
+                       blocks_, ts)
+
+    def open_view(self, trigger_id, view):
+        open_view(self.game.slack_client, trigger_id, view)
+
+    def update_view(self, view_id, view):
+        update_view(self.game.slack_client, view_id, view)
+
+    def open_exception_view(self, trigger_id, msg):
+        open_exception_view(self.game.slack_client, trigger_id, msg)
+
+    def update_upper(self, blocks_):
+        self.update_message(blocks_, self.game.upper_ts)
+
+    def update_lower(self, blocks_):
+        self.update_message(blocks_, self.game.lower_ts)
+
+    def open_setup_freestyle_view(self, trigger_id):
+        view = self.view_builder.build_setup_freestyle_view()
+        self.open_view(trigger_id, view)
+
+    def open_setup_automatic_view(
+            self, trigger_id, max_number, number, question, answer):
+        view = self.view_builder.build_setup_automatic_view(
+            max_number, number, question, answer)
+        self.open_view(trigger_id, view)
+
+    def update_setup_automatic_view(
+            self, view_id, max_number, number, question, answer):
+        view = self.view_builder.build_setup_automatic_view(
+            max_number, number, question, answer)
+        self.update_view(view_id, view)
+
+    def open_guess_view(self, trigger_id):
+        self.open_view(trigger_id, self.view_builder.build_guess_view())
+
+    def open_vote_view(self, trigger_id, voter):
+        view = self.view_builder.build_vote_view(voter)
+        self.open_view(trigger_id, view)
+
+    def send_help(self, user_id):
+        self.post_ephemeral(user_id, 'help help')
+
+    def send_vote_reminders(self):
+        for u in self.game.potential_voters:
+            msg = (
+                f'Hey {users.user_display(u)}, '
+                'you can now vote in the bluffer game '
+                f'organized by {users.user_display(self.game.organizer_id)}!')
+            self.post_ephemeral(u, msg)
+
+    def send_is_over_notifications(self):
+        for u in self.game.frozen_guessers:
+            msg = ("The bluffer game organized by "
+                   f"{users.user_display(self.game.organizer_id)} is over!")
+            self.post_ephemeral(u, msg)
+
+    def post_pre_guess_stage_upper(self):
+        return self.post_message(
+            self.block_builder.build_pre_guess_stage_upper_blocks())
+
+    def post_pre_guess_stage_lower(self):
+        return self.post_message(
+            self.block_builder.build_pre_guess_stage_lower_blocks())
+
+    def update_pre_vote_stage_upper(self):
+        self.update_upper(
+            self.block_builder.build_pre_vote_stage_upper_blocks())
+
+    def update_pre_vote_stage_lower(self):
+        self.update_lower(
+            self.block_builder.build_pre_vote_stage_lower_blocks())
+
+    def update_pre_result_stage_upper(self):
+        self.update_upper(
+            self.block_builder.build_pre_result_stage_upper_blocks())
+
+    def update_pre_result_stage_lower(self):
+        self.update_lower(
+            self.block_builder.build_pre_result_stage_lower_blocks())
+
+    def update_guess_stage_upper(self):
+        self.update_upper(
+            self.block_builder.build_guess_stage_upper_blocks())
+
+    def update_guess_stage_lower(self):
+        self.update_lower(
+            self.block_builder.build_guess_stage_lower_blocks())
+
+    def update_vote_stage_upper(self):
+        self.update_upper(
+            self.block_builder.build_vote_stage_upper_blocks())
+
+    def update_vote_stage_lower(self):
+        self.update_lower(
+            self.block_builder.build_vote_stage_lower_blocks())
+
+    def update_result_stage_upper(self):
+        self.update_upper(
+            self.block_builder.build_result_stage_upper_blocks())
+
+    def update_result_stage_lower(self):
+        self.update_lower(
+            self.block_builder.build_result_stage_lower_blocks())
+
+    def post_pre_guess_stage(self):
+        return self.post_pre_guess_stage_upper(), \
+               self.post_pre_guess_stage_lower()
+
+    def update_pre_vote_stage(self):
+        self.update_pre_vote_stage_upper()
+        self.update_pre_vote_stage_lower()
+
+    def update_pre_result_stage(self):
+        self.update_pre_result_stage_upper()
+        self.update_pre_result_stage_lower()
+
+    def update_guess_stage(self):
+        self.update_guess_stage_upper()
+        self.update_guess_stage_lower()
+
+    def update_vote_stage(self):
+        self.update_vote_stage_upper()
+        self.update_vote_stage_lower()
+
+    def update_result_stage(self):
+        self.update_result_stage_upper()
+        self.update_result_stage_lower()

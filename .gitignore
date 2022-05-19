@@ -1,0 +1,11 @@
+.idea/
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+venv/
+node_modules/
+local_function_*.txt
+cloud_deploy_function_*.txt
+data_dir/
+cypress/screenshots/
+cypress/videos/
