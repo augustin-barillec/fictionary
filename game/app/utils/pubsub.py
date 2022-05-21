@@ -4,10 +4,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def build_topic_path(publisher, project_id, topic_name):
-    return publisher.topic_path(project_id, topic_name)
-
-
 class StageTriggerer:
 
     def __init__(self, publisher, project_id, game_id):
@@ -16,8 +12,7 @@ class StageTriggerer:
         self.game_id = game_id
 
     def build_topic_path(self, topic_name):
-        return build_topic_path(
-            self.publisher, self.project_id, topic_name)
+        return self.publisher.topic_path(self.project_id, topic_name)
 
     def publish(self, topic_name):
         topic_path = self.build_topic_path(topic_name)

@@ -29,45 +29,57 @@ def update_view(slack_client, view_id, view):
     reusable.slack_api.views_update(slack_client, view_id, view)
 
 
+def push_view(slack_client, view_id, view):
+    reusable.slack_api.views_push(slack_client, view_id, view)
+
+
 def open_exception_view(slack_client, trigger_id, msg):
     exception_view = views.build_exception_view(msg)
     open_view(slack_client, trigger_id, exception_view)
 
 
-def get_app_conversations(slack_client):
-    return reusable.slack_api.users_conversations(slack_client)['channels']
+def push_exception_view(slack_client, trigger_id, msg):
+    exception_view = views.build_exception_view(msg)
+    push_view(slack_client, trigger_id, exception_view)
 
 
 class SlackOperator:
     def __init__(self, game):
         self.game = game
+        self.slack_client = self.game.slack_client
         self.block_builder = blocks.BlockBuilder(game)
         self.view_builder = views.ViewBuilder(game)
 
     def get_conversation_infos(self):
         return get_conversation_infos(
-            self.game.slack_client, self.game.channel_id)
+            self.slack_client, self.game.channel_id)
 
     def post_message(self, blocks_):
         return post_message(
-            self.game.slack_client, self.game.channel_id, blocks_)
+            self.slack_client, self.game.channel_id, blocks_)
 
     def post_ephemeral(self, user_id, msg):
         post_ephemeral(
-            self.game.slack_client, self.game.channel_id, user_id, msg)
+            self.slack_client, self.game.channel_id, user_id, msg)
 
     def update_message(self, blocks_, ts):
-        update_message(self.game.slack_client, self.game.channel_id,
+        update_message(self.slack_client, self.game.channel_id,
                        blocks_, ts)
 
     def open_view(self, trigger_id, view):
-        open_view(self.game.slack_client, trigger_id, view)
+        open_view(self.slack_client, trigger_id, view)
 
     def update_view(self, view_id, view):
-        update_view(self.game.slack_client, view_id, view)
+        update_view(self.slack_client, view_id, view)
+
+    def push_view(self, trigger_id, view):
+        push_view(self.slack_client, trigger_id, view)
 
     def open_exception_view(self, trigger_id, msg):
-        open_exception_view(self.game.slack_client, trigger_id, msg)
+        open_exception_view(self.slack_client, trigger_id, msg)
+
+    def push_exception_view(self, view_id, msg):
+        push_exception_view(self.slack_client, view_id, msg)
 
     def update_upper(self, blocks_):
         self.update_message(blocks_, self.game.upper_ts)

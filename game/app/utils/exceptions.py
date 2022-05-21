@@ -1,26 +1,26 @@
+import logging
 import reusable
 from flask import make_response
 from app.utils import views, tag, time, slack, ids
 
+logger = logging.getLogger(__name__)
 
-def game_is_too_old(game_id):
+
+def game_is_too_old(game_id, max_life_span):
     now = reusable.time.get_now()
     slash_datetime_compact = ids.game_id_to_slash_datetime_compact(game_id)
     slash_datetime = reusable.time.compact_to_datetime(
         slash_datetime_compact)
     delta = time.datetime1_minus_datetime2(
         now, slash_datetime)
-    return delta >= 3600
+    return delta > max_life_span
 
 
 class ExceptionsHandler:
 
     def __init__(self, game):
         self.game = game
-
-    @property
-    def slack_operator(self):
-        return slack.SlackOperator(self.game)
+        self.slack_operator = slack.SlackOperator(self.game)
 
     @staticmethod
     def game_is_running(game_dict):
@@ -64,24 +64,23 @@ class ExceptionsHandler:
         return self.game.time_left_to_vote <= 0
 
     def game_is_too_old(self):
-        return game_is_too_old(self.game.id)
+        return game_is_too_old(self.game.id, self.game.max_life_span)
 
     def game_is_dead(self):
         if not self.game.exists:
-            self.game.logger.info(f'not exist, {self.game.id}')
+            logger.info(f'not exist, {self.game.id}')
             return True
         if self.game_is_too_old():
-            self.game.logger.info(f'too old, {self.game.id}')
+            logger.info(f'too old, {self.game.id}')
             return True
         return False
 
-    @staticmethod
-    def stage_was_recently_trigger(last_trigger):
+    def stage_was_recently_trigger(self, last_trigger):
         if last_trigger is None:
             return False
         now = reusable.time.get_now()
         delta = time.datetime1_minus_datetime2(now, last_trigger)
-        return delta < 30
+        return delta < self.game.trigger_cooldown
 
     def guess_stage_was_recently_trigger(self):
         return self.stage_was_recently_trigger(
@@ -190,6 +189,13 @@ class ExceptionsHandler:
             return msg
 
     @tag.add_tag
+    def build_pick_submission_exception_msg(self, qas, number_picked):
+        max_number = len(qas) // 2
+        if number_picked not in range(1, max_number + 1):
+            msg = f'{number_picked} is not between 1 and {max_number}.'
+            return msg
+
+    @tag.add_tag
     def build_guess_click_exception_msg(self, user_id):
         if user_id == self.game.organizer_id and \
                 self.game.parameter == 'freestyle':
@@ -209,12 +215,17 @@ class ExceptionsHandler:
         if user_id in self.game.voters:
             return 'You have already voted!'
 
-    def handle_is_dead_exception(self, trigger_id=None):
+    def handle_is_dead_exception(self, trigger_id=None, push=False):
         exception_msg = self.build_game_is_dead_msg()
         if exception_msg is None:
             return
-        if trigger_id:
-            self.slack_operator.open_exception_view(trigger_id, exception_msg)
+        if trigger_id is not None:
+            if push:
+                self.slack_operator.push_exception_view(
+                    trigger_id, exception_msg)
+            else:
+                self.slack_operator.open_exception_view(
+                    trigger_id, exception_msg)
             return make_response('', 200)
         else:
             return views.build_exception_response(exception_msg)
@@ -226,8 +237,8 @@ class ExceptionsHandler:
         conversation_infos = slack_operator.get_conversation_infos()
         exception_msg = self.build_slash_command_exception_msg(
             game_parameter, game_dicts, conversation_infos)
-        if exception_msg:
-            self.game.logger.info(
+        if exception_msg is not None:
+            logger.info(
                 f'exception slash, {exception_msg} {self.game.id}')
             slack_operator.open_exception_view(trigger_id, exception_msg)
             return make_response('', 200)
@@ -235,37 +246,47 @@ class ExceptionsHandler:
     def handle_setup_submission_exceptions(self):
         game_dicts = self.game.firestore_reader.get_game_dicts()
         exception_msg = self.build_setup_submission_exception_msg(game_dicts)
-        if exception_msg:
-            self.game.logger.info(
+        if exception_msg is not None:
+            logger.info(
                 f'exception setup_submission, {exception_msg} {self.game.id}')
             return views.build_exception_response(exception_msg)
 
     def handle_guess_submission_exceptions(self, guess):
         exception_msg = self.build_guess_submission_exception_msg(guess)
-        if exception_msg:
-            self.game.logger.info(
+        if exception_msg is not None:
+            logger.info(
                 f'exception guess_submission, {exception_msg} {self.game.id}')
             return views.build_exception_response(exception_msg)
 
     def handle_vote_submission_exceptions(self, vote):
         exception_msg = self.build_vote_submission_exception_msg(vote)
-        if exception_msg:
-            self.game.logger.info(
+        if exception_msg is not None:
+            logger.info(
                 f'exception vote_submission, {exception_msg} {self.game.id}')
             return views.build_exception_response(exception_msg)
 
+    def handle_pick_submission_exceptions(
+            self, trigger_id, qas, number_picked):
+        exception_msg = self.build_pick_submission_exception_msg(
+            qas, number_picked)
+        if exception_msg is not None:
+            logger.info(
+                f'exception pick_submission, {exception_msg} {self.game.id}')
+            self.slack_operator.push_exception_view(trigger_id, exception_msg)
+            return make_response('', 200)
+
     def handle_guess_click_exceptions(self, user_id, trigger_id):
         exception_msg = self.build_guess_click_exception_msg(user_id)
-        if exception_msg:
-            self.game.logger.info(
+        if exception_msg is not None:
+            logger.info(
                 f'exception guess_click, {exception_msg} {self.game.id}')
             self.slack_operator.open_exception_view(trigger_id, exception_msg)
             return make_response('', 200)
 
     def handle_vote_click_exceptions(self, user_id, trigger_id):
         exception_msg = self.build_vote_click_exception_msg(user_id)
-        if exception_msg:
-            self.game.logger.info(
+        if exception_msg is not None:
+            logger.info(
                 f'exception vote_click, {exception_msg} {self.game.id}')
             self.slack_operator.open_exception_view(trigger_id, exception_msg)
             return make_response('', 200)
@@ -274,7 +295,7 @@ class ExceptionsHandler:
         if self.game_is_dead():
             return make_response('', 200)
         if self.game.pre_guess_stage_already_triggered:
-            self.game.logger.info(
+            logger.info(
                 self.build_aborted_cause_already_triggered_msg())
             return make_response('', 200)
 
@@ -282,11 +303,11 @@ class ExceptionsHandler:
         if self.game_is_dead():
             return make_response('', 200)
         if self.game.guess_stage_over:
-            self.game.logger.info(
+            logger.info(
                 f'exception, guess_stage over {self.game.id}')
             return make_response('', 200)
         if self.guess_stage_was_recently_trigger():
-            self.game.logger.info(
+            logger.info(
                 self.build_aborted_cause_recently_triggered_msg())
             return make_response('', 200)
 
@@ -294,7 +315,7 @@ class ExceptionsHandler:
         if self.game_is_dead():
             return make_response('', 200)
         if self.game.pre_vote_stage_already_triggered:
-            self.game.logger.info(
+            logger.info(
                 self.build_aborted_cause_already_triggered_msg())
             return make_response('', 200)
 
@@ -302,11 +323,11 @@ class ExceptionsHandler:
         if self.game_is_dead():
             return make_response('', 200)
         if self.game.vote_stage_over:
-            self.game.logger.info(
+            logger.info(
                 f'exception, vote_stage over {self.game.id}')
             return make_response('', 200)
         if self.vote_stage_was_recently_trigger():
-            self.game.logger.info(
+            logger.info(
                 self.build_aborted_cause_recently_triggered_msg())
             return make_response('', 200)
 
@@ -314,7 +335,7 @@ class ExceptionsHandler:
         if self.game_is_dead():
             return make_response('', 200)
         if self.game.pre_result_stage_already_triggered:
-            self.game.logger.info(
+            logger.info(
                 self.build_aborted_cause_already_triggered_msg())
             return make_response('', 200)
 
@@ -322,6 +343,6 @@ class ExceptionsHandler:
         if self.game_is_dead():
             return make_response('', 200)
         if self.game.result_stage_over:
-            self.game.logger.info(
+            logger.info(
                 f'exception, results_stage over {self.game.id}')
             return make_response('', 200)

@@ -5,31 +5,35 @@ import hashlib
 import json
 import google.cloud.pubsub_v1
 import google.cloud.firestore
-import google.cloud.storage
 import reusable
+from argparse import Namespace
 from copy import deepcopy
 from flask import make_response
 from app import utils as ut
-from app import message_actions as ma
+from app import interactivity as inter
 from app.game import Game
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s', level='INFO')
 logger = logging.getLogger()
 
-project_id = os.getenv('PROJECT_ID')
-slack_prefix = hashlib.md5(project_id.encode()).hexdigest()
-publisher = google.cloud.pubsub_v1.PublisherClient()
-db = google.cloud.firestore.Client(project=project_id)
+context = Namespace()
+context.project_id = os.getenv('PROJECT_ID')
+context.surface_prefix = hashlib.md5(context.project_id.encode()).hexdigest()
+context.publisher = google.cloud.pubsub_v1.PublisherClient()
+context.db = google.cloud.firestore.Client(project=context.project_id)
 
 
 def build_game(game_id):
     return Game(
         game_id=game_id,
-        slack_prefix=slack_prefix,
-        project_id=project_id,
-        publisher=publisher,
-        db=db)
+        surface_prefix=context.surface_prefix,
+        project_id=context.project_id,
+        publisher=context.publisher,
+        db=context.db)
+
+
+context.build_game_func = build_game
 
 
 def slash_command(request):
@@ -56,7 +60,7 @@ def slash_command(request):
     ut.firestore.FirestoreEditor(game).set_game(merge=False)
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_slash_command_exceptions(trigger_id)
-    if resp:
+    if resp is not None:
         logger.info(f'exception, game_id={game_id}')
         return resp
     if game.parameter == 'help':
@@ -64,40 +68,36 @@ def slash_command(request):
     elif game.parameter == 'freestyle':
         ut.slack.SlackOperator(game).open_setup_freestyle_view(trigger_id)
     elif game.parameter in ('english', 'french'):
-        questions = db.collection('qas').document(
-            game.parameter).get().to_dict()['content']
-        max_number, number, question, answer = ut.qas.select(questions)
+        qas = ut.qas.get_qas(game)
+        max_number, number, question, answer = ut.qas.select(qas)
         ut.slack.SlackOperator(game).open_setup_automatic_view(
             trigger_id, max_number, number, question, answer)
     logger.info(f'setup_view opened, game_id={game.id}')
     return make_response('', 200)
 
 
-def message_actions(request):
-    message_action = json.loads(request.form['payload'])
-    message_action_type = message_action['type']
-    user_id = message_action['user']['id']
-    if message_action_type not in ('block_actions', 'view_submission'):
+def interactivity(request):
+    payload = json.loads(request.form['payload'])
+    payload_type = payload['type']
+    if payload_type not in ('block_actions', 'view_submission'):
         return make_response('', 200)
-
-    if message_action_type == 'view_submission':
-        return ma.view_submissions.handle_view_submission(
-            user_id, message_action, build_game, slack_prefix)
-
-    if message_action_type == 'block_actions':
-        return ma.block_actions.handle_block_action(
-            user_id, message_action, build_game, slack_prefix)
+    if payload_type == 'view_submission':
+        return inter.view_submissions.handle_view_submission(
+            payload, context)
+    if payload_type == 'block_actions':
+        return inter.block_actions.handle_block_action(
+            payload, context)
 
 
-def pre_guess_stage(event, context):
-    assert context == context
+def pre_guess_stage(event, context_):
+    assert context_ == context_
 
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
     game = build_game(game_id)
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_pre_guess_stage_exceptions()
-    if resp:
+    if resp is not None:
         logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['pre_guess_stage_already_triggered'] = True
@@ -133,15 +133,15 @@ def pre_guess_stage(event, context):
     return make_response('', 200)
 
 
-def guess_stage(event, context):
-    assert context == context
+def guess_stage(event, context_):
+    assert context_ == context_
     call_datetime = reusable.time.get_now()
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
     game = build_game(game_id)
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_guess_stage_exceptions()
-    if resp:
+    if resp is not None:
         logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['guess_stage_last_trigger'] = reusable.time.get_now()
@@ -168,14 +168,14 @@ def guess_stage(event, context):
         time.sleep(game.refresh_interval)
 
 
-def pre_vote_stage(event, context):
-    assert context == context
+def pre_vote_stage(event, context_):
+    assert context_ == context_
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
     game = build_game(game_id)
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_pre_vote_stage_exceptions()
-    if resp:
+    if resp is not None:
         logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['pre_vote_stage_already_triggered'] = True
@@ -211,14 +211,14 @@ def pre_vote_stage(event, context):
     return make_response('', 200)
 
 
-def vote_stage(event, context):
-    assert context == context
+def vote_stage(event, context_):
+    assert context_ == context_
     call_datetime = reusable.time.get_now()
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
     game = build_game(game_id)
     resp = ut.exceptions.ExceptionsHandler(game).handle_vote_stage_exceptions()
-    if resp:
+    if resp is not None:
         logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['vote_stage_last_trigger'] = reusable.time.get_now()
@@ -246,14 +246,14 @@ def vote_stage(event, context):
         time.sleep(game.refresh_interval)
 
 
-def pre_result_stage(event, context):
-    assert context == context
+def pre_result_stage(event, context_):
+    assert context_ == context_
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
     game = build_game(game_id)
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_pre_results_stage_exceptions()
-    if resp:
+    if resp is not None:
         logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['pre_result_stage_already_triggered'] = True
@@ -276,14 +276,14 @@ def pre_result_stage(event, context):
     return make_response('', 200)
 
 
-def result_stage(event, context):
-    assert context == context
+def result_stage(event, context_):
+    assert context_ == context_
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
     game = build_game(game_id)
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_results_stage_exceptions()
-    if resp:
+    if resp is not None:
         logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['result_stage_over'] = True
@@ -293,22 +293,30 @@ def result_stage(event, context):
     return make_response('', 200)
 
 
-def freeze(event, context):
-    assert event == event and context == context
-    teams_ref = db.collection('teams')
+def freeze(event, context_):
+    assert event == event and context_ == context_
+    teams_ref = context.db.collection('teams')
     for t in teams_ref.stream():
         team_ref = teams_ref.document(t.id)
+        team_dict = team_ref.get().to_dict()
         games_ref = team_ref.collection('games')
         for g in games_ref.stream():
             game_id = g.id
             game_dict = g.to_dict()
-            if ut.exceptions.game_is_too_old(game_id):
+            if ut.exceptions.game_is_too_old(
+                    game_id, team_dict['max_life_span']):
                 if 'result_stage_over' in game_dict:
-                    ut.firestore.freeze_success(db, game_id, game_dict)
+                    ref = context.db.collection('successes').document(game_id)
                     kind = 'success'
+                elif sorted(game_dict.keys()) == [
+                        'parameter', 'tag', 'version']:
+                    ref = context.db.collection('unsubmitteds').document(
+                        game_id)
+                    kind = 'unsubmitted'
                 else:
-                    ut.firestore.freeze_fail(db, game_id, game_dict)
+                    ref = context.db.collection('fails').document(game_id)
                     kind = 'fail'
+                ref.set(game_dict, merge=False)
                 g.reference.delete()
                 logger.info(f'{kind} frozen, game_id={g.id}')
     return make_response('', 200)

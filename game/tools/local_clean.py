@@ -1,6 +1,5 @@
 import os
 import shutil
-import glob
 from reusable import processes
 from tools import local_paths, ports
 
@@ -18,20 +17,6 @@ def delete_files(file_paths):
 def delete_folder(folder_path):
     if os.path.isdir(folder_path):
         shutil.rmtree(folder_path)
-
-
-def clean_cypress_screenshots():
-    delete_folder(local_paths.cypress_screenshots_dir)
-
-
-def clean_cypress_videos():
-    delete_folder(local_paths.cypress_videos_dir)
-
-
-def clean_sub_cypress_cloudbuild_files():
-    to_delete = glob.glob(
-        local_paths.sub_cypress_cloudbuild_file.format(i='*'))
-    delete_files(to_delete)
 
 
 def clean_cloud_deploy_functions():
@@ -61,8 +46,6 @@ def clean_functions():
 
 
 def clean_daily():
-    clean_cypress_screenshots()
-    clean_cypress_videos()
     clean_cloud_deploy_functions()
     clean_pubsub()
     clean_functions()

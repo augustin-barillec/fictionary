@@ -54,7 +54,7 @@ class BlockBuilder:
 
     def __init__(self, game):
         self.game = game
-        self.id_builder = self.game.id_builder
+        self.surface_id_builder = self.game.surface_id_builder
 
     def build_guess_timer_block(self):
         return build_timer_block(self.game.time_left_to_guess, 'guess')
@@ -95,12 +95,12 @@ class BlockBuilder:
         return 'Vote'
 
     def build_guess_button_block(self):
-        id_ = self.id_builder.build_guess_button_block_id()
+        id_ = self.surface_id_builder.build_guess_button_block_id()
         msg = self.build_guess_button_msg()
         return build_button_block(msg, id_)
 
     def build_vote_button_block(self):
-        id_ = self.id_builder.build_vote_button_block_id()
+        id_ = self.surface_id_builder.build_vote_button_block_id()
         msg = self.build_vote_button_msg()
         return build_button_block(msg, id_)
 
@@ -147,7 +147,7 @@ class BlockBuilder:
     def build_own_guess_block(self, voter):
         index, guess = proposals.ProposalsBrowser(
             self.game).build_own_indexed_guess(voter)
-        msg = f'Guess: {index}) {guess}'
+        msg = f'Your guess: {index}) {guess}'
         return build_text_block(msg)
 
     def build_indexed_signed_guesses_msg(self):

@@ -1,7 +1,7 @@
 import json
 from copy import deepcopy
 from flask import Response
-from app.utils import jsons, time, blocks, proposals
+from app.utils import jsons, blocks, proposals
 
 
 def get_view(basename):
@@ -74,7 +74,6 @@ def collect_setup_freestyle(setup_freestyle_view):
 def collect_setup_automatic(setup_automatic_view):
     question = setup_automatic_view['blocks'][5]['text']['text']
     truth = setup_automatic_view['private_metadata']
-    values = setup_automatic_view['state']['values']
     return question, truth
 
 
@@ -93,19 +92,19 @@ def collect_vote(vote_view):
 class ViewBuilder:
     def __init__(self, game):
         self.game = game
-        self.id_builder = self.game.id_builder
+        self.surface_id_builder = self.game.surface_id_builder
         self.proposals_browser = proposals.ProposalsBrowser(game)
         self.block_builder = blocks.BlockBuilder(game)
 
     def build_setup_freestyle_view(self):
-        id_ = self.id_builder.build_setup_freestyle_view_id()
+        id_ = self.surface_id_builder.build_setup_freestyle_view_id()
         return build_setup_freestyle_view(id_)
 
     def build_setup_automatic_view(
             self, max_number, number, question, answer):
-        id_ = self.id_builder.build_setup_automatic_view_id()
-        pick_block_id = self.id_builder.build_pick_block_id()
-        shuffle_block_id = self.id_builder.build_shuffle_block_id()
+        id_ = self.surface_id_builder.build_setup_automatic_view_id()
+        pick_block_id = self.surface_id_builder.build_pick_block_id()
+        shuffle_block_id = self.surface_id_builder.build_shuffle_block_id()
         language = self.game.parameter
         return build_setup_automatic_view(
             id_, pick_block_id, shuffle_block_id,
@@ -113,12 +112,12 @@ class ViewBuilder:
             language)
 
     def build_guess_view(self):
-        id_ = self.id_builder.build_guess_view_id()
+        id_ = self.surface_id_builder.build_guess_view_id()
         return build_guess_view(id_, self.game.question)
 
     def build_vote_view(self, voter):
         res = deepcopy(vote_view_template)
-        res['callback_id'] = self.id_builder.build_vote_view_id()
+        res['callback_id'] = self.surface_id_builder.build_vote_view_id()
         input_block_template = res['blocks'][0]
         votable_proposals_msg = ['Voting options:']
         option_template = input_block_template['element']['options'][0]

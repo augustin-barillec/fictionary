@@ -1,6 +1,6 @@
 port_infos = {
     5000: ('slash_command', 'http'),
-    5001: ('message_actions', 'http'),
+    5001: ('interactivity', 'http'),
     5002: ('pre_guess_stage', 'event'),
     5003: ('guess_stage', 'event'),
     5004: ('pre_vote_stage', 'event'),

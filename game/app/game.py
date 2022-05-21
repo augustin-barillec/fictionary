@@ -9,22 +9,24 @@ class Game:
     def __init__(
             self,
             game_id,
-            slack_prefix,
+            surface_prefix,
             project_id,
             publisher,
             db):
         self.version = VERSION
 
         self.id = game_id
-        self.slack_prefix = slack_prefix
+        self.surface_prefix = surface_prefix
         self.project_id = project_id
         self.publisher = publisher
         self.db = db
 
-        self.id_builder = utils.ids.IdBuilder(self.slack_prefix, self.id)
-        self.team_id = self.id_builder.get_team_id()
-        self.channel_id = self.id_builder.get_channel_id()
-        self.organizer_id = self.id_builder.get_organizer_id()
+        self.team_id = utils.ids.game_id_to_team_id(self.id)
+        self.channel_id = utils.ids.game_id_to_channel_id(self.id)
+        self.organizer_id = utils.ids.game_id_to_organizer_id(self.id)
+
+        self.surface_id_builder = utils.ids.SurfaceIdBuilder(
+            self.surface_prefix, self.id)
 
         self.stage_triggerer = utils.pubsub.StageTriggerer(
             self.publisher, self.project_id, self.id)
@@ -44,14 +46,18 @@ class Game:
             params = self.team_dict
 
         self.max_guessers_per_game = params['max_guessers_per_game']
+        self.max_life_span = params['max_life_span']
         self.max_running_games_per_organizer = \
             params['max_running_games_per_organizer']
         self.max_running_games = params['max_running_games']
         self.refresh_interval = params['refresh_interval']
         self.self_trigger_threshold = params['self_trigger_threshold']
         self.tagging = params['tagging']
+        self.trigger_cooldown = params['trigger_cooldown']
         self.time_to_guess = params['time_to_guess']
         self.time_to_vote = params['time_to_vote']
+
+        assert self.trigger_cooldown < self.self_trigger_threshold
 
         self.exists = True
         self.dict = self.firestore_reader.get_game_dict()
@@ -71,7 +77,6 @@ class Game:
             'indexed_signed_proposals')
         self.lower_ts = self.dict.get('lower_ts')
         self.max_guessers = self.dict.get('max_guessers')
-        self.max_life_span = self.dict.get('max_life_span')
         self.max_score = self.dict.get('max_score')
         self.nb_members = self.dict.get('nb_members')
         self.parameter = self.dict.get('parameter')

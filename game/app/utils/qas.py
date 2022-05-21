@@ -1,6 +1,12 @@
 from random import randrange
 
 
+def get_qas(game):
+    res = game.db.collection('qas').document(
+        game.parameter).get().to_dict()['content']
+    return res
+
+
 def select(qas, number=None):
     assert len(qas) % 2 == 0
     max_number = len(qas)//2
