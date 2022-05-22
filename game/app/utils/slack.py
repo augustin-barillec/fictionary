@@ -38,6 +38,11 @@ def open_exception_view(slack_client, trigger_id, msg):
     open_view(slack_client, trigger_id, exception_view)
 
 
+def update_exception_view(slack_client, view_id, msg):
+    exception_view = views.build_exception_view(msg)
+    update_view(slack_client, view_id, exception_view)
+
+
 def push_exception_view(slack_client, trigger_id, msg):
     exception_view = views.build_exception_view(msg)
     push_view(slack_client, trigger_id, exception_view)
@@ -78,8 +83,11 @@ class SlackOperator:
     def open_exception_view(self, trigger_id, msg):
         open_exception_view(self.slack_client, trigger_id, msg)
 
-    def push_exception_view(self, view_id, msg):
-        push_exception_view(self.slack_client, view_id, msg)
+    def update_exception_view(self, view_id, msg):
+        update_exception_view(self.slack_client, view_id, msg)
+
+    def push_exception_view(self, trgger_id, msg):
+        push_exception_view(self.slack_client, trgger_id, msg)
 
     def update_upper(self, blocks_):
         self.update_message(blocks_, self.game.upper_ts)
@@ -92,15 +100,15 @@ class SlackOperator:
         self.open_view(trigger_id, view)
 
     def open_setup_automatic_view(
-            self, trigger_id, max_number, number, question, answer):
+            self, trigger_id, url, max_number, number, question, answer):
         view = self.view_builder.build_setup_automatic_view(
-            max_number, number, question, answer)
+            url, max_number, number, question, answer)
         self.open_view(trigger_id, view)
 
     def update_setup_automatic_view(
-            self, view_id, max_number, number, question, answer):
+            self, view_id, url, max_number, number, question, answer):
         view = self.view_builder.build_setup_automatic_view(
-            max_number, number, question, answer)
+            url, max_number, number, question, answer)
         self.update_view(view_id, view)
 
     def open_guess_view(self, trigger_id):
@@ -117,13 +125,13 @@ class SlackOperator:
         for u in self.game.potential_voters:
             msg = (
                 f'Hey {users.user_display(u)}, '
-                'you can now vote in the bluffer game '
+                'you can now vote in the fictionary game '
                 f'organized by {users.user_display(self.game.organizer_id)}!')
             self.post_ephemeral(u, msg)
 
     def send_is_over_notifications(self):
         for u in self.game.frozen_guessers:
-            msg = ("The bluffer game organized by "
+            msg = ("The fictionary game organized by "
                    f"{users.user_display(self.game.organizer_id)} is over!")
             self.post_ephemeral(u, msg)
 

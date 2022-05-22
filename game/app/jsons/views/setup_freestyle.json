@@ -3,18 +3,15 @@
 	"callback_id": "{}",
 	"title": {
 		"type": "plain_text",
-		"text": "bluffer",
-		"emoji": true
+		"text": "fictionary"
 	},
 	"submit": {
 		"type": "plain_text",
-		"text": "Submit",
-		"emoji": true
+		"text": "Submit"
 	},
 	"close": {
 		"type": "plain_text",
-		"text": "Cancel",
-		"emoji": true
+		"text": "Cancel"
 	},
 	"blocks": [
 		{
@@ -32,8 +29,7 @@
 			"block_id": "question",
 			"label": {
 				"type": "plain_text",
-				"text": "Question",
-				"emoji": true
+				"text": "Question"
 			},
 			"element": {
 				"type": "plain_text_input",
@@ -45,8 +41,7 @@
 			"block_id": "truth",
 			"label": {
 				"type": "plain_text",
-				"text": "Answer",
-				"emoji": true
+				"text": "Answer"
 			},
 			"element": {
 				"type": "plain_text_input",

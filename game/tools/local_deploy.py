@@ -9,6 +9,8 @@ PUBSUB_EMULATOR_HOST = '0.0.0.0:8085'
 
 def deploy_pubsub(project_id):
     local_clean.clean_pubsub()
+    data_dir_path = local_paths.pubsub_data_dir
+    os.makedirs(data_dir_path)
     port_to_function_name = ports.port_to_function_name
     port_to_signature_type = ports.port_to_signature_type
     data_dir_path = local_paths.pubsub_data_dir

@@ -3,18 +3,15 @@
 	"callback_id": "{}",
 	"title": {
 		"type": "plain_text",
-		"text": "bluffer",
-		"emoji": true
+		"text": "fictionary"
 	},
 	"submit": {
 		"type": "plain_text",
-		"text": "Submit",
-		"emoji": true
+		"text": "Submit"
 	},
 	"close": {
 		"type": "plain_text",
-		"text": "Cancel",
-		"emoji": true
+		"text": "Cancel"
 	},
 	"blocks": [
 		{
@@ -22,23 +19,20 @@
 			"block_id": "vote",
 			"label": {
 				"type": "plain_text",
-				"text": "Vote",
-				"emoji": true
+				"text": "Your vote"
 			},
 			"element": {
 				"type": "static_select",
 				"action_id": "vote",
 				"placeholder": {
 					"type": "plain_text",
-					"text": "Select an item",
-					"emoji": true
+					"text": "Select an item"
 				},
 				"options": [
 					{
 						"text": {
 							"type": "plain_text",
-							"text": "{}",
-							"emoji": true
+							"text": "{}"
 						},
 						"value": "{}"
 					}

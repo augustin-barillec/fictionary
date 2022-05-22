@@ -3,18 +3,15 @@
     "callback_id": "{}",
 	"title": {
 		"type": "plain_text",
-		"text": "bluffer",
-		"emoji": true
+		"text": "fictionary"
 	},
 	"submit": {
 		"type": "plain_text",
-		"text": "Submit",
-		"emoji": true
+		"text": "Submit"
 	},
 	"close": {
 		"type": "plain_text",
-		"text": "Cancel",
-		"emoji": true
+		"text": "Cancel"
 	},
 	"blocks": [
 		{
@@ -26,8 +23,7 @@
 			},
 			"label": {
 				"type": "plain_text",
-				"text": "Guess",
-				"emoji": true
+				"text": "Your guess"
 			}
 		}
 	]

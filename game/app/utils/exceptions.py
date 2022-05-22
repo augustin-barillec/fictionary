@@ -189,7 +189,11 @@ class ExceptionsHandler:
             return msg
 
     @tag.add_tag
-    def build_pick_submission_exception_msg(self, qas, number_picked):
+    def build_pick_submission_exception_msg(self, qas, number_picked_str):
+        try:
+            number_picked = int(number_picked_str)
+        except ValueError:
+            return 'Input must be an integer.'
         max_number = len(qas) // 2
         if number_picked not in range(1, max_number + 1):
             msg = f'{number_picked} is not between 1 and {max_number}.'
@@ -215,17 +219,19 @@ class ExceptionsHandler:
         if user_id in self.game.voters:
             return 'You have already voted!'
 
-    def handle_is_dead_exception(self, trigger_id=None, push=False):
+    def handle_is_dead_exception(self, trigger_id=None, view_id=None):
+        if trigger_id is not None:
+            assert view_id is None
+        if view_id is not None:
+            assert trigger_id is None
         exception_msg = self.build_game_is_dead_msg()
         if exception_msg is None:
             return
         if trigger_id is not None:
-            if push:
-                self.slack_operator.push_exception_view(
-                    trigger_id, exception_msg)
-            else:
-                self.slack_operator.open_exception_view(
-                    trigger_id, exception_msg)
+            self.slack_operator.open_exception_view(trigger_id, exception_msg)
+            return make_response('', 200)
+        elif view_id is not None:
+            self.slack_operator.update_exception_view(view_id, exception_msg)
             return make_response('', 200)
         else:
             return views.build_exception_response(exception_msg)
@@ -239,7 +245,7 @@ class ExceptionsHandler:
             game_parameter, game_dicts, conversation_infos)
         if exception_msg is not None:
             logger.info(
-                f'exception slash, {exception_msg} {self.game.id}')
+                f'exception slash_command, {exception_msg} {self.game.id}')
             slack_operator.open_exception_view(trigger_id, exception_msg)
             return make_response('', 200)
 
@@ -266,9 +272,9 @@ class ExceptionsHandler:
             return views.build_exception_response(exception_msg)
 
     def handle_pick_submission_exceptions(
-            self, trigger_id, qas, number_picked):
+            self, trigger_id, qas, number_picked_str):
         exception_msg = self.build_pick_submission_exception_msg(
-            qas, number_picked)
+            qas, number_picked_str)
         if exception_msg is not None:
             logger.info(
                 f'exception pick_submission, {exception_msg} {self.game.id}')

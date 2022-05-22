@@ -4,6 +4,7 @@ from app.utils import users
 
 def build_indexed_signed_proposals(game):
     sorted_frozen_guessers = users.sort_users(game.frozen_guessers)
+    assert 'Truth' not in sorted_frozen_guessers
     res = [(k, game.frozen_guessers[k][1])
            for k in sorted_frozen_guessers]
     res.append(('Truth', game.truth))

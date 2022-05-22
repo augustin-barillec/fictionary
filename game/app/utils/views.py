@@ -37,20 +37,21 @@ def build_setup_freestyle_view(id_):
 
 
 def build_setup_automatic_view(
-        id_, pick_block_id, shuffle_block_id, max_number, number,
-        question, answer, language):
+        id_, pick_block_id, shuffle_block_id,
+        language, url, max_number, number, question, answer):
     res = deepcopy(setup_automatic_view_template)
     res['callback_id'] = id_
     res['private_metadata'] = answer
 
-    res['blocks'][1]['block_id'] = pick_block_id
-    res['blocks'][3]['block_id'] = shuffle_block_id
+    res['blocks'][2]['block_id'] = pick_block_id
+    res['blocks'][4]['block_id'] = shuffle_block_id
 
-    res['blocks'][0]['text'][
+    res['blocks'][1]['text'][
         'text'] = f'{language.capitalize()} questions are visible here:'
-    res['blocks'][4]['text']['text'] = f'Question *{number}* selected: '
-    res['blocks'][5]['text']['text'] = question
-    res['blocks'][1]['element']['placeholder'][
+    res['blocks'][1]['accessory']['url'] = url
+    res['blocks'][5]['text']['text'] = f'Question *{number}* selected: '
+    res['blocks'][6]['text']['text'] = question
+    res['blocks'][2]['element']['placeholder'][
         'text'] = f'Between 1 and {max_number}'
     return res
 
@@ -101,15 +102,14 @@ class ViewBuilder:
         return build_setup_freestyle_view(id_)
 
     def build_setup_automatic_view(
-            self, max_number, number, question, answer):
+            self, url, max_number, number, question, answer):
         id_ = self.surface_id_builder.build_setup_automatic_view_id()
         pick_block_id = self.surface_id_builder.build_pick_block_id()
         shuffle_block_id = self.surface_id_builder.build_shuffle_block_id()
         language = self.game.parameter
         return build_setup_automatic_view(
             id_, pick_block_id, shuffle_block_id,
-            max_number, number, question, answer,
-            language)
+            language, url, max_number, number, question, answer)
 
     def build_guess_view(self):
         id_ = self.surface_id_builder.build_guess_view_id()

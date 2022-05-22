@@ -1,6 +1,5 @@
 import reusable
 from slackclient import SlackClient
-from version import VERSION
 from app import utils
 
 
@@ -13,7 +12,6 @@ class Game:
             project_id,
             publisher,
             db):
-        self.version = VERSION
 
         self.id = game_id
         self.surface_prefix = surface_prefix

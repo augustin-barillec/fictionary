@@ -29,7 +29,6 @@ def clean_cloud_deploy_functions():
 def clean_pubsub():
     data_dir_path = local_paths.pubsub_data_dir
     delete_folder(data_dir_path)
-    os.makedirs(data_dir_path)
     processes.kill_processes('pubsub-emulator')
     processes.kill_processes('emulators pubsub')
 

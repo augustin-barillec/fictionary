@@ -2,36 +2,37 @@
 	"type": "modal",
 	"title": {
 		"type": "plain_text",
-		"text": "Bluffer",
-		"emoji": true
+		"text": "fictionary"
 	},
 	"submit": {
 		"type": "plain_text",
-		"text": "Submit",
-		"emoji": true
+		"text": "Submit"
 	},
 	"close": {
 		"type": "plain_text",
-		"text": "Cancel",
-		"emoji": true
+		"text": "Cancel"
 	},
 	"blocks": [
 		{
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
+				"text": "*Set up a game*"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
 				"text": "Questions are visible here:"
 			},
 			"accessory": {
 				"type": "button",
 				"text": {
 					"type": "plain_text",
-					"text": "Questions",
-					"emoji": true
+					"text": "Questions"
 				},
-				"value": "click_me_123",
-				"url": "https://google.com",
-				"action_id": "button-action"
+				"url": "{}"
 			}
 		},
 		{
@@ -43,7 +44,7 @@
 				"action_id": "plain_text_input-action",
 				"placeholder": {
 					"type": "plain_text",
-					"text": "Between 1 and 1000"
+					"text": "{}"
 				}
 			},
 			"label": {
@@ -65,11 +66,8 @@
 					"type": "button",
 					"text": {
 						"type": "plain_text",
-						"text": "Shuffle",
-						"emoji": true
-					},
-					"value": "click_me_123",
-					"action_id": "actionId-0"
+						"text": "Shuffle"
+					}
 				}
 			]
 		},
@@ -77,15 +75,14 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "Question *1005* selected:"
+				"text": "{}"
 			}
 		},
 		{
 			"type": "section",
 			"text": {
 				"type": "plain_text",
-				"text": "What is ?",
-				"emoji": true
+				"text": "{}"
 			}
 		}
 	]

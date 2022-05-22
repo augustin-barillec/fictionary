@@ -20,31 +20,32 @@ class BlockActionHandler:
         self.slack_operator = ut.slack.SlackOperator(self.game)
         self.exceptions_handler = ut.exceptions.ExceptionsHandler(self.game)
 
-    def get_qas(self):
-        return ut.qas.get_qas(self.game)
+    @property
+    def view_id(self):
+        return self.payload['view']['id']
 
     def handle_pick_submission(self):
-        view_id = self.payload['view']['id']
-        number_picked = int(self.payload['actions'][0]['value'])
-        qas = self.get_qas()
+        number_picked_str = self.payload['actions'][0]['value']
+        url, questions_and_answers = ut.questions.get_data(self.game)
         resp = self.exceptions_handler.handle_pick_submission_exceptions(
-            self.trigger_id, qas, number_picked)
+            self.trigger_id, questions_and_answers, number_picked_str)
         if resp is not None:
             return resp
-        max_number, number, question, answer = ut.qas.select(
-            qas, number_picked)
+        number_picked = int(number_picked_str)
+        max_number, number, question, answer = ut.questions.select(
+            questions_and_answers, number_picked)
         self.slack_operator.update_setup_automatic_view(
-            view_id, max_number, number_picked, question, answer)
+            self.view_id, url, max_number, number_picked, question, answer)
         logger.info(f'question {number_picked} picked, '
                     f'user_id={self.user_id}, game_id={self.game.id}')
         return make_response('', 200)
 
     def handle_shuffle_click(self):
-        view_id = self.payload['view']['id']
-        qas = self.get_qas()
-        max_number, number_random, question, answer = ut.qas.select(qas)
+        url, questions_and_answers = ut.questions.get_data(self.game)
+        max_number, number_random, question, answer = ut.questions.select(
+            questions_and_answers)
         self.slack_operator.update_setup_automatic_view(
-            view_id, max_number, number_random, question, answer)
+            self.view_id, url, max_number, number_random, question, answer)
         logger.info(f'question {number_random} shuffled, '
                     f'user_id={self.user_id}, game_id={self.game.id}')
         return make_response('', 200)
@@ -78,8 +79,13 @@ class BlockActionHandler:
                 self.context.surface_prefix + '#guess_button_block')
         c4 = self.action_block_id.startswith(
                 self.context.surface_prefix + '#vote_button_block')
-        resp = self.exceptions_handler.handle_is_dead_exception(
-            trigger_id=self.trigger_id, push=(c1 or c2))
+        resp = None
+        if c1 or c2:
+            resp = self.exceptions_handler.handle_is_dead_exception(
+                view_id=self.view_id)
+        elif c3 or c4:
+            resp = self.exceptions_handler.handle_is_dead_exception(
+                trigger_id=self.trigger_id)
         if resp is not None:
             return resp
         if c1:

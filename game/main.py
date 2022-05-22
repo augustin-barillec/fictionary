@@ -9,6 +9,7 @@ import reusable
 from argparse import Namespace
 from copy import deepcopy
 from flask import make_response
+from version import VERSION
 from app import utils as ut
 from app import interactivity as inter
 from app.game import Game
@@ -47,6 +48,7 @@ def slash_command(request):
         slash_datetime_compact, team_id, channel_id, organizer_id, trigger_id)
     logger.info(f'game_id built, game_id={game_id}')
     game = build_game(game_id=game_id)
+    game.version = VERSION
     text_split = text.split(' ')
     parameter = text_split[0]
     tag = ''
@@ -68,10 +70,11 @@ def slash_command(request):
     elif game.parameter == 'freestyle':
         ut.slack.SlackOperator(game).open_setup_freestyle_view(trigger_id)
     elif game.parameter in ('english', 'french'):
-        qas = ut.qas.get_qas(game)
-        max_number, number, question, answer = ut.qas.select(qas)
+        url, questions_and_answers = ut.questions.get_data(game)
+        max_number, number, question, answer = ut.questions.select(
+            questions_and_answers)
         ut.slack.SlackOperator(game).open_setup_automatic_view(
-            trigger_id, max_number, number, question, answer)
+            trigger_id, url, max_number, number, question, answer)
     logger.info(f'setup_view opened, game_id={game.id}')
     return make_response('', 200)
 
@@ -79,7 +82,7 @@ def slash_command(request):
 def interactivity(request):
     payload = json.loads(request.form['payload'])
     payload_type = payload['type']
-    if payload_type not in ('block_actions', 'view_submission'):
+    if payload_type not in ('view_submission', 'block_actions'):
         return make_response('', 200)
     if payload_type == 'view_submission':
         return inter.view_submissions.handle_view_submission(

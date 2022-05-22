@@ -72,24 +72,26 @@ class ViewSubmissionHandler:
                     f'game_id={self.game.id} ')
         return make_response('', 200)
 
+    def handle(self):
+        resp = self.exceptions_handler.handle_is_dead_exception()
+        if resp is not None:
+            return resp
+        if self.view_callback_id.startswith(
+                self.context.surface_prefix + '#setup_freestyle_view'):
+            return self.handle_setup_freestyle_submission()
+        if self.view_callback_id.startswith(
+                self.context.surface_prefix + '#setup_automatic_view'):
+            return self.handle_setup_automatic_submission()
+        if self.view_callback_id.startswith(
+                self.context.surface_prefix + '#guess_view'):
+            return self.handle_guess_submission()
+        if self.view_callback_id.startswith(
+                self.context.surface_prefix + '#vote_view'):
+            return self.handle_vote_submission()
+
 
 def handle_view_submission(payload, context):
     if not payload['view']['callback_id'].startswith(context.surface_prefix):
         return make_response('', 200)
-    view_submission_handler = ViewSubmissionHandler(payload, context)
-    resp = view_submission_handler.\
-        exceptions_handler.handle_is_dead_exception()
-    if resp is not None:
-        return resp
-    if view_submission_handler.view_callback_id.startswith(
-            context.surface_prefix + '#setup_freestyle_view'):
-        return view_submission_handler.handle_setup_freestyle_submission()
-    if view_submission_handler.view_callback_id.startswith(
-            context.surface_prefix + '#setup_automatic_view'):
-        return view_submission_handler.handle_setup_automatic_submission()
-    if view_submission_handler.view_callback_id.startswith(
-            context.surface_prefix + '#guess_view'):
-        return view_submission_handler.handle_guess_submission()
-    if view_submission_handler.view_callback_id.startswith(
-            context.surface_prefix + '#vote_view'):
-        return view_submission_handler.handle_vote_submission()
+    return ViewSubmissionHandler(payload, context).handle()
+
