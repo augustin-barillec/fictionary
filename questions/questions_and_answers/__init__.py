@@ -1,2 +1,0 @@
-from questions_and_answers.english import questions_and_answers_english
-from questions_and_answers.french import questions_and_answers_french

@@ -1,4 +1,4 @@
-import tools
+import reusable
 
 
 def build_game_id(
@@ -7,7 +7,7 @@ def build_game_id(
         channel_id,
         organizer_id,
         trigger_id):
-    return tools.ids.build_game_id(
+    return reusable.ids.build_game_id(
         slash_datetime_compact, team_id, channel_id, organizer_id, trigger_id)
 
 

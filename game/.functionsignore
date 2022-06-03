@@ -1,9 +1,0 @@
-*
-!/main.py
-!/app/**
-!/tools/**
-!/reusable/**
-!version.py
-!requirements.txt
-!.
-__pycache__/

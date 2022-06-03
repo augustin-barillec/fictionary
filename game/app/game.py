@@ -51,9 +51,9 @@ class Game:
         self.refresh_interval = params['refresh_interval']
         self.self_trigger_threshold = params['self_trigger_threshold']
         self.tagging = params['tagging']
-        self.trigger_cooldown = params['trigger_cooldown']
         self.time_to_guess = params['time_to_guess']
         self.time_to_vote = params['time_to_vote']
+        self.trigger_cooldown = params['trigger_cooldown']
 
         assert self.trigger_cooldown < self.self_trigger_threshold
 

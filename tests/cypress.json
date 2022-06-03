@@ -1,0 +1,7 @@
+{
+  "chromeWebSecurity": false,
+  "watchForFileChanges": false,
+  "waitForAnimations": true,
+  "trashAssetsBeforeRuns": false,
+  "video": false
+}
