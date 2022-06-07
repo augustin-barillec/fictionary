@@ -8,7 +8,7 @@ default_params = {
     'refresh_interval': 9,
     'self_trigger_threshold': 60,
     'tagging': True,
-    'time_to_guess_options': 900,
+    'time_to_guess': 300,
     'time_to_vote': 600,
     'trigger_cooldown': 30
 }
@@ -37,6 +37,9 @@ channel_names = [
     'exception_guess_click_max_these_guessers',
     'exception_vote_click_not_a_potential_voter',
     'exception_vote_click_already_voted',
+    'setup_english',
+    'setup_freestyle',
+    'setup_french',
     'transition_guess_full',
     'transition_guess_shorten',
     'transition_vote_full',

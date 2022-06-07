@@ -62,17 +62,26 @@ class BlockBuilder:
     def build_vote_timer_block(self):
         return build_timer_block(self.game.time_left_to_vote, 'vote')
 
-    def build_title_block(self):
+    @tag.add_tag
+    def build_title_msg(self):
         if self.game.parameter == 'freestyle':
             kind = 'Freestyle'
         else:
             kind = 'Automatic'
         organizer = users.user_display(self.game.organizer_id)
-        msg = f'{kind} game set up by {organizer}!'
+        return f'{kind} game set up by {organizer}!'
+
+    def build_title_block(self):
+        msg = self.build_title_msg()
         return build_text_block(msg)
 
+    @tag.add_tag
+    def build_question_msg(self):
+        return self.game.question
+
     def build_question_block(self):
-        return build_text_block(self.game.question)
+        msg = self.build_question_msg()
+        return build_text_block(msg)
 
     @staticmethod
     def build_preparing_guess_stage_block():

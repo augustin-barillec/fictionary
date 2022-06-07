@@ -43,6 +43,7 @@ def setup_channels(
             channels_ref, channel_id, params)
         utils.firestore.store_channel_name(
             channels_ref, channel_id, channel_name)
+        utils.slack.leave(slack_client, channel_id)
         logger.info(f'Set {channel_name}')
 
 

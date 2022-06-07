@@ -73,7 +73,7 @@ def collect_setup_freestyle(setup_freestyle_view):
 
 
 def collect_setup_automatic(setup_automatic_view):
-    question = setup_automatic_view['blocks'][5]['text']['text']
+    question = setup_automatic_view['blocks'][6]['text']['text']
     truth = setup_automatic_view['private_metadata']
     return question, truth
 

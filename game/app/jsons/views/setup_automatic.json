@@ -39,17 +39,17 @@
 			"dispatch_action": true,
 			"optional": true,
 			"type": "input",
+			"block_id": "{}",
+			"label": {
+				"type": "plain_text",
+				"text": "Pick a question number"
+			},
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "plain_text_input-action",
 				"placeholder": {
 					"type": "plain_text",
 					"text": "{}"
 				}
-			},
-			"label": {
-				"type": "plain_text",
-				"text": "Pick a question number"
 			}
 		},
 		{
@@ -61,6 +61,7 @@
 		},
 		{
 			"type": "actions",
+			"block_id": "{}",
 			"elements": [
 				{
 					"type": "button",
