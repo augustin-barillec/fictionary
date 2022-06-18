@@ -4,7 +4,7 @@ import google.cloud.firestore
 import utils
 import context_functions as cf
 import channels
-from slackclient import SlackClient
+from slack_sdk import WebClient
 from reusable import secret_manager
 
 logging.basicConfig(
@@ -39,7 +39,7 @@ cypress_context_conf = secret_manager.access_payload_parsed(
     'cypress_context_conf')
 app_user_id = cypress_context_conf['app_user_id']
 cypress_slack_token = cypress_context_conf['cypress_slack_token']
-slack_client = SlackClient(cypress_slack_token)
+slack_client = WebClient(cypress_slack_token)
 cypress_user_id = cypress_context_conf['cypress_user_id']
 team_id = cypress_context_conf['team_id']
 user_ids = utils.users.get_user_ids(cypress_context_conf)

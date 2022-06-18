@@ -1,5 +1,5 @@
 import reusable
-from slackclient import SlackClient
+from slack_sdk import WebClient
 from app import utils
 
 
@@ -35,7 +35,7 @@ class Game:
         self.team_dict = self.firestore_reader.get_team_dict()
 
         slack_token = self.team_dict['slack_token']
-        self.slack_client = SlackClient(slack_token)
+        self.slack_client = WebClient(slack_token)
 
         channel_dicts = self.firestore_reader.get_channel_dicts()
         if self.channel_id in channel_dicts:

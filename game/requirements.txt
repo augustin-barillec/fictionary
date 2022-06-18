@@ -1,4 +1,4 @@
 firebase-admin==3.*
 flask==2.*
 google-cloud-pubsub==2.*
-slackclient==1.*
+slack-sdk==3.*
