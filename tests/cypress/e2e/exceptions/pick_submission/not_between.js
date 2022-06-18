@@ -3,7 +3,7 @@ describe('main', () => {
   it('main', () => {
 
     cy.get_conf().then((conf) => {
-      cy.get_channel_id('exception_guess_submission_no_time_left').then((channel_id) => {
+      cy.get_channel_id('exception_pick_submission_not_between').then((channel_id) => {
         const tag = Cypress._.random(100000, 999999)
 
         cy.login_from_user_index(conf, 0)

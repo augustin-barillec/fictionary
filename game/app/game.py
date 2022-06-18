@@ -119,11 +119,3 @@ class Game:
             self.remaining_potential_voters = utils.users.\
                 compute_remaining_potential_voters(
                     self.potential_voters, self.voters)
-
-    def add_tag_to_msg(self, msg):
-        if msg is None:
-            return
-        if self.tagging:
-            return f'{self.tag}: {msg}'
-        else:
-            return msg

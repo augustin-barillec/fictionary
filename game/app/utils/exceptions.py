@@ -136,7 +136,6 @@ class ExceptionsHandler:
     def build_aborted_cause_already_triggered_msg(self):
         return f'aborted cause already triggered, game_id={self.game.id}'
 
-    @tag.add_tag
     def build_slash_command_exception_msg(
             self, game_parameter, game_dicts, conversation_infos):
         if game_parameter not in ('help', 'freestyle', 'english', 'french'):
@@ -153,7 +152,6 @@ class ExceptionsHandler:
                 remind=False)
             return m
 
-    @tag.add_tag
     def build_setup_submission_exception_msg(self, game_dicts):
         if self.max_nb_this_organizer_running_games_reached(game_dicts):
             m = self.build_max_nb_this_organizer_running_games_reached_msg(
@@ -164,7 +162,6 @@ class ExceptionsHandler:
                 remind=True)
             return m
 
-    @tag.add_tag
     def build_guess_submission_exception_msg(self, guess):
         if self.no_time_left_to_guess():
             msg = (f'Your guess: {guess}\n\n'
@@ -180,7 +177,6 @@ class ExceptionsHandler:
                    'This is the maximal number allowed for this game.')
             return msg
 
-    @tag.add_tag
     def build_vote_submission_exception_msg(self, vote):
         if self.no_time_left_to_vote():
             msg = (f'Your vote: proposal {vote}.\n\n'
@@ -188,7 +184,6 @@ class ExceptionsHandler:
                    'because the voting deadline has passed!')
             return msg
 
-    @tag.add_tag
     def build_pick_submission_exception_msg(self, qas, number_picked_str):
         try:
             number_picked = int(number_picked_str)
@@ -199,7 +194,6 @@ class ExceptionsHandler:
             msg = f'{number_picked} is not between 1 and {max_number}.'
             return msg
 
-    @tag.add_tag
     def build_guess_click_exception_msg(self, user_id):
         if user_id == self.game.organizer_id and \
                 self.game.parameter == 'freestyle':
@@ -212,7 +206,6 @@ class ExceptionsHandler:
                    'This is the maximal number allowed for this game.')
             return msg
 
-    @tag.add_tag
     def build_vote_click_exception_msg(self, user_id):
         if user_id not in self.game.potential_voters:
             return 'Only guessers can vote!'

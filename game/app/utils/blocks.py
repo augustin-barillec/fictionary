@@ -1,5 +1,5 @@
 from copy import deepcopy
-from app.utils import jsons, time, users, proposals, tag
+from app.utils import jsons, proposals, time, users
 
 
 def get_block(basename):
@@ -62,26 +62,17 @@ class BlockBuilder:
     def build_vote_timer_block(self):
         return build_timer_block(self.game.time_left_to_vote, 'vote')
 
-    @tag.add_tag
-    def build_title_msg(self):
+    def build_title_block(self):
         if self.game.parameter == 'freestyle':
             kind = 'Freestyle'
         else:
             kind = 'Automatic'
         organizer = users.user_display(self.game.organizer_id)
-        return f'{kind} game set up by {organizer}!'
-
-    def build_title_block(self):
-        msg = self.build_title_msg()
+        msg = f'{kind} game set up by {organizer}!'
         return build_text_block(msg)
-
-    @tag.add_tag
-    def build_question_msg(self):
-        return self.game.question
 
     def build_question_block(self):
-        msg = self.build_question_msg()
-        return build_text_block(msg)
+        return build_text_block(self.game.question)
 
     @staticmethod
     def build_preparing_guess_stage_block():
@@ -95,23 +86,13 @@ class BlockBuilder:
     def build_computing_results_stage_block():
         return build_text_block('Computing results :drum_with_drumsticks:')
 
-    @tag.add_tag
-    def build_guess_button_msg(self):
-        return 'Guess'
-
-    @tag.add_tag
-    def build_vote_button_msg(self):
-        return 'Vote'
-
     def build_guess_button_block(self):
         id_ = self.surface_id_builder.build_guess_button_block_id()
-        msg = self.build_guess_button_msg()
-        return build_button_block(msg, id_)
+        return build_button_block('Guess', id_)
 
     def build_vote_button_block(self):
         id_ = self.surface_id_builder.build_vote_button_block_id()
-        msg = self.build_vote_button_msg()
-        return build_button_block(msg, id_)
+        return build_button_block('Vote', id_)
 
     def build_nb_remaining_potential_guessers_block(self):
         x = self.game.nb_remaining_potential_guessers
@@ -159,7 +140,16 @@ class BlockBuilder:
         msg = f'Your guess: {index}) {guess}'
         return build_text_block(msg)
 
-    def build_indexed_signed_guesses_msg(self):
+    def build_truth_block(self):
+        msg = '• Truth: '
+        if len(self.game.frozen_guessers) == 0:
+            msg += f'{self.game.truth}'
+        else:
+            index = self.game.truth_index
+            msg += f'{index}) {self.game.truth}'
+        return build_text_block(msg)
+
+    def build_indexed_signed_guesses_block(self):
         msg = []
         for r in deepcopy(self.game.results):
             guesser = users.user_display(r['guesser'])
@@ -168,9 +158,9 @@ class BlockBuilder:
             r_msg = f'• {guesser}: {index}) {guess}'
             msg.append(r_msg)
         msg = '\n'.join(msg)
-        return msg
+        return build_text_block(msg)
 
-    def build_voting_edges_msg(self):
+    def build_voting_edges_block(self):
         msg = []
         for r in deepcopy(self.game.results):
             if 'vote_index' not in r:
@@ -182,9 +172,9 @@ class BlockBuilder:
             r_msg = f'• {voter} -> {chosen_author}'
             msg.append(r_msg)
         msg = '\n'.join(msg)
-        return msg
+        return build_text_block(msg)
 
-    def build_scores_msg(self):
+    def build_scores_block(self):
         msg = []
         for r in deepcopy(self.game.results):
             guesser = users.user_display(r['guesser'])
@@ -197,9 +187,8 @@ class BlockBuilder:
             r_msg = f'• {guesser}: {p}'
             msg.append(r_msg)
         msg = '\n'.join(msg)
-        return msg
+        return build_text_block(msg)
 
-    @tag.add_tag
     def build_conclusion_msg(self):
         lg = len(self.game.frozen_guessers)
         lv = len(self.game.frozen_voters)
@@ -231,27 +220,6 @@ class BlockBuilder:
             msg_aux = ','.join(ws[:-1])
             msg_aux += f' and {ws[-1]}'
             return f'And the winners are {msg_aux}! :clap:'
-
-    def build_truth_block(self):
-        msg = '• Truth: '
-        if len(self.game.frozen_guessers) == 0:
-            msg += f'{self.game.truth}'
-        else:
-            index = self.game.truth_index
-            msg += f'{index}) {self.game.truth}'
-        return build_text_block(msg)
-
-    def build_indexed_signed_guesses_block(self):
-        msg = self.build_indexed_signed_guesses_msg()
-        return build_text_block(msg)
-
-    def build_voting_edges_block(self):
-        msg = self.build_voting_edges_msg()
-        return build_text_block(msg)
-
-    def build_scores_block(self):
-        msg = self.build_scores_msg()
-        return build_text_block(msg)
 
     def build_conclusion_block(self):
         msg = self.build_conclusion_msg()

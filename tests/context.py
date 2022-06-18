@@ -24,6 +24,8 @@ create_fake_guesser_parser.add_argument('tag')
 create_fake_running_game_parser = subparsers.add_parser(
     'create_fake_running_game')
 create_fake_running_game_parser.add_argument('organizer_index', type=int)
+delete_game_parser = subparsers.add_parser('delete_game')
+delete_game_parser.add_argument('tag')
 kick_from_channel_parser = subparsers.add_parser('kick_from_channel')
 kick_from_channel_parser.add_argument('channel_id')
 kick_from_channel_parser.add_argument('user_index', type=int)
@@ -69,6 +71,8 @@ elif args.command == 'create_fake_guesser':
 elif args.command == 'create_fake_running_game':
     organizer_id = user_ids[args.organizer_index]
     cf.create_fake_running_game(games_ref, organizer_id)
+elif args.command == 'delete_game':
+    cf.delete_game(games_ref, args.tag)
 elif args.command == 'kick_from_channel':
     user_id = user_ids[args.user_index]
     cf.kick_from_channel(slack_client, args.channel_id, user_id)

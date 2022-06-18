@@ -25,6 +25,10 @@ Cypress.Commands.add('create_fake_running_game', organizer_index => {
   cy.run_context(`create_fake_running_game ${organizer_index}`)
 })
 
+Cypress.Commands.add('delete_game', tag => {
+  cy.run_context(`delete_game ${tag}`)
+})
+
 Cypress.Commands.add('kick_from_channel', (channel_id, user_index) => {
   cy.run_context(`kick_from_channel ${channel_id} ${user_index}`)
 })
@@ -97,14 +101,14 @@ Cypress.Commands.add('write_question_truth', (question, truth) => {
   cy.get('#truth-truth').click().type(truth).should('have.value', truth)
 })
 
-Cypress.Commands.add('close_setup_view', () => {
+Cypress.Commands.add('submit_view', () => {
   cy.get('.c-wizard_modal__footer > .c-button--primary').click()
 })
 
 Cypress.Commands.add('organize_freestyle_game', (tag, question, truth) => {
   cy.slash_freestyle(tag)
   cy.write_question_truth(question, truth)
-  cy.close_setup_view()
+  cy.submit_view()
 })
 
 Cypress.Commands.add('guess_click', tag => {
@@ -115,14 +119,10 @@ Cypress.Commands.add('guess_type', guess => {
    cy.get('#guess-guess').click().type(guess).should('have.value', guess)
 })
 
-Cypress.Commands.add('guess_submit', () => {
-   cy.get('.c-wizard_modal__footer > .c-button--primary').click()
-})
-
 Cypress.Commands.add('guess', (tag, guess) => {
   cy.guess_click(tag)
   cy.guess_type(guess)
-  cy.guess_submit()
+  cy.submit_view()
 })
 
 Cypress.Commands.add('vote_click', tag => {
@@ -134,12 +134,8 @@ Cypress.Commands.add('vote_select', vote => {
   cy.get(`#vote-vote_option_${vote} > .c-select_options_list__option_label > .p-block-kit-select_options`).click()
 })
 
-Cypress.Commands.add('vote_submit', () => {
-  cy.get('.c-wizard_modal__footer > .c-button--primary').click()
-})
-
 Cypress.Commands.add('vote', (tag, vote) => {
   cy.vote_click(tag)
   cy.vote_select(vote)
-  cy.vote_submit()
+  cy.submit_view()
 })

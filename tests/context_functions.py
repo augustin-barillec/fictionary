@@ -71,12 +71,19 @@ def create_fake_running_game(games_ref, organizer_id):
     game_id = reusable.ids.build_game_id(
         slash_datetime_compact, 'team_id',
         'channel_id', organizer_id, 'trigger_id')
-    game_dict = {
-        'version': 1,
-        'tag': 'tag',
-        'setup_submission': reusable.time.get_now()}
+    game_dict = {'setup_submission': reusable.time.get_now()}
     game_ref = games_ref.document(game_id)
     game_ref.set(game_dict, merge=False)
+
+
+def delete_game(games_ref, tag):
+    cnt = 0
+    for g in games_ref.stream():
+        game_dict = g.to_dict()
+        if game_dict['tag'] == tag:
+            g.reference.delete()
+            cnt += 1
+    assert cnt == 1
 
 
 def kick_from_channel(slack_client, channel_id, user_id):

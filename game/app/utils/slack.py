@@ -1,5 +1,5 @@
 import reusable
-from app.utils import blocks, users, views
+from app.utils import blocks, tag, users, views
 
 
 def get_conversation_infos(slack_client, channel_id):
@@ -54,39 +54,64 @@ class SlackOperator:
         self.slack_client = self.game.slack_client
         self.block_builder = blocks.BlockBuilder(game)
         self.view_builder = views.ViewBuilder(game)
+        self.tagging = self.game.exists and self.game.tagging
+
+    def add_tag_to_text(self, text):
+        if self.tagging:
+            text = tag.add_tag_to_text(text, self.game.tag)
+        return text
+
+    def add_tag_to_blocks(self, blocks_):
+        if self.tagging:
+            blocks_ = tag.add_tag_to_json_list(blocks_, self.game.tag)
+        return blocks_
+
+    def add_tag_to_view(self, view):
+        if self.tagging:
+            view = tag.add_tag_to_json(view, self.game.tag)
+        return view
 
     def get_conversation_infos(self):
         return get_conversation_infos(
             self.slack_client, self.game.channel_id)
 
     def post_message(self, blocks_):
+        blocks_ = self.add_tag_to_blocks(blocks_)
         return post_message(
             self.slack_client, self.game.channel_id, blocks_)
 
     def post_ephemeral(self, user_id, msg):
+        msg = self.add_tag_to_text(msg)
         post_ephemeral(
             self.slack_client, self.game.channel_id, user_id, msg)
 
     def update_message(self, blocks_, ts):
+        blocks_ = self.add_tag_to_blocks(blocks_)
         update_message(self.slack_client, self.game.channel_id,
                        blocks_, ts)
 
     def open_view(self, trigger_id, view):
+        view = self.add_tag_to_view(view)
         open_view(self.slack_client, trigger_id, view)
 
     def update_view(self, view_id, view):
+        view = self.add_tag_to_view(view)
         update_view(self.slack_client, view_id, view)
 
     def push_view(self, trigger_id, view):
+        view = self.add_tag_to_view(view)
         push_view(self.slack_client, trigger_id, view)
 
     def open_exception_view(self, trigger_id, msg):
+        msg = self.add_tag_to_text(msg)
         open_exception_view(self.slack_client, trigger_id, msg)
 
     def update_exception_view(self, view_id, msg):
+        msg = self.add_tag_to_text(msg)
         update_exception_view(self.slack_client, view_id, msg)
 
     def push_exception_view(self, trgger_id, msg):
+        msg = self.add_tag_to_text(msg)
         push_exception_view(self.slack_client, trgger_id, msg)
 
     def update_upper(self, blocks_):

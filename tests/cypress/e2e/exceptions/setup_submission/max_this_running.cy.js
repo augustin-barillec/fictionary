@@ -9,8 +9,8 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, organizer_index)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.slash_command(tag)
-        cy.write_question_and_truth('question', 'truth')
+        cy.slash_freestyle(tag)
+        cy.write_question_truth('question', 'truth')
 
         cy.create_fake_running_game(organizer_index)
         cy.create_fake_running_game(organizer_index)
