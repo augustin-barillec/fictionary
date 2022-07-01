@@ -7,7 +7,9 @@ logger = logging.getLogger(__name__)
 
 class BlockActionHandler:
 
-    def __init__(self, payload, context):
+    def __init__(self, body, headers, payload, context):
+        self.body = body
+        self.headers = headers
         self.payload = payload
         self.context = context
         assert self.payload['type'] == 'block_actions'
@@ -71,6 +73,7 @@ class BlockActionHandler:
         return make_response('', 200)
 
     def handle(self):
+        self.exceptions_handler.verify_signature(self.body, self.headers)
         c1 = self.action_block_id.startswith(
                 self.context.surface_prefix + '#pick_block')
         c2 = self.action_block_id.startswith(
@@ -98,8 +101,8 @@ class BlockActionHandler:
             return self.handle_vote_click()
 
 
-def handle_block_action(payload, context):
+def handle_block_action(body, headers, payload, context):
     if not payload['actions'][0]['block_id'].startswith(
             context.surface_prefix):
         return make_response('', 200)
-    return BlockActionHandler(payload, context).handle()
+    return BlockActionHandler(body, headers, payload, context).handle()

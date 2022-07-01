@@ -1,7 +1,7 @@
 import logging
 import reusable
-from flask import make_response
-from app.utils import views, tag, time, slack, ids
+from flask import make_response, abort
+from app.utils import views, time, slack, ids
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +21,11 @@ class ExceptionsHandler:
     def __init__(self, game):
         self.game = game
         self.slack_operator = slack.SlackOperator(self.game)
+
+    def verify_signature(self, body, headers):
+        if not self.game.slack_verifier.is_valid_request(body, headers):
+            logger.error(f'verification failed, game_id={self.game.id}')
+            abort(401)
 
     @staticmethod
     def game_is_running(game_dict):

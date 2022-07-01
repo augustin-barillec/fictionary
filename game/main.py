@@ -8,7 +8,7 @@ import google.cloud.firestore
 import reusable
 from argparse import Namespace
 from copy import deepcopy
-from flask import make_response
+from flask import make_response, abort
 from version import VERSION
 from app import utils as ut
 from app import interactivity as inter
@@ -38,16 +38,20 @@ context.build_game_func = build_game
 
 
 def slash_command(request):
-    team_id = request.form['team_id']
-    channel_id = request.form['channel_id']
-    organizer_id = request.form['user_id']
-    trigger_id = request.form['trigger_id']
-    text = request.form['text']
+    body = request.get_data()
+    headers = request.headers
+    form = request.form
+    team_id = form['team_id']
+    channel_id = form['channel_id']
+    organizer_id = form['user_id']
+    trigger_id = form['trigger_id']
+    text = form['text']
     slash_datetime_compact = reusable.time.get_now_compact_format()
     game_id = ut.ids.build_game_id(
         slash_datetime_compact, team_id, channel_id, organizer_id, trigger_id)
     logger.info(f'game_id built, game_id={game_id}')
     game = build_game(game_id=game_id)
+    ut.exceptions.ExceptionsHandler(game).verify_signature(body, headers)
     game.version = VERSION
     text_split = text.split(' ')
     parameter = text_split[0]
@@ -80,16 +84,19 @@ def slash_command(request):
 
 
 def interactivity(request):
-    payload = json.loads(request.form['payload'])
+    body = request.get_data()
+    headers = request.headers
+    form = request.form
+    payload = json.loads(form['payload'])
     payload_type = payload['type']
     if payload_type not in ('view_submission', 'block_actions'):
         return make_response('', 200)
     if payload_type == 'view_submission':
         return inter.view_submissions.handle_view_submission(
-            payload, context)
+            body, headers, payload, context)
     if payload_type == 'block_actions':
         return inter.block_actions.handle_block_action(
-            payload, context)
+            body, headers, payload, context)
 
 
 def pre_guess_stage(event, context_):
