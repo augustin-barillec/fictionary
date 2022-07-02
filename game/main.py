@@ -8,14 +8,15 @@ import google.cloud.firestore
 import reusable
 from argparse import Namespace
 from copy import deepcopy
-from flask import make_response, abort
+from flask import make_response
 from version import VERSION
 from app import utils as ut
 from app import interactivity as inter
 from app.game import Game
 
 logging.basicConfig(
-    format='%(asctime)s - %(levelname)s - %(message)s', level='INFO')
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level='INFO')
 logger = logging.getLogger()
 
 context = Namespace()
@@ -270,13 +271,12 @@ def pre_result_stage(event, context_):
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
     ut.slack.SlackOperator(game).update_pre_result_stage()
 
-    if len(game.frozen_guessers) >= 1:
-        game.results = ut.results.ResultsBuilder(game).build_results()
-        game.max_score = ut.results.compute_max_score(game)
-        game.winners = ut.results.compute_winners(game)
-        for attribute in ['results', 'max_score', 'winners']:
-            game.dict[attribute] = game.__dict__[attribute]
-        ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    game.results = ut.results.ResultsBuilder(game).build_results()
+    game.max_score = ut.results.compute_max_score(game)
+    game.winners = ut.results.compute_winners(game)
+    for attribute in ['results', 'max_score', 'winners']:
+        game.dict[attribute] = game.__dict__[attribute]
+    ut.firestore.FirestoreEditor(game).set_game(merge=True)
 
     slack_operator = ut.slack.SlackOperator(game)
     slack_operator.update_result_stage()

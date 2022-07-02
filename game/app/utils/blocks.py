@@ -142,23 +142,32 @@ class BlockBuilder:
 
     def build_truth_block(self):
         msg = '• Truth: '
-        if len(self.game.frozen_guessers) == 0:
+        if len(self.game.frozen_guessers) <= 1:
             msg += f'{self.game.truth}'
         else:
             index = self.game.truth_index
             msg += f'{index}) {self.game.truth}'
         return build_text_block(msg)
 
-    def build_indexed_signed_guesses_block(self):
+    def build_signed_guesses_block(self, show_index):
         msg = []
         for r in deepcopy(self.game.results):
             guesser = users.user_display(r['guesser'])
             index = r['index']
             guess = r['guess']
-            r_msg = f'• {guesser}: {index}) {guess}'
+            if show_index:
+                r_msg = f'• {guesser}: {index}) {guess}'
+            else:
+                r_msg = f'• {guesser}: {guess}'
             msg.append(r_msg)
         msg = '\n'.join(msg)
         return build_text_block(msg)
+
+    def build_signed_noindexed_guesses_block(self):
+        return self.build_signed_guesses_block(show_index=False)
+
+    def build_signed_indexed_guesses_block(self):
+        return self.build_signed_guesses_block(show_index=True)
 
     def build_voting_edges_block(self):
         msg = []
@@ -290,15 +299,23 @@ class BlockBuilder:
         title_block = self.build_title_block()
         question_block = self.build_question_block()
         truth_block = self.build_truth_block()
+        signed_noindexed_guesses_block = \
+            self.build_signed_noindexed_guesses_block()
+        signed_indexed_guesses_block = \
+            self.build_signed_indexed_guesses_block()
+        voting_edges_block = self.build_voting_edges_block()
+        scores_block = self.build_scores_block()
+        conclusion_block = self.build_conclusion_block()
         res = [title_block, question_block, truth_block]
         lg = len(self.game.frozen_guessers)
         lv = len(self.game.frozen_voters)
-        if lg >= 1:
-            res.append(self.build_indexed_signed_guesses_block())
+        if lg == 1:
+            res.append(signed_noindexed_guesses_block)
+        if lg > 1:
+            res.append(signed_indexed_guesses_block)
         if lg >= 2 and lv >= 1:
-            res.append(self.build_voting_edges_block())
-            res.append(self.build_scores_block())
-        res.append(self.build_conclusion_block())
+            res += [voting_edges_block, scores_block]
+        res.append(conclusion_block)
         res = u(res)
         return res
 

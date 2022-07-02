@@ -18,7 +18,8 @@ def conversations_info(slack_client, channel_id):
 def chat_postmessage(slack_client, channel_id, blocks):
     return slack_client.chat_postMessage(
         channel=channel_id,
-        blocks=blocks)
+        blocks=blocks,
+        text='error')
 
 
 def chat_postephemeral(slack_client, channel_id, user_id, msg):
@@ -33,7 +34,8 @@ def chat_update(slack_client, channel_id, blocks, ts):
     return slack_client.chat_update(
         channel=channel_id,
         blocks=blocks,
-        ts=ts)
+        ts=ts,
+        text='error')
 
 
 @crashable
