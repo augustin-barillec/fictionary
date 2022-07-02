@@ -57,7 +57,7 @@ for n in channel_names:
     channel_to_user_indexes[n] = [0, 1, 2, 3]
     channel_to_app_kicked[n] = False
 
-channel_to_params['ending_bravo']['time_to_vote'] = 40
+channel_to_params['ending_bravo']['time_to_vote'] = 30
 channel_to_user_indexes['ending_bravo'] = [0, 1, 2]
 channel_to_params['ending_hey']['time_to_vote'] = 30
 channel_to_user_indexes['ending_hey'] = [0, 1, 2]

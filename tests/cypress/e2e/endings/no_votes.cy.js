@@ -19,6 +19,11 @@ describe('main', () => {
         cy.guess(tag, 'g2')
 
         cy.wait(20000)
+        cy.contains(`${tag}: Freestyle game set up by @augustin!`)
+        cy.contains(`${tag}: question`)
+        cy.contains(`${tag}: • Truth: 3) truth`)
+        cy.contains(`${tag}: • @augustin1: 1) g1`)
+        cy.contains(`${tag}: • @augustin2: 2) g2`)
         cy.contains(`${tag}: No one voted`)
       })
     })

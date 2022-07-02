@@ -189,7 +189,8 @@ class ExceptionsHandler:
                    'because the voting deadline has passed!')
             return msg
 
-    def build_pick_submission_exception_msg(self, qas, number_picked_str):
+    @staticmethod
+    def build_pick_submission_exception_msg(qas, number_picked_str):
         try:
             number_picked = int(number_picked_str)
         except ValueError:
