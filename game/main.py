@@ -117,9 +117,10 @@ def pre_guess_stage(event, context_):
     slack_operator = ut.slack.SlackOperator(game)
     game.upper_ts, game.lower_ts = slack_operator.post_pre_guess_stage()
     game.nb_members = slack_operator.get_conversation_infos()['num_members']
-    max_guessers = min(game.nb_members - 1, game.max_guessers_per_game)
+    max_guessers = game.nb_members - 1
     if game.parameter == 'freestyle':
         max_guessers -= 1
+    max_guessers = min(max_guessers, game.max_guessers_per_game)
     game.max_guessers = max_guessers
     game.guessers = dict()
     game.guess_start = reusable.time.get_now()

@@ -13,7 +13,7 @@ describe('main', () => {
 
         cy.delete_game(tag)
 
-        cy.close_setup_view()
+        cy.submit_view()
 
         cy.contains('This game is dead!')
       })

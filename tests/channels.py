@@ -26,7 +26,6 @@ channel_names = [
     'exception_game_dead_update_view',
     'exception_guess_click_already_guessed',
     'exception_guess_click_max_these_guessers',
-    'exception_guess_click_not_a_member',
     'exception_guess_click_organizer',
     'exception_guess_submission_max_these_guessers',
     'exception_guess_submission_no_time_left',
@@ -67,14 +66,11 @@ channel_to_user_indexes['ending_no_votes'] = [0, 1, 2]
 channel_to_params['ending_thanks']['time_to_guess'] = 30
 channel_to_user_indexes['ending_well'] = [0, 1, 2]
 channel_to_user_indexes['ending_winner'] = [0, 1, 2]
-channel_to_params['ending_zero']['time_to_vote'] = 60
+channel_to_params['ending_zero']['time_to_vote'] = 70
 channel_to_params['exception_game_dead_open_view']['max_life_span'] = 30
 channel_to_params['exception_game_dead_update_view']['max_life_span'] = 0
-channel_to_params['exception_slash_command_max_this_running'][
-    'max_running_games_per_organizer'] = 2
 channel_to_params['exception_guess_click_max_these_guessers'][
     'max_guessers_per_game'] = 2
-channel_to_user_indexes['exception_guess_click_not_a_member'] = [0, 1]
 channel_to_params['exception_guess_submission_max_these_guessers'][
     'max_guessers_per_game'] = 5
 channel_to_params['exception_guess_submission_no_time_left'][
@@ -89,6 +85,8 @@ channel_to_params['exception_slash_command_max_running'][
     'max_running_games'] = 3
 channel_to_params['exception_slash_command_max_running'][
     'self_trigger_threshold'] = 0
+channel_to_params['exception_slash_command_max_this_running'][
+    'max_running_games_per_organizer'] = 2
 channel_to_app_kicked['exception_slash_command_not_invited'] = True
 channel_to_params['exception_vote_click_not_a_potential_voter'][
     'time_to_guess'] = 70
