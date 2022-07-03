@@ -64,10 +64,10 @@ channel_to_user_indexes['ending_hey'] = [0, 1, 2]
 channel_to_params['ending_no_guesses']['time_to_guess'] = 5
 channel_to_params['ending_no_votes']['time_to_vote'] = 1
 channel_to_user_indexes['ending_no_votes'] = [0, 1, 2]
-channel_to_params['ending_thanks']['time_to_guess'] = 35
+channel_to_params['ending_thanks']['time_to_guess'] = 30
 channel_to_user_indexes['ending_well'] = [0, 1, 2]
 channel_to_user_indexes['ending_winner'] = [0, 1, 2]
-channel_to_params['ending_zero']['time_to_vote'] = 80
+channel_to_params['ending_zero']['time_to_vote'] = 60
 channel_to_params['exception_game_dead_open_view']['max_life_span'] = 30
 channel_to_params['exception_game_dead_update_view']['max_life_span'] = 0
 channel_to_params['exception_slash_command_max_this_running'][

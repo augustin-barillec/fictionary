@@ -311,10 +311,10 @@ class BlockBuilder:
         lv = len(self.game.frozen_voters)
         if lg == 1:
             res.append(signed_noindexed_guesses_block)
-        if lg > 1:
+        if lg >= 2:
             res.append(signed_indexed_guesses_block)
-        if lg >= 2 and lv >= 1:
-            res += [voting_edges_block, scores_block]
+            if lv >= 1:
+                res += [voting_edges_block, scores_block]
         res.append(conclusion_block)
         res = u(res)
         return res
