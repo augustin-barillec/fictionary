@@ -14,16 +14,14 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.guess_click(tag)
         cy.guess_type('g1')
-        cy.create_fake_guesser(tag)
-        cy.create_fake_guesser(tag)
-        cy.create_fake_guesser(tag)
+
         cy.create_fake_guesser(tag)
         cy.create_fake_guesser(tag)
 
-        cy.guess_submit()
+        cy.submit_view()
 
         cy.contains(`${tag}: Your guess: g1`)
-        cy.contains('It will not be taken into account because there are already 5 guessers. This is the maximal number allowed')
+        cy.contains(`${tag}: It will not be taken into account because there are already 2 guessers. This is the maximal number allowed for this game`)
       })
     })
   })

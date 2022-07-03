@@ -16,6 +16,7 @@ class ViewSubmissionHandler:
         assert self.payload['type'] == 'view_submission'
         self.user_id = self.payload['user']['id']
         self.view = self.payload['view']
+        self.view_id = self.view['id']
         self.view_callback_id = self.view['callback_id']
         assert self.view_callback_id.startswith(context.surface_prefix)
         self.game_id = ut.ids.surface_id_to_game_id(self.view_callback_id)

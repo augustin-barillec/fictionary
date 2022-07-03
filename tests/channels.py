@@ -25,7 +25,6 @@ channel_names = [
     'exception_game_dead_response',
     'exception_game_dead_update_view',
     'exception_guess_click_already_guessed',
-    'exception_guess_click_max_these_guessers',
     'exception_guess_click_organizer',
     'exception_guess_submission_max_these_guessers',
     'exception_guess_submission_no_time_left',
@@ -69,10 +68,8 @@ channel_to_user_indexes['ending_winner'] = [0, 1, 2]
 channel_to_params['ending_zero']['time_to_vote'] = 70
 channel_to_params['exception_game_dead_open_view']['max_life_span'] = 30
 channel_to_params['exception_game_dead_update_view']['max_life_span'] = 0
-channel_to_params['exception_guess_click_max_these_guessers'][
-    'max_guessers_per_game'] = 2
 channel_to_params['exception_guess_submission_max_these_guessers'][
-    'max_guessers_per_game'] = 5
+    'max_guessers_per_game'] = 2
 channel_to_params['exception_guess_submission_no_time_left'][
     'time_to_guess'] = 35
 channel_to_params['exception_setup_submission_max_running'][

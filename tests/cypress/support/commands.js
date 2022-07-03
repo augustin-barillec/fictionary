@@ -29,14 +29,6 @@ Cypress.Commands.add('delete_game', tag => {
   cy.run_context(`delete_game ${tag}`)
 })
 
-Cypress.Commands.add('kick_from_channel', (channel_id, user_index) => {
-  cy.run_context(`kick_from_channel ${channel_id} ${user_index}`)
-})
-
-Cypress.Commands.add('invite_to_channel', (channel_id, user_index) => {
-  cy.run_context(`invite_to_channel ${channel_id} ${user_index}`)
-})
-
 Cypress.Commands.add('get_conf', () => {
   cy.print_conf().then((result) => {
     return YAML.parse(result.stdout)

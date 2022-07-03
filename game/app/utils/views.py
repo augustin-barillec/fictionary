@@ -24,9 +24,10 @@ def build_exception_view(msg):
 def build_exception_response(msg):
     exception_view = build_exception_view(msg)
     res = {'response_action': 'update', 'view': exception_view}
-    res = Response(json.dumps(res),
-                   mimetype='application/json',
-                   status=200)
+    res = Response(
+        json.dumps(res),
+        mimetype='application/json',
+        status=200)
     return res
 
 

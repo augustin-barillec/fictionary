@@ -23,6 +23,7 @@ describe('main', () => {
         cy.vote(tag, '0')
 
         cy.wait(30000)
+
         cy.contains(`${tag}: Freestyle game set up by @augustin!`)
         cy.contains(`${tag}: question`)
         cy.contains(`${tag}: • Truth: 3) truth`)

@@ -206,11 +206,6 @@ class ExceptionsHandler:
             return 'As the organizer of this freestyle game, you cannot guess!'
         if user_id in self.game.guessers:
             return 'You have already guessed!'
-        if self.max_nb_these_guessers_reached():
-            msg = ('You cannot guess because there are already '
-                   f'{self.game.max_guessers} guessers. '
-                   'This is the maximal number allowed for this game.')
-            return msg
 
     def build_vote_click_exception_msg(self, user_id):
         if user_id not in self.game.potential_voters:
