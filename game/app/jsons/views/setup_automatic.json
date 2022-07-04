@@ -1,5 +1,7 @@
 {
 	"type": "modal",
+	"callback_id": "{}",
+	"private_metadata": "{}",
 	"title": {
 		"type": "plain_text",
 		"text": "fictionary"

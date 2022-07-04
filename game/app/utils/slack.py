@@ -1,4 +1,6 @@
+import json
 import reusable
+from flask import Response
 from app.utils import blocks, tag, users, views
 
 
@@ -29,8 +31,17 @@ def update_view(slack_client, view_id, view):
     reusable.slack_api.views_update(slack_client, view_id, view)
 
 
-def push_view(slack_client, view_id, view):
-    reusable.slack_api.views_push(slack_client, view_id, view)
+def push_view(slack_client, trigger_id, view):
+    reusable.slack_api.views_push(slack_client, trigger_id, view)
+
+
+def build_view_response(view):
+    res = {'response_action': 'update', 'view': view}
+    res = Response(
+        json.dumps(res),
+        mimetype='application/json',
+        status=200)
+    return res
 
 
 def open_exception_view(slack_client, trigger_id, msg):
@@ -46,6 +57,11 @@ def update_exception_view(slack_client, view_id, msg):
 def push_exception_view(slack_client, trigger_id, msg):
     exception_view = views.build_exception_view(msg)
     push_view(slack_client, trigger_id, exception_view)
+
+
+def build_exception_view_response(msg):
+    exception_view = views.build_exception_view(msg)
+    return build_view_response(exception_view)
 
 
 class SlackOperator:
@@ -110,9 +126,13 @@ class SlackOperator:
         msg = self.add_tag_to_text(msg)
         update_exception_view(self.slack_client, view_id, msg)
 
-    def push_exception_view(self, trgger_id, msg):
+    def push_exception_view(self, trigger_id, msg):
         msg = self.add_tag_to_text(msg)
-        push_exception_view(self.slack_client, trgger_id, msg)
+        push_exception_view(self.slack_client, trigger_id, msg)
+
+    def build_exception_view_response(self, msg):
+        msg = self.add_tag_to_text(msg)
+        return build_exception_view_response(msg)
 
     def update_upper(self, blocks_):
         self.update_message(blocks_, self.game.upper_ts)

@@ -3,7 +3,7 @@ describe('main', () => {
   it('main', () => {
 
     cy.get_conf().then((conf) => {
-      cy.get_channel_id('exception_game_dead_response').then((channel_id) => {
+      cy.get_channel_id('exception_game_dead_view_response').then((channel_id) => {
         const tag = Cypress._.random(100000, 999999)
 
         cy.login_from_user_index(conf, 0)

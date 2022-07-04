@@ -1,7 +1,7 @@
 import logging
 import reusable
 from flask import make_response, abort
-from app.utils import views, time, slack, ids
+from app.utils import slack, time, ids
 
 logger = logging.getLogger(__name__)
 
@@ -228,7 +228,8 @@ class ExceptionsHandler:
             self.slack_operator.update_exception_view(view_id, exception_msg)
             return make_response('', 200)
         else:
-            return views.build_exception_response(exception_msg)
+            return self.slack_operator.build_exception_view_response(
+                exception_msg)
 
     def handle_slash_command_exceptions(self, trigger_id):
         slack_operator = self.slack_operator
@@ -249,21 +250,24 @@ class ExceptionsHandler:
         if exception_msg is not None:
             logger.info(
                 f'exception setup_submission, {exception_msg} {self.game.id}')
-            return views.build_exception_response(exception_msg)
+            return self.slack_operator.build_exception_view_response(
+                exception_msg)
 
     def handle_guess_submission_exceptions(self, guess):
         exception_msg = self.build_guess_submission_exception_msg(guess)
         if exception_msg is not None:
             logger.info(
                 f'exception guess_submission, {exception_msg} {self.game.id}')
-            return views.build_exception_response(exception_msg)
+            return self.slack_operator.build_exception_view_response(
+                exception_msg)
 
     def handle_vote_submission_exceptions(self, vote):
         exception_msg = self.build_vote_submission_exception_msg(vote)
         if exception_msg is not None:
             logger.info(
                 f'exception vote_submission, {exception_msg} {self.game.id}')
-            return views.build_exception_response(exception_msg)
+            return self.slack_operator.build_exception_view_response(
+                exception_msg)
 
     def handle_pick_submission_exceptions(
             self, trigger_id, qas, number_picked_str):
