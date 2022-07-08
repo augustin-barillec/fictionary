@@ -18,12 +18,11 @@ describe('main', () => {
         cy.create_fake_running_game(2)
         cy.create_fake_running_game(3)
 
-        cy.close_setup_view()
+        cy.submit_view()
 
         cy.contains(`${tag}: Question: question`)
-        cy.contains('Answer: truth')
-        cy.contains('There are already 4 games running! This is the maximal number allowed.')
-
+        cy.contains(`${tag}: Answer: truth`)
+        cy.contains(`${tag}: There are already 4 games running! This is the maximal number allowed.`)
       })
     })
   })

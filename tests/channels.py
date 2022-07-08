@@ -71,23 +71,19 @@ channel_to_params['exception_game_dead_update_view']['max_life_span'] = 0
 channel_to_params['exception_guess_submission_max_these_guessers'][
     'max_guessers_per_game'] = 2
 channel_to_params['exception_guess_submission_no_time_left'][
-    'time_to_guess'] = 35
+    'time_to_guess'] = 30
 channel_to_params['exception_setup_submission_max_running'][
     'max_running_games'] = 4
-channel_to_params['exception_setup_submission_max_running'][
-    'self_trigger_threshold'] = 0
 channel_to_params['exception_setup_submission_max_this_running'][
     'max_running_games_per_organizer'] = 2
 channel_to_params['exception_slash_command_max_running'][
     'max_running_games'] = 3
-channel_to_params['exception_slash_command_max_running'][
-    'self_trigger_threshold'] = 0
 channel_to_params['exception_slash_command_max_this_running'][
     'max_running_games_per_organizer'] = 2
 channel_to_app_kicked['exception_slash_command_not_invited'] = True
+channel_to_user_indexes['exception_vote_click_already_voted'] = [0, 1, 2]
 channel_to_params['exception_vote_click_not_a_potential_voter'][
     'time_to_guess'] = 70
-channel_to_user_indexes['exception_vote_click_already_voted'] = [0, 1, 2]
 channel_to_params['exception_vote_submission_no_time_left'][
     'time_to_vote'] = 35
 channel_to_user_indexes['exception_vote_submission_no_time_left'] = [0, 1, 2]
