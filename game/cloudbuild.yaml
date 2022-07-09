@@ -1,0 +1,10 @@
+steps:
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - sublime-vial-322911
+  - function
+  - europe-west1
+  - '5000'
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud

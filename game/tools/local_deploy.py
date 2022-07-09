@@ -1,6 +1,5 @@
 import os
 import subprocess
-from google.cloud import pubsub_v1
 from tools import local_clean, local_paths, ports, pubsub_names
 
 
@@ -8,6 +7,7 @@ PUBSUB_EMULATOR_HOST = '0.0.0.0:8085'
 
 
 def deploy_pubsub(project_id):
+    from google.cloud import pubsub_v1
     local_clean.clean_pubsub()
     data_dir_path = local_paths.pubsub_data_dir
     os.makedirs(data_dir_path)

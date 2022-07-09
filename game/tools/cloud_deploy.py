@@ -1,9 +1,9 @@
 import subprocess
 from tools import ports, local_paths, pubsub_names
-from google.cloud import pubsub_v1
 
 
 def deploy_pubsub(project_id):
+    from google.cloud import pubsub_v1
     port_to_function_name = ports.port_to_function_name
     port_to_signature_type = ports.port_to_signature_type
     for port in ports.ports:
@@ -19,10 +19,10 @@ def deploy_pubsub(project_id):
 
 def deploy_function(project_id, region, port):
     command_template = """
-    gcloud alpha functions deploy {function_name} \
+    gcloud functions deploy {function_name} \
     --project {project_id} \
     --region {region} \
-    --runtime python39 \
+    --runtime python310 \
     --timeout 540s \
     --ignore-file .functionsignore \
     --trigger-{trigger_type} {allow_unauthenticated} {min_instances} \
