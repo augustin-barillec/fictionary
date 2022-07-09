@@ -6,5 +6,6 @@ steps:
   - function
   - europe-west1
   - '5000'
+  dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
