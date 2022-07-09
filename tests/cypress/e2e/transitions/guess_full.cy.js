@@ -18,7 +18,7 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.guess(tag, 'g2')
 
-        cy.wait(55000)
+        cy.wait(40000)
         cy.contains(`${tag}: Vote`)
       })  
     })

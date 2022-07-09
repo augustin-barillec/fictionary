@@ -1,12 +1,17 @@
 from random import randrange
+from app.utils import url
 
 
-def get_data(game):
-    data = game.db.collection('questions').document(
-        game.parameter).get().to_dict()
-    url = data['url']
-    questions_answers = data['questions_answers']
-    return url, questions_answers
+def get_questions_url(game):
+    res = url.get_url(game)
+    res = f'{res}/questions/{game.parameter}'
+    return res
+
+
+def get_questions_answers(game):
+    res = game.db.collection('questions').document(
+        game.parameter).get().to_dict()['questions_answers']
+    return res
 
 
 def select(questions_answers, number=None):

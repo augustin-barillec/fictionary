@@ -1,7 +1,7 @@
 import json
 import reusable
 from flask import Response
-from app.utils import blocks, tag, users, views
+from app.utils import blocks, help, tag, users, views
 
 
 def get_conversation_infos(slack_client, channel_id):
@@ -164,7 +164,8 @@ class SlackOperator:
         self.open_view(trigger_id, view)
 
     def send_help(self, user_id):
-        self.post_ephemeral(user_id, 'help help')
+        msg = help.build_msg(self.game)
+        self.post_ephemeral(user_id, msg)
 
     def send_vote_reminders(self):
         for u in self.game.potential_voters:

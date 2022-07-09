@@ -20,7 +20,7 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 3)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.wait(45000)
+        cy.wait(20000)
         cy.vote_click(tag)
 
         cy.contains(`${tag}: Only guessers can vote!`)

@@ -22,8 +22,8 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.vote(tag, '0')
 
-        cy.wait(35000)
-        cy.contains('The bluffer game organized by @augustin is over!')
+        cy.wait(20000)
+        cy.contains(`${tag}: The fictionary game organized by @augustin is over!`)
       })
     })
   })

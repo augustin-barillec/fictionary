@@ -28,7 +28,8 @@ class BlockActionHandler:
 
     def handle_pick_submission(self):
         number_picked_str = self.payload['actions'][0]['value']
-        url, questions_answers = ut.questions.get_data(self.game)
+        url = ut.questions.get_questions_url(self.game)
+        questions_answers = ut.questions.get_questions_answers(self.game)
         resp = self.exceptions_handler.handle_pick_submission_exceptions(
             self.trigger_id, questions_answers, number_picked_str)
         if resp is not None:
@@ -43,7 +44,8 @@ class BlockActionHandler:
         return make_response('', 200)
 
     def handle_shuffle_click(self):
-        url, questions_answers = ut.questions.get_data(self.game)
+        url = ut.questions.get_questions_url(self.game)
+        questions_answers = ut.questions.get_questions_answers(self.game)
         max_number, number_random, question, answer = ut.questions.select(
             questions_answers)
         self.slack_operator.update_setup_automatic_view(

@@ -32,6 +32,7 @@ channel_names = [
     'exception_pick_submission_not_integer',
     'exception_setup_submission_max_running',
     'exception_setup_submission_max_this_running',
+    'exception_slash_command_invalid_parameter',
     'exception_slash_command_max_running',
     'exception_slash_command_max_this_running',
     'exception_slash_command_not_invited',
@@ -45,6 +46,7 @@ channel_names = [
     'transition_guess_shorten',
     'transition_vote_full',
     'transition_vote_shorten',
+    'help',
     'special_characters']
 
 channel_to_params = dict()
@@ -87,8 +89,8 @@ channel_to_params['exception_vote_click_not_a_potential_voter'][
 channel_to_params['exception_vote_submission_no_time_left'][
     'time_to_vote'] = 35
 channel_to_user_indexes['exception_vote_submission_no_time_left'] = [0, 1, 2]
-channel_to_params['transition_guess_full']['time_to_guess'] = 80
+channel_to_params['transition_guess_full']['time_to_guess'] = 70
 channel_to_user_indexes['transition_guess_shorten'] = [0, 1, 2]
 channel_to_user_indexes['transition_vote_full'] = [0, 1, 2]
-channel_to_params['transition_vote_full']['time_to_vote'] = 35
+channel_to_params['transition_vote_full']['time_to_vote'] = 30
 channel_to_user_indexes['transition_vote_shorten'] = [0, 1, 2]
