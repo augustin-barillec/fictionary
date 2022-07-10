@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} <title>Fictionary | Privacy policy</title>{% endblock %}
+{% block body %}
+<a href="/" target="_blank">Home</a>
+<h1>Privacy Policy</h1>
+    Fictionary is a Slack app for fun. It collects only the data necessary to <br>
+    its functioning. <br><br>
+
+    All data is stored in a Firestore instance in Europe. It is a database <br>
+    provided by Google Cloud Platform and it is not public to internet. <br><br>
+
+    During the installation, we collect the following informations:
+    <ul>
+        <li>Team ID, ex: TXXXXXXX. This allows the bot to select the <br>
+            correct authorization token in order to interact with your workspace.</li>
+        <li>Authorization Token, the token granted by Slack to our bot in <br>
+            order to securely communicate with your workspace.</li>
+    </ul>
+    For each game, we collect the following informations:
+    <ul>
+        <li>User IDs involved with the game, ex: UXXXXXX.</li>
+        <li>Channel ID where the game takes place, ex: CXXXXXX.</li>
+        <li>Questions and answers written by the users.</li>
+    </ul>
+    If a game ends successfully, its data is deleted automatically within <br>
+    the hour. If a game crashes, its data is kept to help for debugging. <br>
+    Once the code is fixed, the game's data is deleted manually. <br><br>
+
+    If you want the data associated with your workspace to be removed, you <br>
+    can send me a email at augustin.barillec@yokyok.ninja with your team ID.
+{% endblock %}

@@ -4,6 +4,12 @@ import reusable
 logger = logging.getLogger(__name__)
 
 
+def store_team_params(team_ref, params):
+    logger.info(f'Storing params for team...')
+    team_ref.set(params, merge=False)
+    logger.info(f'Stored params for team')
+
+
 def clean_channels_in_firestore(channels_ref):
     logger.info('Deleting channels in firestore...')
     for channel in channels_ref.stream():

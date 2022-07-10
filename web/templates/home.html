@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %} <title>Fictionary</title>{% endblock %}
+{% block body %}
+    <h1>Fictionary</h1>
+        <p>A slack app to play <a href="https://en.wikipedia.org/wiki/Fictionary" target="_blank">fictionary</a>.</p>
+    <h2>Installation</h2>
+        <!--<a href="{{ url }}"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>-->
+        <a href="https://www.google.com" target="_blank"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+    <h2>Set up a game</h2>
+        The organizer types one of the following command:
+    <ul>
+        <li>/fictionary freestyle</li>
+        <li>/fictionary english</li>
+        <li>/fictionary french</li>
+    </ul>
+        The first command lets the organizer write a question and an answer. <br>
+        The other commands let the organizer pick a question from one of the <br>
+        question banks below.
+    <h2>Question Banks</h2>
+    <ul>
+      <li><a href="/questions/english" target="_blank">English</a></li>
+      <li><a href="/questions/french" target="_blank">French</a></li>
+    </ul>
+    <h2>Gameplay</h2>
+        <ol>
+            <li>Players see only the question and write a credible answer.</li>
+            <li>Players vote for the answer they believe is correct.</li>
+            <li>Players win one point for voting for the game's answer <br>
+                and two points for each vote cast for the answer they wrote. </li>
+        </ol>
+    <h2>Source</h2>
+        <a href=https://github.com/augustin-barillec/google-pandas-load target="_blank">https://github.com/augustin-barillec/google-pandas-load</a>
+    <h2>Support</h2>
+        augustin.barillec@yokyok.ninja
+    <h2>Privacy Policy</h2>
+        See <a href="/privacy_policy" target="_blank">here</a>.
+{% endblock %}

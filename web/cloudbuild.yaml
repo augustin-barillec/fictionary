@@ -1,0 +1,25 @@
+steps:
+- args:
+  - build
+  - -t
+  - europe-west1-docker.pkg.dev/build-322912/bases/bluffer-distribution
+  - .
+  name: gcr.io/cloud-builders/docker
+- args:
+  - push
+  - europe-west1-docker.pkg.dev/build-322912/bases/bluffer-distribution
+  name: gcr.io/cloud-builders/docker
+- args:
+  - run
+  - deploy
+  - bluffer-distribution
+  - --image
+  - europe-west1-docker.pkg.dev/build-322912/bases/bluffer-distribution
+  - --project
+  - build-322912
+  - --region
+  - europe-west1
+  - --set-env-vars
+  - "PROJECT_ID=build-322912"
+  - --allow-unauthenticated
+  name: gcr.io/cloud-builders/docker

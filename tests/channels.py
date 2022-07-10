@@ -1,16 +1,6 @@
 from copy import deepcopy
+from params import channel_default_params
 
-default_params = {
-    'max_guessers_per_game': 100,
-    'max_life_span': 3600,
-    'max_running_games': 100,
-    'max_running_games_per_organizer': 100,
-    'refresh_interval': 9,
-    'self_trigger_threshold': 60,
-    'tagging': True,
-    'time_to_guess': 300,
-    'time_to_vote': 600,
-    'trigger_cooldown': 30}
 channel_names = [
     'ending_bravo',
     'ending_hey',
@@ -53,7 +43,7 @@ channel_to_params = dict()
 channel_to_user_indexes = dict()
 channel_to_app_kicked = dict()
 for n in channel_names:
-    channel_to_params[n] = deepcopy(default_params)
+    channel_to_params[n] = deepcopy(channel_default_params)
     channel_to_user_indexes[n] = [0, 1, 2, 3]
     channel_to_app_kicked[n] = False
 

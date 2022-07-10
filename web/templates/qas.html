@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} <title>Fictionary | {{capitalized_language}} questions</title>{% endblock %}
+{% block body %}
+<a href="/" target="_blank">Home</a>
+<h1>{{capitalized_language}} questions</h1>
+<ol>
+{%for i in range(len_qas)%}
+    {% if i is divisibleby 2 %}
+        <li>
+            {{qas[i]}}<br>
+    {% else %}
+            <button onclick="ShowHide()">Show Answer</button>
+            <div style="display: none;">{{qas[i]}}</div>
+        </li>
+    {% endif %}
+{%endfor%}
+</ol>
+<script>
+    function ShowHide($event) {
+        var temp = event.target;
+        var temp1 = event.target.nextElementSibling;
+        if (temp1.style.display === "none") {
+            temp1.style.display = "block";
+            temp.innerHTML = 'Hide Answer';
+        } else {
+            temp1.style.display = "none";
+            temp.innerHTML = 'Show Answer';
+        }
+    }
+</script>
+{% endblock %}
