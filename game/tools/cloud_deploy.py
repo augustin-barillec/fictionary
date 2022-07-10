@@ -1,4 +1,5 @@
 import subprocess
+import time
 from tools import ports, local_paths, pubsub_names
 
 
@@ -17,7 +18,10 @@ def deploy_pubsub(project_id):
             print(f'Created topic: {topic.name}')
 
 
-def deploy_function(project_id, region, port):
+def deploy_function(project_id, region, port, pre_sleep_duration):
+    print(f'Pre-sleeping {pre_sleep_duration}s...')
+    time.sleep(pre_sleep_duration)
+    print(f'Pre-slept {pre_sleep_duration}s')
     command_template = """
     gcloud functions deploy {function_name} \
     --project {project_id} \
