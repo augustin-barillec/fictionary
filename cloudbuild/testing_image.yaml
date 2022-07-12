@@ -1,0 +1,14 @@
+steps:
+- args:
+  - build
+  - -t
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  - -f
+  - Dockerfile
+  - .
+  dir: tests
+  name: gcr.io/cloud-builders/docker
+- args:
+  - push
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: gcr.io/cloud-builders/docker

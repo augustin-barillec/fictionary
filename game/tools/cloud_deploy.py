@@ -26,6 +26,7 @@ def deploy_function(project_id, region, port, pre_sleep_duration):
     gcloud functions deploy {function_name} \
     --project {project_id} \
     --region {region} \
+    --docker-registry artifact-registry \
     --runtime python310 \
     --timeout 540s \
     --ignore-file .functionsignore \
