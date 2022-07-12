@@ -7,4 +7,4 @@ parser.add_argument('to_deploy')
 args = parser.parse_args()
 
 assert args.to_deploy in ('pubsub', 'functions')
-getattr(tools.cloud_deploy, 'deploy_' + args.to_deploy)(args.project_id)
+getattr(tools.local_deploy, 'deploy_' + args.to_deploy)(args.project_id)
