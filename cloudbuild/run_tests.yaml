@@ -1,0 +1,11 @@
+steps:
+- args:
+  - cypress_run.py
+  - $_RUN_PROJECT_ID
+  - cypress_bucket
+  - $BUILD_ID
+  - run_cypress
+  - exceptions/setup_submission/max_running.js
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing-image
+timeout: 7200s

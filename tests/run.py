@@ -1,7 +1,7 @@
 import logging
 import argparse
 import google.cloud.storage
-from cypress import run
+import run_functions as rf
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s', level='INFO')
@@ -20,16 +20,16 @@ subparsers.add_parser('write_stats')
 subparsers.add_parser('report_fails')
 args = parser.parse_args()
 
-storage_client = google.cloud.storage.Client()
+storage_client = google.cloud.storage.Client(project=args.project_id)
 bucket = storage_client.bucket(args.bucket_name)
 
 assert args.command in (
     'run_cypress', 'wait_end', 'write_stats', 'report_fails')
 if args.command == 'run_cypress':
-    run.run_cypress(args.source, args.project_id, bucket, args.bucket_dir_name)
+    rf.run_cypress(args.source, args.project_id, bucket, args.bucket_dir_name)
 elif args.command == 'wait_end':
-    run.wait_end(bucket, args.bucket_dir_name, args.expected_nb_cases)
+    rf.wait_end(bucket, args.bucket_dir_name, args.expected_nb_cases)
 elif args.command == 'write_stats':
-    run.write_stats(bucket, args.bucket_dir_name)
+    rf.write_stats(bucket, args.bucket_dir_name)
 elif args.command == 'report_fails':
-    run.report_fails(bucket, args.bucket_dir_name)
+    rf.report_fails(bucket, args.bucket_dir_name)
