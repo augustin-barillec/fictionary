@@ -18,7 +18,7 @@ npx cypress run \
 
 
 def build_spec(source):
-    return f'cypress/integration/{source}'
+    return f'cypress/e2e/{source}'
 
 
 def run_cypress(source, project_id, bucket, bucket_dir_name):
