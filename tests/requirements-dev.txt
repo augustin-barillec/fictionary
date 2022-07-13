@@ -1,2 +1,0 @@
--r requiremets.txt
-slack-sdk==3.*
