@@ -2,7 +2,7 @@ steps:
 - args:
   - build
   - -t
-  - europe-west1-docker.pkg.dev/$PROJECT_ID/from_dockerfile/tests_image
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
   - -f
   - Dockerfile
   - .
@@ -10,5 +10,5 @@ steps:
   name: gcr.io/cloud-builders/docker
 - args:
   - push
-  - europe-west1-docker.pkg.dev/$PROJECT_ID/from_dockerfile/tests_image
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
   name: gcr.io/cloud-builders/docker
