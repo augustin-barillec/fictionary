@@ -2,10 +2,10 @@ steps:
 - args:
   - run.py
   - $PROJECT_ID
-  - testing_bucket
+  - testing-$PROJECT_ID
   - $BUILD_ID
   - run_cypress
-  - exceptions/setup_submission/max_running.js
+  - small_test.cy.js
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing-image
