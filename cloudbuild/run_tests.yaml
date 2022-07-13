@@ -1,12 +1,13 @@
 steps:
 - args:
-  - run.py
-  - $PROJECT_ID
-  - testing-$PROJECT_ID
-  - $BUILD_ID
-  - run_cypress
-  - small.cy.js
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  - builds
+  - submit
+  - .
+  - --config
+  - cloudbuild/sub_run_tests_1.yaml
+  - --async
+  - --substitutions
+  - _BUCKET_DIR_NAME=$BUILD_ID
+  entrypoint: gcloud
+  name: gcr.io/cloud-builders/gcloud
 timeout: 7200s
