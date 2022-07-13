@@ -3,6 +3,8 @@ steps:
   - builds
   - submit
   - .
+  - --region
+  - europe-west1
   - --config
   - cloudbuild/sub_run_tests_1.yaml
   - --async
