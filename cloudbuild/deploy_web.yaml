@@ -1,0 +1,12 @@
+steps:
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5000'
+  - '3'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud

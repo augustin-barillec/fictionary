@@ -4,7 +4,6 @@ import google.cloud.firestore
 import utils
 import context_functions as cf
 import channels
-from slack_sdk import WebClient
 from reusable import secret_manager
 
 logging.basicConfig(
@@ -27,12 +26,6 @@ create_fake_running_game_parser = subparsers.add_parser(
 create_fake_running_game_parser.add_argument('organizer_index', type=int)
 delete_game_parser = subparsers.add_parser('delete_game')
 delete_game_parser.add_argument('tag')
-kick_from_channel_parser = subparsers.add_parser('kick_from_channel')
-kick_from_channel_parser.add_argument('channel_id')
-kick_from_channel_parser.add_argument('user_index', type=int)
-invite_to_channel_parser = subparsers.add_parser('invite_to_channel')
-invite_to_channel_parser.add_argument('channel_id')
-invite_to_channel_parser.add_argument('user_index', type=int)
 args = parser.parse_args()
 
 cypress_context_conf = secret_manager.access_payload_parsed(
@@ -40,7 +33,6 @@ cypress_context_conf = secret_manager.access_payload_parsed(
     'cypress_context_conf')
 app_user_id = cypress_context_conf['app_user_id']
 cypress_slack_token = cypress_context_conf['cypress_slack_token']
-slack_client = WebClient(cypress_slack_token)
 cypress_user_id = cypress_context_conf['cypress_user_id']
 team_id = cypress_context_conf['team_id']
 user_ids = utils.users.get_user_ids(cypress_context_conf)
@@ -53,6 +45,8 @@ channels_ref = team_ref.collection('channels')
 if args.command == 'setup_team':
     cf.setup_team(team_ref)
 elif args.command == 'setup_channels':
+    from slack_sdk import WebClient
+    slack_client = WebClient(cypress_slack_token)
     cf.setup_channels(
         slack_client,
         channels_ref,
@@ -76,9 +70,3 @@ elif args.command == 'create_fake_running_game':
     cf.create_fake_running_game(games_ref, organizer_id)
 elif args.command == 'delete_game':
     cf.delete_game(games_ref, args.tag)
-elif args.command == 'kick_from_channel':
-    user_id = user_ids[args.user_index]
-    cf.kick_from_channel(slack_client, args.channel_id, user_id)
-elif args.command == 'invite_to_channel':
-    user_id = user_ids[args.user_index]
-    cf.invite_to_channel(slack_client, args.channel_id, user_id)

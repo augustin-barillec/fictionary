@@ -1,0 +1,8 @@
+steps:
+- args:
+  - write.py
+  - --project_id
+  - $PROJECT_ID
+  dir: questions
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from_dockerfile/questions_image
