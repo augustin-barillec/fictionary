@@ -1,12 +1,123 @@
 steps:
 - args:
+  - start
+  entrypoint: echo
+  id: start
+  name: gcr.io/cloud-builders/gcloud
+- args:
   - cloud_deploy.py
   - --project_id
   - $PROJECT_ID
   - function
   - europe-west1
   - '5000'
-  - '3'
+  - '0'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5001'
+  - '10'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5002'
+  - '20'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5003'
+  - '30'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5004'
+  - '40'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5005'
+  - '50'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5006'
+  - '60'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5007'
+  - '70'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5008'
+  - '80'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
