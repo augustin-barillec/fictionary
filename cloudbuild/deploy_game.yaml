@@ -24,7 +24,7 @@ steps:
   - function
   - europe-west1
   - '5001'
-  - '10'
+  - '15'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -37,7 +37,7 @@ steps:
   - function
   - europe-west1
   - '5002'
-  - '20'
+  - '25'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -50,7 +50,7 @@ steps:
   - function
   - europe-west1
   - '5003'
-  - '30'
+  - '35'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -63,7 +63,7 @@ steps:
   - function
   - europe-west1
   - '5004'
-  - '40'
+  - '45'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -76,7 +76,7 @@ steps:
   - function
   - europe-west1
   - '5005'
-  - '50'
+  - '55'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -89,7 +89,7 @@ steps:
   - function
   - europe-west1
   - '5006'
-  - '60'
+  - '65'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -102,7 +102,7 @@ steps:
   - function
   - europe-west1
   - '5007'
-  - '70'
+  - '75'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -115,7 +115,7 @@ steps:
   - function
   - europe-west1
   - '5008'
-  - '80'
+  - '85'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
