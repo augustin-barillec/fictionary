@@ -29,8 +29,9 @@ class Writer:
             entrypoint=None,
             dir_=None,
             wait_for=None,
-            id_=None):
-        res = {'args': args, 'name': self.docker_image}
+            id_=None,
+            name=None):
+        res = {'args': args}
         if entrypoint is not None:
             res['entrypoint'] = entrypoint
         if dir_ is not None:
@@ -39,6 +40,10 @@ class Writer:
             res['waitFor'] = wait_for
         if id_ is not None:
             res['id'] = id_
+        if name is not None:
+            res['name'] = name
+        else:
+            res['name'] = self.docker_image
         return res
 
     def write(self):
@@ -125,7 +130,8 @@ class RunTestsWriter(Writer):
                 f'_BUCKET_DIR_NAME={self.bucket_dir_name}']
         entrypoint = 'gcloud'
         return self.build_step(
-            args=args, entrypoint=entrypoint, dir_='tests')
+            args=args, entrypoint=entrypoint, dir_='tests',
+            name='gcr.io/cloud-builders/gcloud')
 
     def build_wait_end_step(self):
         args = ['run.py', self.project_id,
