@@ -5,27 +5,7 @@ steps:
   - tests-$PROJECT_ID
   - $BUILD_ID
   - run_cypress
-  - exceptions/setup_submission/max_running.js
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $BUILD_ID
-  - run_cypress
-  - exceptions/slash_command/max_running.js
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $BUILD_ID
-  - run_cypress
-  - small_test.js
+  - small.cy.js
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
@@ -83,7 +63,7 @@ steps:
   - tests-$PROJECT_ID
   - $BUILD_ID
   - wait_end
-  - '29'
+  - '4'
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image

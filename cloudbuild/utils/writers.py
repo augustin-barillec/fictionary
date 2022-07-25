@@ -26,9 +26,8 @@ class Writer:
             entrypoint=None,
             dir_=None,
             wait_for=None,
-            id_=None,
-            name=None):
-        res = {'args': args}
+            id_=None):
+        res = {'args': args, 'name': self.docker_image}
         if entrypoint is not None:
             res['entrypoint'] = entrypoint
         if dir_ is not None:
@@ -37,9 +36,6 @@ class Writer:
             res['waitFor'] = wait_for
         if id_ is not None:
             res['id'] = id_
-        if name is None:
-            name = self.docker_image
-        res['name'] = name
         return res
 
     def write(self):
@@ -67,8 +63,7 @@ class SubRunTestsWriter(Writer):
 
     def build_dummy_step(self):
         return self.build_step(
-            args=['dummy'], entrypoint='echo',
-            dir_='tests', name='gcr.io/cloud-builders/gcloud')
+            args=['dummy'], entrypoint='echo', dir_='tests')
 
     def build_run_cypress_step(self, source):
         args = ['run.py', self.project_id,
