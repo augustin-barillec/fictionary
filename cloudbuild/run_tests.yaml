@@ -14,7 +14,7 @@ steps:
   - submit
   - .
   - --config
-  - sub_run_tests_1.yaml
+  - cloudbuild/sub_run_tests_1.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -26,7 +26,7 @@ steps:
   - submit
   - .
   - --config
-  - sub_run_tests_2.yaml
+  - cloudbuild/sub_run_tests_2.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -38,7 +38,7 @@ steps:
   - submit
   - .
   - --config
-  - sub_run_tests_3.yaml
+  - cloudbuild/sub_run_tests_3.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -50,7 +50,7 @@ steps:
   - submit
   - .
   - --config
-  - sub_run_tests_4.yaml
+  - cloudbuild/sub_run_tests_4.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID

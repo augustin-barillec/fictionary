@@ -14,9 +14,9 @@ class Writer:
 
     def __init__(
             self,
-            destination_file_path,
+            destination_file_basename,
             docker_image):
-        self.destination_file_path = destination_file_path
+        self.destination_file_basename = destination_file_basename
         self.docker_image = docker_image
 
     @property
@@ -47,7 +47,7 @@ class Writer:
         return res
 
     def write(self):
-        with open(self.destination_file_path, 'w') as f:
+        with open(self.destination_file_basename, 'w') as f:
             yaml.dump(self.content, f, Dumper=NoAliasDumper)
 
 
@@ -55,14 +55,14 @@ class SubRunTestsWriter(Writer):
 
     def __init__(
             self,
-            destination_file_path,
+            destination_file_basename,
             docker_image,
             project_id,
             bucket_name,
             bucket_dir_name,
             sources):
-        super().__init__(destination_file_path, docker_image)
-        self.destination_file_path = destination_file_path
+        super().__init__(destination_file_basename, docker_image)
+        self.destination_file_basename = destination_file_basename
         self.docker_image = docker_image
         self.project_id = project_id
         self.bucket_name = bucket_name
@@ -113,7 +113,10 @@ class RunTestsWriter(Writer):
         self.nb_expected_cases = (
                 len(self.no_parallelizable_sources) +
                 len(self.parallelizable_sources))
-        self.sub_run_tests_file_template = 'sub_run_tests_{i}.yaml'
+        self.sub_run_tests_file_basename_template = \
+            'sub_run_tests_{i}.yaml'
+        self.sub_run_tests_file_path_template = \
+            f'cloudbuild/{self.sub_run_tests_file_basename_template}'
 
     def build_run_cypress_step(self, source):
         args = ['run.py', self.project_id,
@@ -123,9 +126,10 @@ class RunTestsWriter(Writer):
             args=args, entrypoint='python', dir_='tests')
 
     def build_submit_step(self, i):
-        cloudbuild_file = self.sub_run_tests_file_template.format(i=i)
+        cloudbuild_file_path = \
+            self.sub_run_tests_file_path_template.format(i=i)
         args = ['builds', 'submit', '.', '--config',
-                cloudbuild_file, '--async',
+                cloudbuild_file_path, '--async',
                 '--substitutions',
                 f'_BUCKET_DIR_NAME={self.bucket_dir_name}']
         entrypoint = 'gcloud'
@@ -148,7 +152,7 @@ class RunTestsWriter(Writer):
             args=args, entrypoint='python',  dir_='tests')
 
     def build_report_fails_step(self):
-        args = ['cypress_run.py', self.project_id,
+        args = ['run.py', self.project_id,
                 self.bucket_name, self.bucket_dir_name,
                 'report_fails']
         return self.build_step(args=args, entrypoint='python', dir_='tests')
@@ -174,7 +178,7 @@ class RunTestsWriter(Writer):
 
     def instantiate_sub_run_tests_writer(self, i, sources):
         res = SubRunTestsWriter(
-                self.sub_run_tests_file_template.format(i=i),
+                self.sub_run_tests_file_basename_template.format(i=i),
                 self.docker_image,
                 self.project_id,
                 self.bucket_name,
