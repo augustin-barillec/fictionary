@@ -71,7 +71,7 @@ class SubRunTestsWriter(Writer):
 
     def build_dummy_step(self):
         return self.build_step(
-            args=['dummy'], entrypoint='echo', dir_='tests')
+            args=[self.bucket_dir_name], entrypoint='echo', dir_='tests')
 
     def build_run_cypress_step(self, source):
         args = ['run.py', self.project_id,
@@ -124,14 +124,15 @@ class RunTestsWriter(Writer):
 
     def build_submit_step(self, i):
         cloudbuild_file_path = \
-            self.sub_run_tests_file_path_template.format(i=i)
+            f'cloudbuild/{self.sub_run_tests_file_path_template.format(i=i)}'
         args = ['builds', 'submit', '.', '--config',
                 cloudbuild_file_path, '--async',
                 '--substitutions',
                 f'_BUCKET_DIR_NAME={self.bucket_dir_name}']
         entrypoint = 'gcloud'
         return self.build_step(
-            args=args, entrypoint=entrypoint, dir_='cloudbuild',
+            args=args,
+            entrypoint=entrypoint,
             name='gcr.io/cloud-builders/gcloud')
 
     def build_wait_end_step(self):

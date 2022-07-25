@@ -1,6 +1,6 @@
 steps:
 - args:
-  - dummy
+  - $_BUCKET_DIR_NAME
   dir: tests
   entrypoint: echo
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
