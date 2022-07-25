@@ -3,5 +3,5 @@ steps:
   - dummy
   dir: tests
   entrypoint: echo
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 timeout: 3600s

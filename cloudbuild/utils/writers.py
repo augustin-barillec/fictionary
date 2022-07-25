@@ -1,6 +1,9 @@
 import yaml
 from utils import split
 
+DOCKER_IMAGE = \
+    'europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image'
+
 
 class NoAliasDumper(yaml.SafeDumper):
     def ignore_aliases(self, data):
@@ -93,7 +96,7 @@ class RunTestsWriter(Writer):
             nb_batches):
         super().__init__(
             'run_tests.yaml',
-            'europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image')
+            DOCKER_IMAGE)
         self.project_id = '$PROJECT_ID'
         self.bucket_name = 'tests-$PROJECT_ID'
         self.bucket_dir_name = '$BUILD_ID'

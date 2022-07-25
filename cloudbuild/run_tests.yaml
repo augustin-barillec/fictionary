@@ -8,7 +8,7 @@ steps:
   - small.cy.js
   dir: tests
   entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
   - builds
   - submit
@@ -20,7 +20,7 @@ steps:
   - _BUCKET_DIR_NAME=$BUILD_ID
   dir: tests
   entrypoint: gcloud
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
   - builds
   - submit
@@ -32,7 +32,7 @@ steps:
   - _BUCKET_DIR_NAME=$BUILD_ID
   dir: tests
   entrypoint: gcloud
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
   - builds
   - submit
@@ -44,7 +44,7 @@ steps:
   - _BUCKET_DIR_NAME=$BUILD_ID
   dir: tests
   entrypoint: gcloud
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
   - builds
   - submit
@@ -56,7 +56,7 @@ steps:
   - _BUCKET_DIR_NAME=$BUILD_ID
   dir: tests
   entrypoint: gcloud
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
   - run.py
   - $PROJECT_ID
@@ -66,7 +66,7 @@ steps:
   - '4'
   dir: tests
   entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
   - run.py
   - $PROJECT_ID
@@ -75,7 +75,7 @@ steps:
   - write_stats
   dir: tests
   entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
   - cypress_run.py
   - $PROJECT_ID
@@ -84,5 +84,5 @@ steps:
   - report_fails
   dir: tests
   entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 timeout: 7200s
