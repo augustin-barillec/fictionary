@@ -8,7 +8,5 @@ steps:
   - .
   dir: tests
   name: gcr.io/cloud-builders/docker
-- args:
-  - push
+images:
   - europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-  name: gcr.io/cloud-builders/docker
