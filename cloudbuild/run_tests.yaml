@@ -1,24 +1,24 @@
 steps:
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $BUILD_ID
-  - run_cypress
-  - small.cy.js
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+#- args:
+#  - run.py
+#  - $PROJECT_ID
+#  - tests-$PROJECT_ID
+#  - $BUILD_ID
+#  - run_cypress
+#  - small.cy.js
+#  dir: tests
+#  entrypoint: python
+#  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
   - builds
   - submit
   - .
   - --config
-  - cloudbuild/sub_run_tests_1.yaml
+  - sub_run_tests_1.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
-  dir: tests
+  dir: cloudbuild
   entrypoint: gcloud
   name: gcr.io/cloud-builders/gcloud
 - args:
@@ -26,11 +26,11 @@ steps:
   - submit
   - .
   - --config
-  - cloudbuild/sub_run_tests_2.yaml
+  - sub_run_tests_2.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
-  dir: tests
+  dir: cloudbuild
   entrypoint: gcloud
   name: gcr.io/cloud-builders/gcloud
 - args:
@@ -38,11 +38,11 @@ steps:
   - submit
   - .
   - --config
-  - cloudbuild/sub_run_tests_3.yaml
+  - sub_run_tests_3.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
-  dir: tests
+  dir: cloudbuild
   entrypoint: gcloud
   name: gcr.io/cloud-builders/gcloud
 - args:
@@ -50,11 +50,11 @@ steps:
   - submit
   - .
   - --config
-  - cloudbuild/sub_run_tests_4.yaml
+  - sub_run_tests_4.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
-  dir: tests
+  dir: cloudbuild
   entrypoint: gcloud
   name: gcr.io/cloud-builders/gcloud
 - args:
@@ -77,7 +77,7 @@ steps:
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 - args:
-  - cypress_run.py
+  - run.py
   - $PROJECT_ID
   - tests-$PROJECT_ID
   - $BUILD_ID
