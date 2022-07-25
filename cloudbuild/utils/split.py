@@ -1,12 +1,10 @@
-def split(li, max_nb_batches):
+def split(li, nb_batches):
     len_li = len(li)
-    batch_size_base = len_li // max_nb_batches
-    remainder = len_li % max_nb_batches
-    batch_sizes = [batch_size_base for _ in range(max_nb_batches)]
+    batch_size_base = len_li // nb_batches
+    remainder = len_li % nb_batches
+    batch_sizes = [batch_size_base for _ in range(nb_batches)]
     for i in range(remainder):
         batch_sizes[i] += 1
-    if 0 in batch_sizes:
-        batch_sizes = batch_sizes[:batch_sizes.index(0)]
     assert sum(batch_sizes) == len_li
     batch_indexes = [sum(batch_sizes[:i]) for i in range(len(batch_sizes) + 1)]
     batches = []

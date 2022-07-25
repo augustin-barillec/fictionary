@@ -1,6 +1,6 @@
 from utils.writers import RunTestsWriter
 
-docker_image = 'europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image'
+
 no_parallelizable_sources = [
     'exceptions/setup_submission/max_running.js',
     'exceptions/slash_command/max_running.js',
@@ -40,13 +40,8 @@ parallelizable_sources = [
 
 
 run_tests_writer = RunTestsWriter(
-    destination_file_path='toto.yaml',
-    docker_image=docker_image,
-    project_id='$PROJECT_ID',
-    bucket_name='tests-$PROJECT_ID',
-    bucket_dir_name='$BUILD_ID',
-    no_parallizable_sources=no_parallelizable_sources,
-    parallizable_sources=parallelizable_sources,
-    max_nb_batches=4)
+    no_parallelizable_sources=no_parallelizable_sources,
+    parallelizable_sources=parallelizable_sources,
+    nb_batches=4)
 
 run_tests_writer.write()

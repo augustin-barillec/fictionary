@@ -1,11 +1,31 @@
 steps:
 - args:
-    - run.py
-    - $PROJECT_ID
-    - testing-$PROJECT_ID
-    - $BUILD_ID
-    - run_cypress
-    - small.cy.js
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $BUILD_ID
+  - run_cypress
+  - exceptions/setup_submission/max_running.js
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $BUILD_ID
+  - run_cypress
+  - exceptions/slash_command/max_running.js
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $BUILD_ID
+  - run_cypress
+  - small_test.js
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
@@ -13,13 +33,76 @@ steps:
   - builds
   - submit
   - .
-  - --region
-  - europe-west1
   - --config
-  - cloudbuild/sub_run_tests_1.yaml
+  - sub_run_tests_1.yaml
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
+  dir: tests
   entrypoint: gcloud
-  name: gcr.io/cloud-builders/gcloud
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+- args:
+  - builds
+  - submit
+  - .
+  - --config
+  - sub_run_tests_2.yaml
+  - --async
+  - --substitutions
+  - _BUCKET_DIR_NAME=$BUILD_ID
+  dir: tests
+  entrypoint: gcloud
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+- args:
+  - builds
+  - submit
+  - .
+  - --config
+  - sub_run_tests_3.yaml
+  - --async
+  - --substitutions
+  - _BUCKET_DIR_NAME=$BUILD_ID
+  dir: tests
+  entrypoint: gcloud
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+- args:
+  - builds
+  - submit
+  - .
+  - --config
+  - sub_run_tests_4.yaml
+  - --async
+  - --substitutions
+  - _BUCKET_DIR_NAME=$BUILD_ID
+  dir: tests
+  entrypoint: gcloud
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $BUILD_ID
+  - wait_end
+  - '29'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $BUILD_ID
+  - write_stats
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
+- args:
+  - cypress_run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $BUILD_ID
+  - report_fails
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/testing/testing_image
 timeout: 7200s
