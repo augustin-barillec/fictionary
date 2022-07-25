@@ -125,10 +125,11 @@ class RunTestsWriter(Writer):
     def build_submit_step(self, i):
         cloudbuild_file_path = \
             f'cloudbuild/{self.sub_run_tests_file_path_template.format(i=i)}'
-        args = ['builds', 'submit', '.', '--config',
-                cloudbuild_file_path, '--async',
-                '--substitutions',
-                f'_BUCKET_DIR_NAME={self.bucket_dir_name}']
+        args = ['builds', 'submit', '.',
+                '--config', cloudbuild_file_path,
+                '--region', 'europe-west1',
+                '--async',
+                '--substitutions', f'_BUCKET_DIR_NAME={self.bucket_dir_name}']
         entrypoint = 'gcloud'
         return self.build_step(
             args=args,
