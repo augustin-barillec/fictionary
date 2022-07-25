@@ -25,7 +25,7 @@ def run_cypress(source, project_id, bucket, bucket_dir_name):
     logger.info(f'Running {source} on {project_id}...')
     spec = build_spec(source)
     assert os.path.exists(spec)
-    command = command_template.format(spec=spec, project_id=project_id)
+    command = command_template.format(project_id=project_id, spec=spec)
     source_rewritten = source.replace('/', '&')
     completed_process = subprocess.run(command, shell=True)
     assert completed_process.returncode in (0, 1)
