@@ -1,12 +1,13 @@
 steps:
 - args:
-  - cloud_deploy.py
-  - --project_id
+  - run
+  - web
+  - --project
   - $PROJECT_ID
-  - function
+  - --region
   - europe-west1
-  - '5000'
-  - '3'
-  dir: game
-  entrypoint: python3
+  - --image
+  - europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/web_image
+  - --set-env-vars
+  - PROJECT_ID=$PROJECT_ID
   name: gcr.io/cloud-builders/gcloud
