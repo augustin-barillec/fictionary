@@ -1,6 +1,7 @@
 steps:
 - args:
   - run
+  - deploy
   - web
   - --project
   - $PROJECT_ID
