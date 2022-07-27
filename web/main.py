@@ -115,14 +115,14 @@ def oauth_callback():
 
 @app.route('/questions/<language>')
 def qas_(language):
-    qas = db.collection('qas').document(
-        language).get().to_dict()['content']
-    len_qas = len(qas)
+    questions_answers = db.collection('questions').document(
+        language).get().to_dict()['questions_answers']
+    len_questions_answers = len(questions_answers)
     return render_template(
-        'qas.html',
+        'questions_answers.html',
         capitalized_language=language.capitalize(),
-        len_qas=len_qas,
-        qas=qas)
+        len_qas=len_questions_answers,
+        qas=questions_answers)
 
 
 @app.route('/privacy_policy')
