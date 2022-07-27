@@ -10,7 +10,6 @@ describe('main', () => {
         cy.submit_view()
         cy.wait(5000)
         cy.contains(`${tag}: Automatic game set up by @augustin!`)
-        cy.contains(`${tag}: Combien font `)
         cy.contains(`${tag}: Guess`)
       })
     })
