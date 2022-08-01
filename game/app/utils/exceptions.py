@@ -1,6 +1,7 @@
 import logging
 import reusable
 from flask import make_response, abort
+from slack_sdk.errors import SlackApiError
 from app.utils import slack, time, ids
 
 logger = logging.getLogger(__name__)
@@ -142,7 +143,9 @@ class ExceptionsHandler:
         return f'aborted cause already triggered, game_id={self.game.id}'
 
     def build_slash_command_exception_msg(
-            self, game_parameter, game_dicts, conversation_infos):
+            self, in_channel, game_parameter, game_dicts):
+        if not in_channel:
+            return 'Please invite me first to this conversation!'
         if game_parameter not in ('help', 'freestyle', 'english', 'french'):
             return (f"Game parameter must be one of "
                     "help, freestyle, english or french.")
@@ -150,8 +153,6 @@ class ExceptionsHandler:
             m = self.build_max_nb_this_organizer_running_games_reached_msg(
                 remind=False)
             return m
-        if not conversation_infos['is_member']:
-            return 'Please invite me first to this conversation!'
         if self.max_nb_running_games_reached(game_dicts):
             m = self.build_max_nb_running_games_reached_msg(
                 remind=False)
@@ -233,11 +234,20 @@ class ExceptionsHandler:
 
     def handle_slash_command_exceptions(self, trigger_id):
         slack_operator = self.slack_operator
+        app_user_id = self.slack_operator.get_app_user_id()
+        in_channel = True
+        try:
+            slack_operator.post_ephemeral(app_user_id, 'I was invited!')
+        except SlackApiError as e:
+            assert 'error' in e.response
+            if e.response['error'] == 'not_in_channel':
+                in_channel = False
+            else:
+                raise e
         game_parameter = self.game.parameter
         game_dicts = self.game.firestore_reader.get_game_dicts()
-        conversation_infos = slack_operator.get_conversation_infos()
         exception_msg = self.build_slash_command_exception_msg(
-            game_parameter, game_dicts, conversation_infos)
+            in_channel, game_parameter, game_dicts)
         if exception_msg is not None:
             logger.info(
                 f'exception slash_command, {exception_msg} {self.game.id}')

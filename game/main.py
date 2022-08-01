@@ -116,13 +116,9 @@ def pre_guess_stage(event, context_):
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
 
     slack_operator = ut.slack.SlackOperator(game)
-    game.upper_ts, game.lower_ts = slack_operator.post_pre_guess_stage()
-    game.nb_members = slack_operator.get_conversation_infos()['num_members']
-    max_guessers = game.nb_members - 1
-    if game.parameter == 'freestyle':
-        max_guessers -= 1
-    max_guessers = min(max_guessers, game.max_guessers_per_game)
-    game.max_guessers = max_guessers
+    resp_upper, resp_lower = slack_operator.post_pre_guess_stage()
+    game.upper_ts = resp_upper['ts']
+    game.lower_ts = resp_lower['ts']
     game.guessers = dict()
     game.guess_start = reusable.time.get_now()
     game.guess_deadline = ut.time.compute_deadline(
@@ -130,7 +126,6 @@ def pre_guess_stage(event, context_):
     for attribute in [
         'upper_ts',
         'lower_ts',
-        'nb_members',
         'max_guessers',
         'guessers',
         'guess_start',

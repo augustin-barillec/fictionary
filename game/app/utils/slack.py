@@ -4,14 +4,13 @@ from flask import Response
 from app.utils import blocks, help, tag, users, views
 
 
-def get_conversation_infos(slack_client, channel_id):
-    return reusable.slack_api.conversations_info(
-        slack_client, channel_id)['channel']
+def auth_test(slack_client):
+    return reusable.slack_api.auth_test(slack_client)
 
 
 def post_message(slack_client, channel_id, blocks_):
     return reusable.slack_api.chat_postmessage(
-        slack_client, channel_id, blocks_)['ts']
+        slack_client, channel_id, blocks_)
 
 
 def post_ephemeral(slack_client, channel_id, user_id, msg):
@@ -87,9 +86,8 @@ class SlackOperator:
             view = tag.add_tag_to_json(view, self.game.tag)
         return view
 
-    def get_conversation_infos(self):
-        return get_conversation_infos(
-            self.slack_client, self.game.channel_id)
+    def get_app_user_id(self):
+        return auth_test(self.slack_client)['user_id']
 
     def post_message(self, blocks_):
         blocks_ = self.add_tag_to_blocks(blocks_)

@@ -80,7 +80,6 @@ class Game:
         self.lower_ts = self.dict.get('lower_ts')
         self.max_guessers = self.dict.get('max_guessers')
         self.max_score = self.dict.get('max_score')
-        self.nb_members = self.dict.get('nb_members')
         self.parameter = self.dict.get('parameter')
         self.potential_voters = self.dict.get('potential_voters')
         self.pre_guess_stage_already_triggered = self.dict.get(
