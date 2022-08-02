@@ -64,7 +64,6 @@ def slash_command(request):
     game.dict = dict()
     for attribute in ['version', 'parameter', 'tag']:
         game.dict[attribute] = game.__dict__[attribute]
-    ut.firestore.FirestoreEditor(game).set_game(merge=False)
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_slash_command_exceptions(trigger_id)
     if resp is not None:
@@ -72,7 +71,9 @@ def slash_command(request):
         return resp
     if game.parameter == 'help':
         ut.slack.SlackOperator(game).send_help(organizer_id)
-    elif game.parameter == 'freestyle':
+        return make_response('', 200)
+    ut.firestore.FirestoreEditor(game).set_game(merge=False)
+    if game.parameter == 'freestyle':
         ut.slack.SlackOperator(game).open_setup_freestyle_view(trigger_id)
     elif game.parameter in ('english', 'french'):
         url = ut.questions.get_questions_url(game)

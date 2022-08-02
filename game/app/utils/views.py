@@ -21,9 +21,19 @@ def build_exception_view(msg):
     return res
 
 
-def build_setup_freestyle_view(id_):
+def build_setup_freestyle_view(id_, max_guessers_per_game):
     res = deepcopy(setup_freestyle_view_template)
     res['callback_id'] = id_
+
+    res['blocks'][4]['accessory']['placeholder']['text'] = \
+        str(max_guessers_per_game)
+    options = []
+    for i in range(2, max_guessers_per_game + 1):
+        option = deepcopy(res['blocks'][4]['accessory']['options'][0])
+        option['text']['text'] = str(i)
+        option['value'] = str(i)
+        options.append(option)
+    res['blocks'][4]['accessory']['options'] = options
     return res
 
 
@@ -60,7 +70,9 @@ def collect_setup_freestyle(setup_freestyle_view):
     values = setup_freestyle_view['state']['values']
     question = values['question']['question']['value']
     truth = values['truth']['truth']['value']
-    return question, truth
+    max_guessers = int(values['max_guessers']['max_guessers']
+                       ['selected_option']['value'])
+    return question, truth, max_guessers
 
 
 def collect_setup_automatic(setup_automatic_view):
@@ -90,7 +102,7 @@ class ViewBuilder:
 
     def build_setup_freestyle_view(self):
         id_ = self.surface_id_builder.build_setup_freestyle_view_id()
-        return build_setup_freestyle_view(id_)
+        return build_setup_freestyle_view(id_, self.game.max_guessers_per_game)
 
     def build_setup_automatic_view(
             self, url, max_number, number, question, answer):

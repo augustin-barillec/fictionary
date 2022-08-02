@@ -47,6 +47,31 @@
 				"type": "plain_text_input",
 				"action_id": "truth"
 			}
+		},
+		{
+			"type": "section",
+			"block_id": "max_guessers",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Maximum number of players"
+			},
+			"accessory": {
+				"type": "static_select",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "{}"
+				},
+				"options": [
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "{}"
+						},
+						"value": "{}"
+					}
+				],
+				"action_id": "max_guessers"
+			}
 		}
 	]
 }
