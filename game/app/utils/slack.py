@@ -1,37 +1,37 @@
 import json
-import reusable
+import tools
 from flask import Response
 from app.utils import blocks, help, tag, users, views
 
 
 def auth_test(slack_client):
-    return reusable.slack_api.auth_test(slack_client)
+    return tools.slack_api.auth_test(slack_client)
 
 
 def post_message(slack_client, channel_id, blocks_):
-    return reusable.slack_api.chat_postmessage(
+    return tools.slack_api.chat_postmessage(
         slack_client, channel_id, blocks_)
 
 
 def post_ephemeral(slack_client, channel_id, user_id, msg):
-    reusable.slack_api.chat_postephemeral(
+    tools.slack_api.chat_postephemeral(
         slack_client, channel_id, user_id, msg)
 
 
 def update_message(slack_client, channel_id, blocks_, ts):
-    reusable.slack_api.chat_update(slack_client, channel_id, blocks_, ts)
+    tools.slack_api.chat_update(slack_client, channel_id, blocks_, ts)
 
 
 def open_view(slack_client, trigger_id, view):
-    reusable.slack_api.views_open(slack_client, trigger_id, view)
+    tools.slack_api.views_open(slack_client, trigger_id, view)
 
 
 def update_view(slack_client, view_id, view):
-    reusable.slack_api.views_update(slack_client, view_id, view)
+    tools.slack_api.views_update(slack_client, view_id, view)
 
 
 def push_view(slack_client, trigger_id, view):
-    reusable.slack_api.views_push(slack_client, trigger_id, view)
+    tools.slack_api.views_push(slack_client, trigger_id, view)
 
 
 def build_view_response(view):

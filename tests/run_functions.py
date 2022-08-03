@@ -3,7 +3,7 @@ import time
 import subprocess
 import glob
 import logging
-import reusable
+import utils
 
 logger = logging.getLogger(__name__)
 
@@ -32,18 +32,18 @@ def run_cypress(source, project_id, bucket, bucket_dir_name):
     if completed_process.returncode == 0:
         msg = f'success#{source_rewritten}'
         logger.info(msg)
-        reusable.storage.upload_string_to_gs(
+        utils.storage.upload_string_to_gs(
             bucket, bucket_dir_name, msg, msg)
     elif completed_process.returncode == 1:
         msg = f'fail#{source_rewritten}'
         logger.info(msg)
-        reusable.storage.upload_string_to_gs(bucket, bucket_dir_name, msg, msg)
+        utils.storage.upload_string_to_gs(bucket, bucket_dir_name, msg, msg)
         screenshot_paths = glob.glob(f'cypress/screenshots/{source}/*.png')
         logger.info(f'screenshot_paths = {screenshot_paths}')
         if len(screenshot_paths) >= 1:
             screenshot_path = screenshot_paths[0]
             screenshot_blob_basename = f'screenshot#{source_rewritten}'
-            reusable.storage.upload_file_to_gs(
+            utils.storage.upload_file_to_gs(
                 bucket, bucket_dir_name,
                 screenshot_blob_basename, screenshot_path)
             logger.info(f'{screenshot_blob_basename} uploaded')
@@ -87,7 +87,7 @@ def write_stats(bucket, bucket_dir_name):
         'nb_fails': nb_fails,
         'ratio': ratio}
     logger.info(f'stats={stats}')
-    reusable.storage.upload_string_to_gs(
+    utils.storage.upload_string_to_gs(
         bucket, bucket_dir_name, 'stats', str(stats))
 
 
@@ -96,5 +96,5 @@ def report_fails(bucket, bucket_dir_name):
     fails = [f.replace('&', '/') for f in fails]
     fails = [f"'{f}'" for f in fails]
     fails = ',\n'.join(fails)
-    reusable.storage.upload_string_to_gs(
+    utils.storage.upload_string_to_gs(
         bucket, bucket_dir_name, 'fails', fails)

@@ -1,13 +1,13 @@
 import logging
 import reusable
 import utils
-import params
+from params import team_params
 
 logger = logging.getLogger(__name__)
 
 
 def setup_team(team_ref):
-    utils.firestore.store_team_params(team_ref, params.team_params)
+    utils.firestore.store_team_params(team_ref, team_params)
 
 
 def setup_channels(

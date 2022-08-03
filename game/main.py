@@ -50,8 +50,8 @@ def slash_command(request):
     slash_datetime_compact = reusable.time.get_now_compact_format()
     game_id = ut.ids.build_game_id(
         slash_datetime_compact, team_id, channel_id, organizer_id, trigger_id)
-    logger.info(f'game_id built, game_id={game_id}')
     game = build_game(game_id=game_id)
+    logger.info(f'game  built, game_id={game_id}')
     ut.exceptions.ExceptionsHandler(game).verify_signature(body, headers)
     game.version = VERSION
     text_split = text.split(' ')
@@ -73,6 +73,7 @@ def slash_command(request):
         ut.slack.SlackOperator(game).send_help(organizer_id)
         return make_response('', 200)
     ut.firestore.FirestoreEditor(game).set_game(merge=False)
+    logger.info(f'game  stored, game_id={game_id}')
     if game.parameter == 'freestyle':
         ut.slack.SlackOperator(game).open_setup_freestyle_view(trigger_id)
     elif game.parameter in ('english', 'french'):

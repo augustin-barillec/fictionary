@@ -45,13 +45,16 @@ class ViewSubmissionHandler:
         return make_response('', 200)
 
     def handle_setup_freestyle_submission(self):
+        logger.info(self.view)
         question, truth, max_guessers = ut.views.collect_setup_freestyle(
             self.view)
         return self.finalize_setup_submission(question, truth, max_guessers)
 
     def handle_setup_automatic_submission(self):
-        question, truth = ut.views.collect_setup_automatic(self.view)
-        return self.finalize_setup_submission(question, truth)
+        logger.info(self.view)
+        question, truth, max_guessers = ut.views.collect_setup_automatic(
+            self.view)
+        return self.finalize_setup_submission(question, truth, max_guessers)
 
     def handle_guess_submission(self):
         guess = ut.views.collect_guess(self.view)
@@ -101,4 +104,3 @@ def handle_view_submission(body, headers, payload, context):
     if not payload['view']['callback_id'].startswith(context.surface_prefix):
         return make_response('', 200)
     return ViewSubmissionHandler(body, headers, payload, context).handle()
-

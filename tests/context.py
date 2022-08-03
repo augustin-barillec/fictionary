@@ -4,7 +4,6 @@ import google.cloud.firestore
 import utils
 import context_functions as cf
 import channels
-from reusable import secret_manager
 
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s', level='INFO')
@@ -28,9 +27,8 @@ delete_game_parser = subparsers.add_parser('delete_game')
 delete_game_parser.add_argument('tag')
 args = parser.parse_args()
 
-cypress_context_conf = secret_manager.access_payload_parsed(
-    args.project_id,
-    'cypress_context_conf')
+cypress_context_conf = utils.secret_manager.access_payload_parsed(
+    args.project_id, 'cypress_context_conf')
 app_user_id = cypress_context_conf['app_user_id']
 cypress_slack_token = cypress_context_conf['cypress_slack_token']
 cypress_user_id = cypress_context_conf['cypress_user_id']
