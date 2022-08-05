@@ -8,6 +8,7 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 0)
         cy.go_to_channel_from_channel_id(conf, channel_id)
+        cy.slash_command('helpp', 'tag')
         cy.organize_freestyle_game(tag, 'question', 'truth')
 
         cy.login_from_user_index(conf, 1)

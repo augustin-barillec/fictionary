@@ -8,10 +8,10 @@ def has_duplicates(list_):
 no_parallelizable_sources = [
     # 'exceptions/setup_submission/max_running.cy.js',
     # 'exceptions/slash_command/max_running.cy.js',
-    'small.cy.js'
+    # 'small.cy.js'
 ]
 parallelizable_sources = [
-    # 'endings/bravo.cy.js',
+    'endings/bravo.cy.js',
     # 'endings/hey.cy.js',
     # 'endings/no_guesses.cy.js',
     # 'endings/no_votes.cy.js',

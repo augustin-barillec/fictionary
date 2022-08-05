@@ -1,15 +1,5 @@
 steps:
 - args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $BUILD_ID
-  - run_cypress
-  - small.cy.js
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
   - builds
   - submit
   - .

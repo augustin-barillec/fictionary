@@ -4,4 +4,14 @@ steps:
   dir: tests
   entrypoint: echo
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - endings/bravo.cy.js
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 timeout: 3600s
