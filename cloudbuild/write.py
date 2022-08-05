@@ -8,7 +8,7 @@ def has_duplicates(list_):
 no_parallelizable_sources = [
     # 'exceptions/setup_submission/max_running.cy.js',
     # 'exceptions/slash_command/max_running.cy.js',
-    # 'small.cy.js'
+    'small.cy.js'
 ]
 parallelizable_sources = [
     # 'endings/bravo.cy.js',
@@ -18,7 +18,7 @@ parallelizable_sources = [
     # 'endings/thanks.cy.js',
     # 'endings/well.cy.js',
     # 'endings/winner.cy.js',
-    'endings/winners.cy.js',
+    # 'endings/winners.cy.js',
     # 'endings/zero.cy.js',
     # 'exceptions/game_dead/open_view.cy.js',
     # 'exceptions/game_dead/update_view.cy.js',
@@ -44,7 +44,7 @@ parallelizable_sources = [
     # 'transitions/vote_full.cy.js',
     # 'transitions/vote_shorten.cy.js',
     # 'help.cy.js',
-    'special_characters.cy.js'
+    # 'special_characters.cy.js'
 ]
 
 assert not has_duplicates(no_parallelizable_sources + parallelizable_sources)
