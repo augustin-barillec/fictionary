@@ -56,27 +56,18 @@ class SubRunTestsWriter(Writer):
     def __init__(
             self,
             destination_file_path,
-            docker_image,
-            project_id,
-            bucket_name,
-            bucket_dir_name,
             sources):
-        super().__init__(destination_file_path, docker_image)
+        super().__init__(destination_file_path, DOCKER_IMAGE)
         self.destination_file_path = destination_file_path
-        self.docker_image = docker_image
-        self.project_id = project_id
-        self.bucket_name = bucket_name
-        self.bucket_dir_name = bucket_dir_name
         self.sources = sources
 
     def build_dummy_step(self):
         return self.build_step(
-            args=[self.bucket_dir_name], entrypoint='echo', dir_='tests')
+            args=['$_BUCKET_DIR_NAME'], entrypoint='echo', dir_='tests')
 
     def build_run_cypress_step(self, source):
-        args = ['run.py', self.project_id,
-                self.bucket_name, self.bucket_dir_name,
-                'run_cypress', source]
+        args = ['run.py', '$PROJECT_ID', 'tests-$PROJECT_ID',
+                '$_BUCKET_DIR_NAME', 'run_cypress', source]
         return self.build_step(
             args=args, entrypoint='python', dir_='tests')
 
@@ -102,9 +93,6 @@ class RunTestsWriter(Writer):
         super().__init__(
             'run_tests.yaml',
             DOCKER_IMAGE)
-        self.project_id = '$PROJECT_ID'
-        self.bucket_name = 'tests-$PROJECT_ID'
-        self.bucket_dir_name = '$BUILD_ID'
         self.no_parallelizable_sources = no_parallelizable_sources
         self.parallelizable_sources = parallelizable_sources
         self.nb_batches = nb_batches
@@ -116,8 +104,8 @@ class RunTestsWriter(Writer):
         self.sub_run_tests_file_path_template = 'sub_run_tests_{i}.yaml'
 
     def build_run_cypress_step(self, source):
-        args = ['run.py', self.project_id,
-                self.bucket_name, self.bucket_dir_name,
+        args = ['run.py', '$PROJECT_ID',
+                'tests-$PROJECT_ID', '$BUILD_ID',
                 'run_cypress', source]
         return self.build_step(
             args=args, entrypoint='python', dir_='tests')
@@ -128,8 +116,9 @@ class RunTestsWriter(Writer):
         args = ['builds', 'submit', '.',
                 '--config', cloudbuild_file_path,
                 '--region', 'europe-west1',
+                '--gcs-source-staging-dir', 'cloudbuild-$PROJECT_ID',
                 '--async',
-                '--substitutions', f'_BUCKET_DIR_NAME={self.bucket_dir_name}']
+                '--substitutions', f'_BUCKET_DIR_NAME=$BUILD_ID']
         entrypoint = 'gcloud'
         return self.build_step(
             args=args,
@@ -137,22 +126,22 @@ class RunTestsWriter(Writer):
             name='gcr.io/cloud-builders/gcloud')
 
     def build_wait_end_step(self):
-        args = ['run.py', self.project_id,
-                self.bucket_name, self.bucket_dir_name,
+        args = ['run.py', '$PROJECT_ID',
+                'tests-$PROJECT_ID', '$BUILD_ID',
                 'wait_end', f'{self.nb_expected_cases}']
         return self.build_step(
             args=args, entrypoint='python', dir_='tests')
 
     def build_write_stats_step(self):
-        args = ['run.py', self.project_id,
-                self.bucket_name, self.bucket_dir_name,
+        args = ['run.py', '$PROJECT_ID',
+                'tests-$PROJECT_ID', '$BUILD_ID',
                 'write_stats']
         return self.build_step(
             args=args, entrypoint='python',  dir_='tests')
 
     def build_report_fails_step(self):
-        args = ['run.py', self.project_id,
-                self.bucket_name, self.bucket_dir_name,
+        args = ['run.py', '$PROJECT_ID',
+                'tests-$PROJECT_ID', '$BUILD_ID',
                 'report_fails']
         return self.build_step(args=args, entrypoint='python', dir_='tests')
 
@@ -178,10 +167,6 @@ class RunTestsWriter(Writer):
     def instantiate_sub_run_tests_writer(self, i, sources):
         res = SubRunTestsWriter(
                 self.sub_run_tests_file_path_template.format(i=i),
-                self.docker_image,
-                self.project_id,
-                self.bucket_name,
-                '$_BUCKET_DIR_NAME',
                 sources)
         return res
 

@@ -27,6 +27,7 @@ def deploy_function(project_id, region, port, pre_sleep_duration):
     --project {project_id} \
     --region {region} \
     --docker-registry artifact-registry \
+    --gen2 \
     --runtime python310 \
     --timeout 540s \
     --ignore-file .functionsignore \

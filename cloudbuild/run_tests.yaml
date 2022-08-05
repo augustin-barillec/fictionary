@@ -7,6 +7,8 @@ steps:
   - cloudbuild/sub_run_tests_1.yaml
   - --region
   - europe-west1
+  - --gcs-source-staging-dir
+  - cloudbuild-$PROJECT_ID
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -20,6 +22,8 @@ steps:
   - cloudbuild/sub_run_tests_2.yaml
   - --region
   - europe-west1
+  - --gcs-source-staging-dir
+  - cloudbuild-$PROJECT_ID
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -33,6 +37,8 @@ steps:
   - cloudbuild/sub_run_tests_3.yaml
   - --region
   - europe-west1
+  - --gcs-source-staging-dir
+  - cloudbuild-$PROJECT_ID
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -46,6 +52,8 @@ steps:
   - cloudbuild/sub_run_tests_4.yaml
   - --region
   - europe-west1
+  - --gcs-source-staging-dir
+  - cloudbuild-$PROJECT_ID
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID

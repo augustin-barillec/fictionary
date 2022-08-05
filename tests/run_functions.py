@@ -27,6 +27,7 @@ def run_cypress(source, project_id, bucket, bucket_dir_name):
     assert os.path.exists(spec)
     command = command_template.format(project_id=project_id, spec=spec)
     source_rewritten = source.replace('/', '&')
+    source_basename = source.split('/')[-1]
     completed_process = subprocess.run(command, shell=True)
     assert completed_process.returncode in (0, 1)
     if completed_process.returncode == 0:
@@ -38,7 +39,8 @@ def run_cypress(source, project_id, bucket, bucket_dir_name):
         msg = f'fail#{source_rewritten}'
         logger.info(msg)
         utils.storage.upload_string_to_gs(bucket, bucket_dir_name, msg, msg)
-        screenshot_paths = glob.glob(f'cypress/screenshots/{source}/*.png')
+        screenshot_paths = glob.glob(
+            f'cypress/screenshots/{source_basename}/*.png')
         logger.info(f'screenshot_paths = {screenshot_paths}')
         if len(screenshot_paths) >= 1:
             screenshot_path = screenshot_paths[0]
