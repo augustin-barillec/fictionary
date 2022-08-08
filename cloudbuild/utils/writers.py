@@ -116,7 +116,7 @@ class RunTestsWriter(Writer):
         args = ['builds', 'submit', '.',
                 '--config', cloudbuild_file_path,
                 '--region', 'europe-west1',
-                '--gcs-source-staging-dir', 'cloudbuild-$PROJECT_ID',
+                '--gcs-source-staging-dir', 'gs://cloudbuild-$PROJECT_ID',
                 '--async',
                 '--substitutions', f'_BUCKET_DIR_NAME=$BUILD_ID']
         entrypoint = 'gcloud'

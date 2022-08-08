@@ -8,7 +8,7 @@ steps:
   - --region
   - europe-west1
   - --gcs-source-staging-dir
-  - cloudbuild-$PROJECT_ID
+  - gs://cloudbuild-$PROJECT_ID
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -23,7 +23,7 @@ steps:
   - --region
   - europe-west1
   - --gcs-source-staging-dir
-  - cloudbuild-$PROJECT_ID
+  - gs://cloudbuild-$PROJECT_ID
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -38,7 +38,7 @@ steps:
   - --region
   - europe-west1
   - --gcs-source-staging-dir
-  - cloudbuild-$PROJECT_ID
+  - gs://cloudbuild-$PROJECT_ID
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
@@ -53,7 +53,7 @@ steps:
   - --region
   - europe-west1
   - --gcs-source-staging-dir
-  - cloudbuild-$PROJECT_ID
+  - gs://cloudbuild-$PROJECT_ID
   - --async
   - --substitutions
   - _BUCKET_DIR_NAME=$BUILD_ID
