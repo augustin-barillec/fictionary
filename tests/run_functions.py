@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 command_template = """
-DEBUG=cypress:* npx cypress run \
+DEBUG=cypress:server npx cypress run \
 --headless \
 --browser chrome \
 --env PROJECT_ID={project_id} \
