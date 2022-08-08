@@ -11,7 +11,7 @@ no_parallelizable_sources = [
     # 'small.cy.js'
 ]
 parallelizable_sources = [
-    'endings/bravo.cy.js',
+    # 'endings/bravo.cy.js',
     # 'endings/hey.cy.js',
     # 'endings/no_guesses.cy.js',
     # 'endings/no_votes.cy.js',
@@ -44,7 +44,7 @@ parallelizable_sources = [
     # 'transitions/vote_full.cy.js',
     # 'transitions/vote_shorten.cy.js',
     # 'help.cy.js',
-    # 'special_characters.cy.js'
+    'special_characters.cy.js'
 ]
 
 assert not has_duplicates(no_parallelizable_sources + parallelizable_sources)
