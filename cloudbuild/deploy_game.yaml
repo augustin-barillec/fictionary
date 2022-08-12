@@ -24,7 +24,7 @@ steps:
   - function
   - europe-west1
   - '5001'
-  - '20'
+  - '30'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -37,19 +37,6 @@ steps:
   - function
   - europe-west1
   - '5002'
-  - '40'
-  dir: game
-  entrypoint: python3
-  name: gcr.io/cloud-builders/gcloud
-  waitFor:
-    - start
-- args:
-  - cloud_deploy.py
-  - --project_id
-  - $PROJECT_ID
-  - function
-  - europe-west1
-  - '5003'
   - '60'
   dir: game
   entrypoint: python3
@@ -62,33 +49,20 @@ steps:
   - $PROJECT_ID
   - function
   - europe-west1
+  - '5003'
+  - '90'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
   - '5004'
-  - '80'
-  dir: game
-  entrypoint: python3
-  name: gcr.io/cloud-builders/gcloud
-  waitFor:
-    - start
-- args:
-  - cloud_deploy.py
-  - --project_id
-  - $PROJECT_ID
-  - function
-  - europe-west1
-  - '5005'
-  - '100'
-  dir: game
-  entrypoint: python3
-  name: gcr.io/cloud-builders/gcloud
-  waitFor:
-    - start
-- args:
-  - cloud_deploy.py
-  - --project_id
-  - $PROJECT_ID
-  - function
-  - europe-west1
-  - '5006'
   - '120'
   dir: game
   entrypoint: python3
@@ -101,8 +75,34 @@ steps:
   - $PROJECT_ID
   - function
   - europe-west1
+  - '5005'
+  - '150'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5006'
+  - '180'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
   - '5007'
-  - '140'
+  - '210'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -115,7 +115,7 @@ steps:
   - function
   - europe-west1
   - '5008'
-  - '160'
+  - '240'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
