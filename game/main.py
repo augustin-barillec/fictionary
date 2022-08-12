@@ -328,7 +328,7 @@ def monitor(event, context_):
                     ref = context.db.collection('fails').document(game_id)
                     ref.set(game_dict, merge=False)
                     outcome = 'fail'
-                # g.reference.delete()
+                g.reference.delete()
                 logger.info(f'{outcome}, game_id={g.id}')
                 game_ids.append(game_id)
                 game_dicts.append(game_dict)
@@ -337,5 +337,7 @@ def monitor(event, context_):
         game_ids, game_dicts, outcomes)
     ut.monitoring.upload_monitoring(
         bq_client, monitoring, context.project_id)
+    logger.info('monitoring uploaded')
     ut.monitoring.deduplicate_monitoring(bq_client, context.project_id)
+    logger.info('monitoring deduplicated')
     return make_response('', 200)
