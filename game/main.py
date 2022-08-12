@@ -302,8 +302,13 @@ def result_stage(event, context_):
     return make_response('', 200)
 
 
-def freeze(event, context_):
+def monitor(event, context_):
     assert event == event and context_ == context_
+    from google.cloud import bigquery
+    bq_client = bigquery.Client()
+    game_ids = []
+    game_dicts = []
+    outcomes = []
     teams_ref = context.db.collection('teams')
     for t in teams_ref.stream():
         team_ref = teams_ref.document(t.id)
@@ -315,17 +320,22 @@ def freeze(event, context_):
             if ut.exceptions.game_is_too_old(
                     game_id, team_dict['max_life_span']):
                 if 'result_stage_over' in game_dict:
-                    ref = context.db.collection('successes').document(game_id)
-                    kind = 'success'
+                    outcome = 'success'
                 elif sorted(game_dict.keys()) == [
                         'parameter', 'tag', 'version']:
-                    ref = context.db.collection('unsubmitteds').document(
-                        game_id)
-                    kind = 'unsubmitted'
+                    outcome = 'unsubmitted'
                 else:
                     ref = context.db.collection('fails').document(game_id)
-                    kind = 'fail'
-                ref.set(game_dict, merge=False)
-                g.reference.delete()
-                logger.info(f'{kind} frozen, game_id={g.id}')
+                    ref.set(game_dict, merge=False)
+                    outcome = 'fail'
+                # g.reference.delete()
+                logger.info(f'{outcome}, game_id={g.id}')
+                game_ids.append(game_id)
+                game_dicts.append(game_dict)
+                outcomes.append(outcome)
+    monitoring = ut.monitoring.compute_monitoring(
+        game_ids, game_dicts, outcomes)
+    ut.monitoring.upload_monitoring(
+        bq_client, monitoring, context.project_id)
+    ut.monitoring.deduplicate_monitoring(bq_client, context.project_id)
     return make_response('', 200)

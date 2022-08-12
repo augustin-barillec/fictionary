@@ -7,7 +7,7 @@ port_infos = {
     5005: ('vote_stage', 'event'),
     5006: ('pre_result_stage', 'event'),
     5007: ('result_stage', 'event'),
-    5008: ('freeze', 'event'),
+    5008: ('monitor', 'event')
 }
 ports = sorted(port_infos)
 port_to_function_name = {port: port_infos[port][0] for port in ports}
