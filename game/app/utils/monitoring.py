@@ -58,7 +58,7 @@ def compute_row(game_id, game_dict, outcome):
     row['max_guessers'] = max_guessers
     row['nb_guessers'] = nb_guessers
     row['nb_voters'] = nb_voters
-    row['version'] = str(version)
+    row['version'] = version
     row['game_id'] = game_id
     return row
 
