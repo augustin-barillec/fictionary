@@ -121,3 +121,4 @@ steps:
   name: gcr.io/cloud-builders/gcloud
   waitFor:
     - start
+timeout: 1200s
