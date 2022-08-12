@@ -24,19 +24,6 @@ steps:
   - function
   - europe-west1
   - '5001'
-  - '30'
-  dir: game
-  entrypoint: python3
-  name: gcr.io/cloud-builders/gcloud
-  waitFor:
-    - start
-- args:
-  - cloud_deploy.py
-  - --project_id
-  - $PROJECT_ID
-  - function
-  - europe-west1
-  - '5002'
   - '60'
   dir: game
   entrypoint: python3
@@ -49,20 +36,7 @@ steps:
   - $PROJECT_ID
   - function
   - europe-west1
-  - '5003'
-  - '90'
-  dir: game
-  entrypoint: python3
-  name: gcr.io/cloud-builders/gcloud
-  waitFor:
-    - start
-- args:
-  - cloud_deploy.py
-  - --project_id
-  - $PROJECT_ID
-  - function
-  - europe-west1
-  - '5004'
+  - '5002'
   - '120'
   dir: game
   entrypoint: python3
@@ -75,20 +49,7 @@ steps:
   - $PROJECT_ID
   - function
   - europe-west1
-  - '5005'
-  - '150'
-  dir: game
-  entrypoint: python3
-  name: gcr.io/cloud-builders/gcloud
-  waitFor:
-    - start
-- args:
-  - cloud_deploy.py
-  - --project_id
-  - $PROJECT_ID
-  - function
-  - europe-west1
-  - '5006'
+  - '5003'
   - '180'
   dir: game
   entrypoint: python3
@@ -101,8 +62,47 @@ steps:
   - $PROJECT_ID
   - function
   - europe-west1
+  - '5004'
+  - '240'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5005'
+  - '300'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
+  - '5006'
+  - '360'
+  dir: game
+  entrypoint: python3
+  name: gcr.io/cloud-builders/gcloud
+  waitFor:
+    - start
+- args:
+  - cloud_deploy.py
+  - --project_id
+  - $PROJECT_ID
+  - function
+  - europe-west1
   - '5007'
-  - '210'
+  - '420'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
@@ -115,7 +115,7 @@ steps:
   - function
   - europe-west1
   - '5008'
-  - '240'
+  - '480'
   dir: game
   entrypoint: python3
   name: gcr.io/cloud-builders/gcloud
