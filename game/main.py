@@ -336,7 +336,7 @@ def monitor(event, context_):
     monitoring = ut.monitoring.compute_monitoring(
         game_ids, game_dicts, outcomes)
     ut.monitoring.upload_monitoring(
-        bq_client, monitoring, context.project_id)
+        bq_client, context.project_id, monitoring)
     logger.info('monitoring uploaded')
     ut.monitoring.deduplicate_monitoring(bq_client, context.project_id)
     logger.info('monitoring deduplicated')

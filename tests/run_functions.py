@@ -21,24 +21,33 @@ def build_spec(source):
     return f'cypress/e2e/{source}'
 
 
-def run_cypress(source, project_id, bucket, bucket_dir_name):
+def run_cypress(project_id, bucket, bucket_dir_name, source, timeout):
     logger.info(f'Running {source} on {project_id}...')
     spec = build_spec(source)
     assert os.path.exists(spec)
     command = command_template.format(project_id=project_id, spec=spec)
     source_rewritten = source.replace('/', '&')
     source_basename = source.split('/')[-1]
-    completed_process = subprocess.run(command, shell=True)
-    assert completed_process.returncode in (0, 1)
-    if completed_process.returncode == 0:
+    try:
+        completed_process = subprocess.run(
+            command, shell=True, timeout=timeout)
+        assert completed_process.returncode in (0, 1)
+    except subprocess.TimeoutExpired:
+        completed_process = None
+    if completed_process is not None and completed_process.returncode == 0:
         msg = f'success#{source_rewritten}'
         logger.info(msg)
         utils.storage.upload_string_to_gs(
             bucket, bucket_dir_name, msg, msg)
-    elif completed_process.returncode == 1:
+    elif completed_process is None or completed_process.returncode == 1:
         msg = f'fail#{source_rewritten}'
         logger.info(msg)
         utils.storage.upload_string_to_gs(bucket, bucket_dir_name, msg, msg)
+        if completed_process is None:
+            msg = f'TimeoutExpired#{source_rewritten}'
+            logger.info(msg)
+            utils.storage.upload_string_to_gs(
+                bucket, bucket_dir_name, msg, msg)
         screenshot_paths = glob.glob(
             f'cypress/screenshots/{source_basename}/*.png')
         logger.info(f'screenshot_paths = {screenshot_paths}')

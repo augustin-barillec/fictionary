@@ -72,7 +72,7 @@ def compute_monitoring(game_ids, game_dicts, outcomes):
     return pandas.DataFrame(data=rows, columns=columns)
 
 
-def upload_monitoring(bq_client, monitoring, project_id):
+def upload_monitoring(bq_client, project_id, monitoring):
     destination_table_id = f'{project_id}.monitoring.monitoring'
     job_config = bigquery.LoadJobConfig(
         schema=bq_schema,

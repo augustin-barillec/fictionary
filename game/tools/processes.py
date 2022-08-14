@@ -3,7 +3,7 @@ import subprocess
 import os
 
 
-def list_processes(contains=None):
+def list_processes(contains):
     out = subprocess.check_output(['ps', '-aef'], universal_newlines=True)
     lines = out.splitlines()[1:]
     if contains is not None:
@@ -11,7 +11,7 @@ def list_processes(contains=None):
     return lines
 
 
-def kill_processes(contains=None):
+def kill_processes(contains):
     lines = list_processes(contains=contains)
     for line in lines:
         pid = int(line.split(None, 2)[1])

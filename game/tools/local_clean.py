@@ -19,7 +19,6 @@ def delete_folder(folder_path):
 
 
 def clean_cloud_deploy_functions():
-    processes.kill_processes('gcloud.py alpha functions deploy')
     for port in ports.ports:
         filepath = local_paths.cloud_deploy_function_file.format(port=port)
         delete_file(filepath)
