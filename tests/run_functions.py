@@ -3,6 +3,7 @@ import time
 import subprocess
 import glob
 import logging
+import reusable
 import utils
 
 logger = logging.getLogger(__name__)
@@ -34,6 +35,7 @@ def run_cypress(project_id, bucket, bucket_dir_name, source, timeout):
         assert completed_process.returncode in (0, 1)
     except subprocess.TimeoutExpired:
         completed_process = None
+        reusable.processes.kill_processes('Cypress')
     if completed_process is not None and completed_process.returncode == 0:
         msg = f'success#{source_rewritten}'
         logger.info(msg)

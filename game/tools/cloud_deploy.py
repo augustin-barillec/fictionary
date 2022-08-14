@@ -1,6 +1,9 @@
 import subprocess
 import time
+import logging
 from tools import ports, local_paths, pubsub_names
+
+logger = logging.getLogger(__name__)
 
 
 def deploy_pubsub(project_id):
@@ -15,13 +18,13 @@ def deploy_pubsub(project_id):
             topic_name = pubsub_names.topic.format(function_name=function_name)
             topic_path = publisher.topic_path(project_id, topic_name)
             topic = publisher.create_topic(request={'name': topic_path})
-            print(f'Created topic: {topic.name}')
+            logger.info(f'Created topic: {topic.name}')
 
 
 def deploy_function(project_id, region, port, pre_sleep_duration):
-    print(f'Pre-sleeping {pre_sleep_duration}s...')
+    logger.info(f'Pre-sleeping {pre_sleep_duration}s...')
     time.sleep(pre_sleep_duration)
-    print(f'Pre-slept {pre_sleep_duration}s')
+    logger.info(f'Pre-slept {pre_sleep_duration}s')
     command_template = """
     gcloud functions deploy {function_name} \
     --project {project_id} \
@@ -57,4 +60,4 @@ def deploy_function(project_id, region, port, pre_sleep_duration):
     subprocess.run(command, shell=True)
     with open(filepath) as f:
         assert 'done' in f.read()
-        print(f'port={port} successfully deployed')
+        logger.info(f'port={port} successfully deployed')

@@ -1,6 +1,7 @@
 import os
 import shutil
-from tools import local_paths, ports, processes
+import reusable
+from tools import local_paths, ports
 
 
 def delete_file(file_path):
@@ -27,8 +28,8 @@ def clean_cloud_deploy_functions():
 def clean_pubsub():
     data_dir_path = local_paths.pubsub_data_dir
     delete_folder(data_dir_path)
-    processes.kill_processes('pubsub-emulator')
-    processes.kill_processes('emulators pubsub')
+    reusable.processes.kill_processes('pubsub-emulator')
+    reusable.processes.kill_processes('emulators pubsub')
 
 
 def clean_functions():
@@ -38,8 +39,7 @@ def clean_functions():
             port=port)
         function_name = port_to_function_name[port]
         delete_file(local_function_filepath)
-        processes.kill_processes(
-            f'--target {function_name}')
+        reusable.processes.kill_processes(f'--target {function_name}')
 
 
 def clean_daily():

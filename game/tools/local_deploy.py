@@ -1,7 +1,9 @@
 import os
 import subprocess
+import logging
 from tools import local_clean, local_paths, ports, pubsub_names
 
+logger = logging.getLogger(__name__)
 
 PUBSUB_EMULATOR_HOST = '0.0.0.0:8085'
 
@@ -30,7 +32,7 @@ def deploy_pubsub(project_id):
             topic_name = pubsub_names.topic.format(function_name=function_name)
             topic_path = publisher.topic_path(project_id, topic_name)
             topic = publisher.create_topic(request={'name': topic_path})
-            print(f'Created topic: {topic.name}')
+            logger.info(f'Created topic: {topic.name}')
             subscriber = pubsub_v1.SubscriberClient()
             subscription_name = pubsub_names.sub.format(
                 function_name=function_name)
@@ -44,8 +46,8 @@ def deploy_pubsub(project_id):
                         'name': subscription_path,
                         'topic': topic_path,
                         'push_config': push_config})
-            print(f'Push subscription created: {subscription}')
-            print(f'Endpoint for subscription is: {endpoint}')
+            logger.info(f'Push subscription created: {subscription}')
+            logger.info(f'Endpoint for subscription is: {endpoint}')
 
 
 def deploy_functions(project_id):

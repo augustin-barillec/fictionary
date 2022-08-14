@@ -1,5 +1,11 @@
 import argparse
+import logging
 import tools
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level='INFO')
+logger = logging.getLogger()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--project_id', required=True)
