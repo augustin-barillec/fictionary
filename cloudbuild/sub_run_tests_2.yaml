@@ -4,4 +4,103 @@ steps:
   dir: tests
   entrypoint: echo
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/game_dead/open_view.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/game_dead/update_view.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/game_dead/view_response.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/guess_click/already_guessed.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/guess_click/organizer.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/guess_submission/max_these_guessers.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/guess_submission/no_time_left.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/pick_submission/not_between.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/pick_submission/not_integer.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
 timeout: 3600s
