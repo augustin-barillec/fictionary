@@ -1,4 +1,4 @@
-FROM cypress/included:10.0.2
+FROM cypress/included:10.4.0
 COPY package.json .
 COPY package-lock.json .
 RUN npm install
