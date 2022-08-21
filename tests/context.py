@@ -17,12 +17,14 @@ subparsers.add_parser('setup_channels')
 subparsers.add_parser('print_conf')
 get_channel_id_parser = subparsers.add_parser('print_channel_id')
 get_channel_id_parser.add_argument('channel_name')
-subparsers.add_parser('clean_games')
-create_fake_guesser_parser = subparsers.add_parser('create_fake_guesser')
-create_fake_guesser_parser.add_argument('tag')
+create_fake_guess_parser = subparsers.add_parser('create_fake_guess')
+create_fake_guess_parser.add_argument('tag')
+create_fake_guess_parser.add_argument('user_index', type=int)
 create_fake_running_game_parser = subparsers.add_parser(
     'create_fake_running_game')
 create_fake_running_game_parser.add_argument('organizer_index', type=int)
+mark_game_as_success_parser = subparsers.add_parser('mark_game_as_success')
+mark_game_as_success_parser.add_argument('tag')
 delete_game_parser = subparsers.add_parser('delete_game')
 delete_game_parser.add_argument('tag')
 args = parser.parse_args()
@@ -39,6 +41,7 @@ teams_ref = db.collection('teams')
 team_ref = teams_ref.document(team_id)
 games_ref = team_ref.collection('games')
 channels_ref = team_ref.collection('channels')
+
 
 if args.command == 'setup_team':
     cf.setup_team(team_ref)
@@ -59,12 +62,13 @@ elif args.command == 'print_conf':
     print(cypress_context_conf)
 elif args.command == 'print_channel_id':
     print(cf.get_channel_id(channels_ref, args.channel_name))
-elif args.command == 'clean_games':
-    cf.clean_games(games_ref)
-elif args.command == 'create_fake_guesser':
-    cf.create_fake_guesser(games_ref, args.tag)
+elif args.command == 'create_fake_guess':
+    user_id = user_ids[args.user_index]
+    cf.create_fake_guess(games_ref, args.tag, user_id)
 elif args.command == 'create_fake_running_game':
     organizer_id = user_ids[args.organizer_index]
     cf.create_fake_running_game(games_ref, organizer_id)
+elif args.command == 'mark_game_as_success':
+    cf.mark_game_as_success(games_ref, args.tag)
 elif args.command == 'delete_game':
     cf.delete_game(games_ref, args.tag)

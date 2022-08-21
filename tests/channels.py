@@ -32,10 +32,10 @@ channel_names = [
     'setup_english',
     'setup_freestyle',
     'setup_french',
-    'transition_guess_full',
-    'transition_guess_shorten',
-    'transition_vote_full',
-    'transition_vote_shorten',
+    'transition_guess_full_time',
+    'transition_guess_shorten_time',
+    'transition_vote_full_time',
+    'transition_vote_shorten_time',
     'help',
     'special_characters']
 
@@ -81,9 +81,9 @@ channel_to_params['exception_vote_submission_no_time_left'][
     'time_to_vote'] = 35
 channel_to_params['exception_vote_submission_no_time_left'][
     'max_guessers_per_game'] = 2
-channel_to_params['transition_guess_full']['time_to_guess'] = 70
-channel_to_params['transition_guess_shorten'][
+channel_to_params['transition_guess_full_time']['time_to_guess'] = 70
+channel_to_params['transition_guess_shorten_time'][
     'max_guessers_per_game'] = 2
-channel_to_params['transition_vote_full']['max_guessers_per_game'] = 2
-channel_to_params['transition_vote_full']['time_to_vote'] = 30
-channel_to_params['transition_vote_shorten']['max_guessers_per_game'] = 2
+channel_to_params['transition_vote_full_time']['max_guessers_per_game'] = 2
+channel_to_params['transition_vote_full_time']['time_to_vote'] = 30
+channel_to_params['transition_vote_shorten_time']['max_guessers_per_game'] = 2

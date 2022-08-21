@@ -67,7 +67,6 @@ def slash_command(request):
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_slash_command_exceptions(trigger_id)
     if resp is not None:
-        logger.info(f'exception, game_id={game_id}')
         return resp
     if game.parameter == 'help':
         ut.slack.SlackOperator(game).send_help(organizer_id)
@@ -112,7 +111,6 @@ def pre_guess_stage(event, context_):
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_pre_guess_stage_exceptions()
     if resp is not None:
-        logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['pre_guess_stage_already_triggered'] = True
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
@@ -152,7 +150,6 @@ def guess_stage(event, context_):
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_guess_stage_exceptions()
     if resp is not None:
-        logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['guess_stage_last_trigger'] = reusable.time.get_now()
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
@@ -186,7 +183,6 @@ def pre_vote_stage(event, context_):
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_pre_vote_stage_exceptions()
     if resp is not None:
-        logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['pre_vote_stage_already_triggered'] = True
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
@@ -229,7 +225,6 @@ def vote_stage(event, context_):
     game = build_game(game_id)
     resp = ut.exceptions.ExceptionsHandler(game).handle_vote_stage_exceptions()
     if resp is not None:
-        logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['vote_stage_last_trigger'] = reusable.time.get_now()
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
@@ -264,7 +259,6 @@ def pre_result_stage(event, context_):
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_pre_results_stage_exceptions()
     if resp is not None:
-        logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['pre_result_stage_already_triggered'] = True
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
@@ -293,7 +287,6 @@ def result_stage(event, context_):
     resp = ut.exceptions.ExceptionsHandler(
         game).handle_results_stage_exceptions()
     if resp is not None:
-        logger.info(f'exception, game_id={game_id}')
         return resp
     game.dict['result_stage_over'] = True
     firestore_editor = ut.firestore.FirestoreEditor(game)
@@ -337,7 +330,7 @@ def monitor(event, context_):
         game_ids, game_dicts, outcomes)
     ut.monitoring.upload_monitoring(
         bq_client, context.project_id, monitoring)
-    logger.info('monitoring uploaded')
+    logger.info(f'monitoring uploaded: {len(monitoring)} lines')
     ut.monitoring.deduplicate_monitoring(bq_client, context.project_id)
     logger.info('monitoring deduplicated')
     return make_response('', 200)

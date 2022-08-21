@@ -306,56 +306,36 @@ class ExceptionsHandler:
             return make_response('', 200)
 
     def handle_pre_guess_stage_exceptions(self):
-        if self.game_is_dead():
-            return make_response('', 200)
         if self.game.pre_guess_stage_already_triggered:
             logger.info(
                 self.build_aborted_cause_already_triggered_msg())
             return make_response('', 200)
 
     def handle_guess_stage_exceptions(self):
-        if self.game_is_dead():
-            return make_response('', 200)
-        if self.game.guess_stage_over:
-            logger.info(
-                f'exception, guess_stage over {self.game.id}')
-            return make_response('', 200)
         if self.guess_stage_was_recently_trigger():
             logger.info(
                 self.build_aborted_cause_recently_triggered_msg())
             return make_response('', 200)
 
     def handle_pre_vote_stage_exceptions(self):
-        if self.game_is_dead():
-            return make_response('', 200)
         if self.game.pre_vote_stage_already_triggered:
             logger.info(
                 self.build_aborted_cause_already_triggered_msg())
             return make_response('', 200)
 
     def handle_vote_stage_exceptions(self):
-        if self.game_is_dead():
-            return make_response('', 200)
-        if self.game.vote_stage_over:
-            logger.info(
-                f'exception, vote_stage over {self.game.id}')
-            return make_response('', 200)
         if self.vote_stage_was_recently_trigger():
             logger.info(
                 self.build_aborted_cause_recently_triggered_msg())
             return make_response('', 200)
 
     def handle_pre_results_stage_exceptions(self):
-        if self.game_is_dead():
-            return make_response('', 200)
         if self.game.pre_result_stage_already_triggered:
             logger.info(
                 self.build_aborted_cause_already_triggered_msg())
             return make_response('', 200)
 
     def handle_results_stage_exceptions(self):
-        if self.game_is_dead():
-            return make_response('', 200)
         if self.game.result_stage_over:
             logger.info(
                 f'exception, results_stage over {self.game.id}')

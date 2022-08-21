@@ -18,14 +18,6 @@ def clean_channels_in_firestore(channels_ref):
     logger.info('Deleted channels in firestore')
 
 
-def clean_games(games_ref):
-    logger.info('Deleting games in firestore...')
-    for game in games_ref.stream():
-        game.reference.delete()
-        logger.info(f'{game.id} deleted')
-    logger.info('Deleted games in firestore')
-
-
 def store_channel_params(channels_ref, channel_id, params):
     logger.info(f'Storing params for channel_id = {channel_id}...')
     channel_ref = channels_ref.document(channel_id)

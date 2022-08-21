@@ -56,17 +56,13 @@ def get_channel_id(channel_refs, channel_name):
     return utils.firestore.get_channel_id(channel_refs, channel_name)
 
 
-def clean_games(games_ref):
-    utils.firestore.clean_games(games_ref)
-
-
-def create_fake_guesser(games_ref, tag):
+def create_fake_guess(games_ref, tag, user_id):
     game_dicts = reusable.firestore.get_dicts(games_ref)
     for game_id in game_dicts:
         game_dict = game_dicts[game_id]
         if game_dict['tag'] == tag:
             now = reusable.time.get_now()
-            data = {'guessers': {f'guesser_id_{now}': [now, 'guess']}}
+            data = {'guessers': {user_id: [now, 'fake_guess']}}
             game_ref = games_ref.document(game_id)
             game_ref.set(data, merge=True)
 
@@ -79,6 +75,17 @@ def create_fake_running_game(games_ref, organizer_id):
     game_dict = {'setup_submission': reusable.time.get_now()}
     game_ref = games_ref.document(game_id)
     game_ref.set(game_dict, merge=False)
+
+
+def mark_game_as_success(games_ref, tag):
+    cnt = 0
+    for g in games_ref.stream():
+        game_dict = g.to_dict()
+        if game_dict['tag'] == tag:
+            game_dict['result_stage_over'] = True
+            g.reference.set(game_dict, merge=False)
+            cnt += 1
+    assert cnt == 1
 
 
 def delete_game(games_ref, tag):

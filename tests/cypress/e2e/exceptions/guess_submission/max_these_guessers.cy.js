@@ -15,8 +15,8 @@ describe('main', () => {
         cy.guess_click(tag)
         cy.guess_type('g1')
 
-        cy.create_fake_guesser(tag)
-        cy.create_fake_guesser(tag)
+        cy.create_fake_guess(tag, 2)
+        cy.create_fake_guess(tag, 3)
 
         cy.submit_view()
 

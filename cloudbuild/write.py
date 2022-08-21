@@ -39,10 +39,10 @@ parallelizable_sources = [
     'setups/english.cy.js',
     'setups/freestyle.cy.js',
     'setups/french.cy.js',
-    'transitions/guess_full.cy.js',
-    'transitions/guess_shorten.cy.js',
-    'transitions/vote_full.cy.js',
-    'transitions/vote_shorten.cy.js',
+    'transitions/guess_full_time.cy.js',
+    'transitions/guess_shorten_time.cy.js',
+    'transitions/vote_full_time.cy.js',
+    'transitions/vote_shorten_time.cy.js',
     'help.cy.js',
     'special_characters.cy.js'
 ]

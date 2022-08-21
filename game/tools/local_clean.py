@@ -42,7 +42,7 @@ def clean_functions():
         reusable.processes.kill_processes(f'--target {function_name}')
 
 
-def clean_daily():
+def clean():
     clean_cloud_deploy_functions()
     clean_pubsub()
     clean_functions()

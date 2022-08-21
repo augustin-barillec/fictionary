@@ -13,16 +13,16 @@ Cypress.Commands.add('print_channel_id', channel_name => {
   cy.run_context(`print_channel_id ${channel_name}`)
 })
 
-Cypress.Commands.add('clean_games', () => {
-  cy.run_context('clean_games')
-})
-
-Cypress.Commands.add('create_fake_guesser', tag => {
-  cy.run_context(`create_fake_guesser ${tag}`)
+Cypress.Commands.add('create_fake_guess', (tag, user_index) => {
+  cy.run_context(`create_fake_guess ${tag} ${user_index}`)
 })
 
 Cypress.Commands.add('create_fake_running_game', organizer_index => {
   cy.run_context(`create_fake_running_game ${organizer_index}`)
+})
+
+Cypress.Commands.add('mark_game_as_success', tag => {
+  cy.run_context(`mark_game_as_success ${tag}`)
 })
 
 Cypress.Commands.add('delete_game', tag => {
@@ -68,24 +68,24 @@ Cypress.Commands.add('go_to_channel_from_channel_id', (conf, channel_id) => {
   cy.wait(1000)
 })
 
-Cypress.Commands.add('slash_command', (parameter, tag) => {
+Cypress.Commands.add('slash_command', (tag, parameter) => {
   cy.get('.ql-editor > p').click().clear().type(`/fictionary ${parameter} ${tag} {enter}`)
 })
 
 Cypress.Commands.add('slash_help', tag => {
-  cy.slash_command('help', tag)
+  cy.slash_command(tag, 'help')
 })
 
 Cypress.Commands.add('slash_freestyle', tag => {
-  cy.slash_command('freestyle', tag)
+  cy.slash_command(tag, 'freestyle')
 })
 
 Cypress.Commands.add('slash_english', tag => {
-  cy.slash_command('english', tag)
+  cy.slash_command(tag, 'english')
 })
 
 Cypress.Commands.add('slash_french', tag => {
-  cy.slash_command('french', tag)
+  cy.slash_command(tag, 'french')
 })
 
 Cypress.Commands.add('write_question_truth', (question, truth) => {
