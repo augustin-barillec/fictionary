@@ -6,20 +6,19 @@ def has_duplicates(list_):
 
 
 no_parallelizable_sources = [
-    # 'exceptions/setup_submission/max_running.cy.js',
     'exceptions/slash_command/max_running.cy.js',
-    'small.cy.js'
+    'small.cy.js',
+    # 'exceptions/setup_submission/max_running.cy.js',
+    # 'exceptions/slash_command/max_running.cy.js',
+    # 'small.cy.js'
 ]
 parallelizable_sources = [
-    'endings/hey.cy.js',
-    'endings/thanks.cy.js',
     'endings/winner.cy.js',
     'endings/winners.cy.js',
     'endings/zero.cy.js',
     'exceptions/game_dead/view_response.cy.js',
     'exceptions/guess_submission/max_these_guessers.cy.js',
     'exceptions/slash_command/max_this_running.cy.js',
-    'exceptions/vote_click/already_voted.cy.js',
     'exceptions/vote_click/not_a_potential_voter.cy.js',
     'exceptions/vote_submission/no_time_left.cy.js',
     'special_characters.cy.js',

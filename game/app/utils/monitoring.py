@@ -1,7 +1,7 @@
 import pandas
 import reusable
 from google.cloud import bigquery
-from app import utils
+from app.utils import ids
 
 columns = [
     'outcome',
@@ -32,10 +32,10 @@ bq_schema = [
 
 def compute_row(game_id, game_dict, outcome):
     row = dict()
-    team_id = utils.ids.game_id_to_team_id(game_id)
-    channel_id = utils.ids.game_id_to_channel_id(game_id)
-    organizer_id = utils.ids.game_id_to_organizer_id(game_id)
-    slash_datetime_compact = utils.ids.game_id_to_slash_datetime_compact(
+    team_id = ids.game_id_to_team_id(game_id)
+    channel_id = ids.game_id_to_channel_id(game_id)
+    organizer_id = ids.game_id_to_organizer_id(game_id)
+    slash_datetime_compact = ids.game_id_to_slash_datetime_compact(
         game_id)
     slash_datetime = reusable.time.compact_to_datetime(slash_datetime_compact)
     setup_submission = game_dict.get('setup_submission')
@@ -48,7 +48,7 @@ def compute_row(game_id, game_dict, outcome):
         nb_voters = len(game_dict['frozen_voters'])
     else:
         nb_voters = None
-    version = game_dict['version']
+    version = game_dict.get('version')
     row['outcome'] = outcome
     row['team_id'] = team_id
     row['channel_id'] = channel_id
