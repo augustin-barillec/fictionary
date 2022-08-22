@@ -10,28 +10,6 @@ steps:
   - tests-$PROJECT_ID
   - $_BUCKET_DIR_NAME
   - run_cypress
-  - endings/hey.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - endings/thanks.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
   - endings/winner.cy.js
   - '600'
   dir: tests
@@ -44,6 +22,28 @@ steps:
   - $_BUCKET_DIR_NAME
   - run_cypress
   - endings/winners.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - endings/zero.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/game_dead/view_response.cy.js
   - '600'
   dir: tests
   entrypoint: python

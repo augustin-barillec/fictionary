@@ -10,28 +10,6 @@ steps:
   - tests-$PROJECT_ID
   - $_BUCKET_DIR_NAME
   - run_cypress
-  - endings/zero.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - exceptions/game_dead/view_response.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
   - exceptions/guess_submission/max_these_guessers.cy.js
   - '600'
   dir: tests
@@ -44,6 +22,17 @@ steps:
   - $_BUCKET_DIR_NAME
   - run_cypress
   - exceptions/slash_command/max_this_running.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/vote_click/not_a_potential_voter.cy.js
   - '600'
   dir: tests
   entrypoint: python
