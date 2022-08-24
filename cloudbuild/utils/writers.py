@@ -67,7 +67,7 @@ class SubRunTestsWriter(Writer):
 
     def build_run_cypress_step(self, source):
         args = ['run.py', '$PROJECT_ID', 'tests-$PROJECT_ID',
-                '$_BUCKET_DIR_NAME', 'run_cypress', source, '600']
+                '$_BUCKET_DIR_NAME', 'run_cypress', source, '23']
         return self.build_step(
             args=args, entrypoint='python', dir_='tests')
 
@@ -106,7 +106,7 @@ class RunTestsWriter(Writer):
     def build_run_cypress_step(self, source):
         args = ['run.py', '$PROJECT_ID',
                 'tests-$PROJECT_ID', '$BUILD_ID',
-                'run_cypress', source, '600']
+                'run_cypress', source, '23']
         return self.build_step(
             args=args, entrypoint='python', dir_='tests')
 

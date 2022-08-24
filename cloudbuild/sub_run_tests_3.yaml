@@ -10,19 +10,8 @@ steps:
   - tests-$PROJECT_ID
   - $_BUCKET_DIR_NAME
   - run_cypress
-  - special_characters.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
   - transitions/guess_shorten_time.cy.js
-  - '600'
+  - '23'
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
