@@ -11,7 +11,7 @@ steps:
   - $_BUCKET_DIR_NAME
   - run_cypress
   - endings/winners.cy.js
-  - '23'
+  - '600'
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
@@ -22,7 +22,7 @@ steps:
   - $_BUCKET_DIR_NAME
   - run_cypress
   - endings/zero.cy.js
-  - '23'
+  - '600'
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image

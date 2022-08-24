@@ -11,7 +11,7 @@ steps:
   - $_BUCKET_DIR_NAME
   - run_cypress
   - transitions/vote_shorten_time.cy.js
-  - '23'
+  - '600'
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
