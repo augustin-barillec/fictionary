@@ -140,6 +140,12 @@ class RunTestsWriter(Writer):
         return self.build_step(
             args=args, entrypoint='python',  dir_='tests')
 
+    def build_report_successes_step(self):
+        args = ['run.py', '$PROJECT_ID',
+                'tests-$PROJECT_ID', '$BUILD_ID',
+                'report_successes']
+        return self.build_step(args=args, entrypoint='python', dir_='tests')
+
     def build_report_fails_step(self):
         args = ['run.py', '$PROJECT_ID',
                 'tests-$PROJECT_ID', '$BUILD_ID',
@@ -156,6 +162,7 @@ class RunTestsWriter(Writer):
             res.append(step)
         res.append(self.build_wait_end_step())
         res.append(self.build_write_stats_step())
+        res.append(self.build_report_successes_step())
         res.append(self.build_report_fails_step())
         return res
 

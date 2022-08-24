@@ -104,10 +104,23 @@ def write_stats(bucket, bucket_dir_name):
         bucket, bucket_dir_name, 'stats', str(stats))
 
 
-def report_fails(bucket, bucket_dir_name):
-    fails = get_fails(bucket, bucket_dir_name)
-    fails = [f.replace('&', '/') for f in fails]
-    fails = [f"'{f}'" for f in fails]
-    fails = ',\n'.join(fails)
+def report(bucket, bucket_dir_name, kind):
+    assert kind in ('success', 'fail')
+    if kind == 'success':
+        plural = 'successes'
+    else:
+        plural = 'fails'
+    selected = globals()[f'get_{plural}'](bucket, bucket_dir_name)
+    selected = [s.replace('&', '/') for s in selected]
+    selected = [f"'{s}'" for s in selected]
+    selected = ',\n'.join(selected)
     utils.storage.upload_string_to_gs(
-        bucket, bucket_dir_name, 'fails', fails)
+        bucket, bucket_dir_name, f'report_{plural}', selected)
+
+
+def report_successes(bucket, bucket_dir_name):
+    report(bucket, bucket_dir_name, 'success')
+
+
+def report_fails(bucket, bucket_dir_name):
+    report(bucket, bucket_dir_name, 'fail')
