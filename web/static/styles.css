@@ -37,16 +37,6 @@ h1 + p {
   padding-top: 0rem;
 }
 
-.button {
-  display: inline-flex;
-  margin: 0 auto;
-  padding: 1rem 2rem;
-  background: var(--primary-color);
-  color: white;
-  border-radius: 0.3rem;
-  margin-bottom: 2rem;
-}
-
 h2 {
   font-family: "Sansita Swashed", cursive;
   font-weight: 600;
