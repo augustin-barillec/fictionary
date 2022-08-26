@@ -1,1 +1,2 @@
-firebase-admin==3.*
+firebase-admin==5.*
+pandas==1.*
