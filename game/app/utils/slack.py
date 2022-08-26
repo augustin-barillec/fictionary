@@ -95,6 +95,9 @@ class SlackOperator:
             self.slack_client, self.game.channel_id, blocks_)
 
     def post_ephemeral(self, user_id, msg):
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(self.game.channel_id)
         msg = self.add_tag_to_text(msg)
         post_ephemeral(
             self.slack_client, self.game.channel_id, user_id, msg)

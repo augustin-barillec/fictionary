@@ -143,8 +143,8 @@ class ExceptionsHandler:
         return f'aborted cause already triggered, game_id={self.game.id}'
 
     def build_slash_command_exception_msg(
-            self, in_channel, game_parameter, game_dicts):
-        if not in_channel:
+            self, in_conversation, game_parameter, game_dicts):
+        if not in_conversation:
             return 'Please invite me first to this conversation!'
         if game_parameter not in ('help', 'freestyle', 'english', 'french'):
             return (f"Game parameter must be one of "
@@ -235,19 +235,19 @@ class ExceptionsHandler:
     def handle_slash_command_exceptions(self, trigger_id):
         slack_operator = self.slack_operator
         app_user_id = self.slack_operator.get_app_user_id()
-        in_channel = True
+        in_conversation = True
         try:
             slack_operator.post_ephemeral(app_user_id, 'I was invited!')
         except SlackApiError as e:
             assert 'error' in e.response
-            if e.response['error'] == 'not_in_channel':
-                in_channel = False
+            if e.response['error'] in ['channel_not_found', 'not_in_channel']:
+                in_conversation = False
             else:
                 raise e
         game_parameter = self.game.parameter
         game_dicts = self.game.firestore_reader.get_game_dicts()
         exception_msg = self.build_slash_command_exception_msg(
-            in_channel, game_parameter, game_dicts)
+            in_conversation, game_parameter, game_dicts)
         if exception_msg is not None:
             logger.info(
                 f'exception slash_command, {exception_msg} {self.game.id}')
