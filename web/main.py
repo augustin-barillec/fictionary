@@ -18,7 +18,7 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/questions/<language>')
+@app.route('/questions_<language>')
 def questions_answers_(language):
     questions_answers = db.collection('questions').document(
         language).get().to_dict()['questions_answers']
