@@ -2,15 +2,15 @@
 {% block title %} <title>Fictionary | {{capitalized_language}} questions</title>{% endblock %}
 {% block body %}
 <a href="/">Home</a>
-<h1>{{capitalized_language}} questions</h1>
+<h2 class="questions_answers">{{capitalized_language}} questions</h2>
 <ol>
 {%for i in range(len_qas)%}
     {% if i is divisibleby 2 %}
         <li>
-            {{qas[i]}}<br>
+            <div class="question">{{qas[i]}}</div>
     {% else %}
             <button onclick="ShowHide()">Show Answer</button>
-            <div style="display: none;">{{qas[i]}}</div>
+            <div class="answer" style="display: none">{{qas[i]}}</div>
         </li>
     {% endif %}
 {%endfor%}

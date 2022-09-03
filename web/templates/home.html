@@ -1,41 +1,42 @@
 {% extends 'base.html' %}
 {% block title %} <title>Fictionary</title>{% endblock %}
 {% block body %}
-    <h1>Fictionary</h1>
-        <div class="pitch">
-            <p>A slack app to play <a href="https://en.wikipedia.org/wiki/Fictionary" target="_blank">fictionary</a>.</p>
-        </div>
-    <h2>Set up a game</h2>
-        <p>The organizer types one of the following command:</p>
-    <ul>
-        <li>/fictionary freestyle</li>
-        <li>/fictionary english</li>
-        <li>/fictionary french</li>
-    </ul>
-    <p>
-        The first command lets the organizer write a question and an answer. <br>
-        The other commands let the organizer pick a question from one of the <br>
-        question banks below.
-    </p>
-    <h2>Question Banks</h2>
-    <ul>
-      <li><a href="/questions_english" target="_blank">English</a></li>
-      <li><a href="/questions_french" target="_blank">French</a></li>
-    </ul>
-    <h2>Gameplay</h2>
-        <ol>
-            <li>Players see only the question and write a credible answer.</li>
-            <li>Players vote for the answer they believe is correct.</li>
-            <li>Players win one point for voting for the game's answer <br>
-                and two points for each vote cast for the answer they wrote. </li>
-        </ol>
-    <h2>Source</h2>
-        <a href=https://github.com/augustin-barillec/fictionary target="_blank">https://github.com/augustin-barillec/fictionary</a>
-    <h2>Support</h2>
-        <p>augustin.barillec@yokyok.ninja</p>
-    <h2>Privacy Policy</h2>
-        <p>See <a href="/privacy_policy" target="_blank">here</a>.</p>
-    <div class="footnote">
-        <p>Made with ❤️ by Augustin Barillec</p>
-    </div>
+<h1>Fictionary</h1>
+<div class="pitch"> A slack app to play <a href="https://en.wikipedia.org/wiki/Fictionary" target="_blank">fictionary</a>. </div>
+<h2>Set up a game</h2>
+<p>The organizer types one of the following command:</p>
+<ul>
+	<li>/fictionary freestyle</li>
+	<li>/fictionary english</li>
+	<li>/fictionary french</li>
+</ul>
+<p>
+	The first command lets the organizer write a question and an answer.
+	The other commands let the organizer pick a question from one of the question banks below.
+</p>
+<h2>Question Banks</h2>
+<ul>
+	<li>
+		<a href="/questions_english" target="_blank">English</a>
+	</li>
+	<li>
+		<a href="/questions_french" target="_blank">French</a>
+	</li>
+</ul>
+<h2>Gameplay</h2>
+<ol>
+	<li>Players see only the question and write a credible answer.</li>
+	<li>Players vote for the answer they believe is correct.</li>
+	<li>Players win one point for voting for the game's answer and
+        two points for each vote cast for the answer they wrote. </li>
+</ol>
+<h2>Source</h2>
+<a href=https://github.com/augustin-barillec/fictionary target="_blank">https://github.com/augustin-barillec/fictionary</a>
+<h2>Support</h2>
+<p>augustin.barillec@yokyok.ninja</p>
+<h2>Privacy Policy</h2>
+<p>See <a href="/privacy_policy" target="_blank">here</a>. </p>
+<div class="footnote">
+	<p>Made with ❤️ by Augustin Barillec</p>
+</div>
 {% endblock %}
