@@ -7,8 +7,8 @@
     Fictionary is a Slack app for fun. It collects only the data necessary to its functioning.
 </p>
 <p>
-    All data is stored in a Firestore instance in Europe. It is a database provided by
-    Google Cloud Platform and it is not public to internet.
+    All data is stored in a Firestore instance in Europe. It is a private database
+    provided by Google Cloud Platform.
 </p>
 <p>
     During the installation, we collect the following informations:
@@ -16,7 +16,6 @@
 <ul>
 	<li>Team ID, ex: TXXXXXXX. This allows the bot to select the correct authorization token in order to interact with your workspace.</li>
 	<li>Authorization Token, the token granted by Slack to our bot in order to securely communicate with your workspace.</li>
-
 </ul>
 <p>
     For each game, we collect the following informations:
@@ -34,8 +33,7 @@
     users is stored for monitoring purposes.
 </p>
 <p>
-    If you want the data associated with your
-    workspace to be removed, you can send me a email at augustin.barillec@yokyok.ninja
-    with your team ID.
+    If you want the data associated with your workspace to be removed, you can
+    send a email at augustin.barillec@yokyok.ninja with your team ID.
 </p>
 {% endblock %}
