@@ -5,9 +5,9 @@ logger = logging.getLogger(__name__)
 
 
 def store_team_params(team_ref, params):
-    logger.info(f'Storing params for team...')
+    logger.info(f'Storing params for {team_ref.id}...')
     team_ref.set(params, merge=False)
-    logger.info(f'Stored params for team')
+    logger.info(f'Stored params for team {team_ref.id}')
 
 
 def clean_channels_in_firestore(channels_ref):
