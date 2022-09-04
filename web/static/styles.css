@@ -50,6 +50,7 @@ a:hover {
 .pitch {
     font-style: italic;
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 .footnote {
