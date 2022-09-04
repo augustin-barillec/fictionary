@@ -42,14 +42,15 @@ Cypress.Commands.add('get_channel_id', channel_name => {
 })
 
 Cypress.Commands.add('login', (signin_url, email, password) => {
-  cy.clearCookies()
-  cy.visit(signin_url)
-  cy.wait(1000)
-  cy.visit(signin_url)
-  cy.wait(1000)
-  cy.get('#email').click().type(email).should('have.value', email)
-  cy.get('#password').click().type(password, {log: false })
-  cy.get('#signin_btn').click()
+  cy.session(email, () => {
+      cy.visit(signin_url)
+      cy.wait(1000)
+      cy.visit(signin_url)
+      cy.wait(1000)
+      cy.get('#email').click().type(email).should('have.value', email)
+      cy.get('#password').click().type(password, {log: false })
+      cy.get('#signin_btn').click()
+  })
 })
 
 Cypress.Commands.add('login_from_user_index', (conf, user_index) => {

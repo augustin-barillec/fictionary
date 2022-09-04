@@ -7,6 +7,9 @@ describe('main', () => {
         const tag = Cypress._.random(100000, 999999)
 
         cy.login_from_user_index(conf, 0)
+        cy.login_from_user_index(conf, 1)
+
+        cy.login_from_user_index(conf, 0)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.organize_freestyle_game(tag, 'question', 'truth')
 
