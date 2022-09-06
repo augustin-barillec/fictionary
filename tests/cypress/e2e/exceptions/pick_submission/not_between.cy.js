@@ -9,7 +9,7 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.slash_english(tag)
         cy.get('[placeholder*="Between"]').click().type('550 {enter}')
-        cy.contains(`${tag}: 550 is not between 1 and 3.`)
+        cy.contains(`${tag}: 550 is not between 1 and`)
       })
     })
   })

@@ -49,13 +49,8 @@ parallelizable_sources = [
 
 no_parallelizable_sources = []
 parallelizable_sources = [
-    'endings/hey.cy.js',
-    'endings/no_votes.cy.js',
-    'endings/thanks.cy.js',
     'endings/winners.cy.js',
-    'endings/zero.cy.js',
     'exceptions/pick_submission/not_between.cy.js',
-    'exceptions/vote_click/already_voted.cy.js',
     'exceptions/vote_click/not_a_potential_voter.cy.js',
     'exceptions/vote_submission/no_time_left.cy.js',
     'transitions/guess_full_time.cy.js'

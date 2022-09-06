@@ -65,7 +65,7 @@ steps:
   - tests-$PROJECT_ID
   - $BUILD_ID
   - wait_end
-  - '10'
+  - '5'
   dir: tests
   entrypoint: python
   name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image

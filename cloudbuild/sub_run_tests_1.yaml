@@ -10,7 +10,7 @@ steps:
   - tests-$PROJECT_ID
   - $_BUCKET_DIR_NAME
   - run_cypress
-  - endings/hey.cy.js
+  - endings/winners.cy.js
   - '600'
   dir: tests
   entrypoint: python
@@ -21,18 +21,7 @@ steps:
   - tests-$PROJECT_ID
   - $_BUCKET_DIR_NAME
   - run_cypress
-  - endings/no_votes.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - endings/thanks.cy.js
+  - exceptions/pick_submission/not_between.cy.js
   - '600'
   dir: tests
   entrypoint: python
