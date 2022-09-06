@@ -295,7 +295,7 @@ def result_stage(event, context_):
     return make_response('', 200)
 
 
-def monitor(event, context_):
+def clean(event, context_):
     assert event == event and context_ == context_
     from google.cloud import bigquery
     bq_client = bigquery.Client()
