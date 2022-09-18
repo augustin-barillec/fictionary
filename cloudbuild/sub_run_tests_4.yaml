@@ -10,73 +10,7 @@ steps:
   - tests-$PROJECT_ID
   - $_BUCKET_DIR_NAME
   - run_cypress
-  - setups/freestyle.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - setups/french.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - transitions/guess_full_time.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - transitions/guess_shorten_time.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - transitions/vote_full_time.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - transitions/vote_shorten_time.cy.js
-  - '600'
-  dir: tests
-  entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
-- args:
-  - run.py
-  - $PROJECT_ID
-  - tests-$PROJECT_ID
-  - $_BUCKET_DIR_NAME
-  - run_cypress
-  - help.cy.js
+  - setups/english.cy.js
   - '600'
   dir: tests
   entrypoint: python
@@ -88,6 +22,17 @@ steps:
   - $_BUCKET_DIR_NAME
   - run_cypress
   - special_characters.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - transitions/vote_full_time.cy.js
   - '600'
   dir: tests
   entrypoint: python
