@@ -8,7 +8,7 @@ team_params = {
     'refresh_interval': 4,
     'self_trigger_threshold': 60,
     'tagging': False,
-    'time_to_guess': 600,
+    'time_to_guess': 900,
     'time_to_vote': 600,
     'trigger_cooldown': 30}
 

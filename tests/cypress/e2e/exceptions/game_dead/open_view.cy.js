@@ -15,7 +15,7 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.wait(20000)
+        cy.wait(10000)
         cy.guess_click(tag)
 
         cy.contains(`${tag}: This game is dead!`)

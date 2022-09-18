@@ -30,8 +30,6 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.vote(tag, '0')
 
-        cy.wait(15000)
-
         cy.contains(`${tag}: Freestyle game set up by @augustin!`)
         cy.contains(`${tag}: question`)
         cy.contains(`${tag}: • Truth: 3) truth`)

@@ -10,7 +10,6 @@ describe('main', () => {
         cy.get('[placeholder*="Between"]').click().type('1 {enter}')
         cy.contains('Question 1 selected:')
         cy.submit_view()
-        cy.wait(5000)
         cy.contains(`${tag}: Automatic game set up by @augustin!`)
         cy.contains(`${tag}: Guess`)
       })
