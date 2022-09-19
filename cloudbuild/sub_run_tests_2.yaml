@@ -10,7 +10,7 @@ steps:
   - tests-$PROJECT_ID
   - $_BUCKET_DIR_NAME
   - run_cypress
-  - endings/well.cy.js
+  - endings/zero.cy.js
   - '600'
   dir: tests
   entrypoint: python
