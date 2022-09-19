@@ -47,9 +47,7 @@ parallelizable_sources = [
     'special_characters.cy.js'
 ]
 
-no_parallelizable_sources = [
-    'exceptions/setup_submission/max_running.cy.js',
-]
+no_parallelizable_sources = []
 parallelizable_sources = [
     'endings/bravo.cy.js',
     'endings/hey.cy.js',

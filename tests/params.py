@@ -18,3 +18,5 @@ channel_default_params['max_running_games'] = 100
 channel_default_params['max_running_games_per_organizer'] = 100
 channel_default_params['refresh_interval'] = 9
 channel_default_params['tagging'] = True
+channel_default_params['time_to_guess'] = 180
+channel_default_params['time_to_vote'] = 180
