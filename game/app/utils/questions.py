@@ -4,7 +4,7 @@ from app.utils import url
 
 def get_questions_url(game):
     res = url.get_url(game)
-    res = f'{res}/questions/{game.parameter}'
+    res = f'{res}/questions_{game.parameter}'
     return res
 
 
