@@ -38,6 +38,7 @@ class BlockActionHandler:
         number_picked = int(number_picked_str)
         number, question, answer = ut.questions.select(
             questions, answers, number_picked)
+        assert number_picked == number
         self.slack_operator.update_setup_automatic_view(
             self.view_id, url, max_number, number_picked, question, answer)
         logger.info(f'question {number_picked} picked, '
