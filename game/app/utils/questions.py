@@ -9,17 +9,19 @@ def get_questions_url(game):
 
 
 def get_questions_answers(game):
-    res = game.db.collection('questions').document(
-        game.parameter).get().to_dict()['questions_answers']
-    return res
+    questions_dict = game.db.collection('questions').document(
+        game.parameter).get().to_dict()
+    questions = questions_dict['questions']
+    answers = questions_dict['answers']
+    assert len(questions) == len(answers)
+    return questions, answers
 
 
-def select(questions_answers, number=None):
-    assert len(questions_answers) % 2 == 0
-    max_number = len(questions_answers)//2
+def select(questions, answers, number=None):
+    max_number = len(questions)
     if number is None:
         number = randrange(1, max_number + 1)
     assert number in range(1, max_number + 1)
-    question = questions_answers[2*number-2]
-    answer = questions_answers[2*number-1]
-    return max_number, number, question, answer
+    question = questions[number - 1]
+    answer = answers[number - 1]
+    return number, question, answer

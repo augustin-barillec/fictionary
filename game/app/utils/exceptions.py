@@ -191,12 +191,12 @@ class ExceptionsHandler:
             return msg
 
     @staticmethod
-    def build_pick_submission_exception_msg(qas, number_picked_str):
+    def build_pick_submission_exception_msg(
+            max_number, number_picked_str):
         try:
             number_picked = int(number_picked_str)
         except ValueError:
             return 'Input must be an integer.'
-        max_number = len(qas) // 2
         if number_picked not in range(1, max_number + 1):
             msg = f'{number_picked} is not between 1 and {max_number}.'
             return msg
@@ -280,9 +280,9 @@ class ExceptionsHandler:
                 exception_msg)
 
     def handle_pick_submission_exceptions(
-            self, trigger_id, qas, number_picked_str):
+            self, trigger_id, max_number, number_picked_str):
         exception_msg = self.build_pick_submission_exception_msg(
-            qas, number_picked_str)
+            max_number, number_picked_str)
         if exception_msg is not None:
             logger.info(
                 f'exception pick_submission, {exception_msg} {self.game.id}')

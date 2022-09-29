@@ -28,12 +28,12 @@ h2 {
     font-weight: 600;
 }
 
-h2.questions_answers, h2.privacy_policy {
+h2.questions, h2.privacy_policy {
     color: var(--primary-color);
     text-align: center;
 }
 
-h2.questions_answers {
+h2.questions {
     margin-bottom: 0;
 }
 

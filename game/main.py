@@ -77,9 +77,9 @@ def slash_command(request):
         ut.slack.SlackOperator(game).open_setup_freestyle_view(trigger_id)
     elif game.parameter in ('english', 'french'):
         url = ut.questions.get_questions_url(game)
-        questions_answers = ut.questions.get_questions_answers(game)
-        max_number, number, question, answer = ut.questions.select(
-            questions_answers)
+        questions, answers = ut.questions.get_questions_answers(game)
+        max_number = len(questions)
+        number, question, answer = ut.questions.select(questions, answers)
         ut.slack.SlackOperator(game).open_setup_automatic_view(
             trigger_id, url, max_number, number, question, answer)
     logger.info(f'setup_view opened, game_id={game.id}')

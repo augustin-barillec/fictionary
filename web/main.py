@@ -19,15 +19,21 @@ def home():
 
 
 @app.route('/questions_<language>')
-def questions_answers_(language):
-    questions_answers = db.collection('questions').document(
-        language).get().to_dict()['questions_answers']
-    len_questions_answers = len(questions_answers)
+def questions_(language):
+    questions_dict = db.collection('questions').document(
+        language).get().to_dict()
+    questions = questions_dict['questions']
+    answers = questions_dict['answers']
+    sources = questions_dict['sources']
+    credits_ = questions_dict['credits']
     return render_template(
-        'questions_answers.html',
+        'questions.html',
         capitalized_language=language.capitalize(),
-        len_qas=len_questions_answers,
-        qas=questions_answers)
+        len_questions=len(questions),
+        questions=questions,
+        answers=answers,
+        sources=sources,
+        credits_=credits_)
 
 
 @app.route('/privacy_policy')
