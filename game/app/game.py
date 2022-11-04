@@ -78,7 +78,6 @@ class Game:
         self.indexed_signed_proposals = self.dict.get(
             'indexed_signed_proposals')
         self.lower_ts = self.dict.get('lower_ts')
-        self.max_guessers = self.dict.get('max_guessers')
         self.max_score = self.dict.get('max_score')
         self.parameter = self.dict.get('parameter')
         self.potential_voters = self.dict.get('potential_voters')
@@ -114,9 +113,9 @@ class Game:
             self.time_left_to_vote = utils.time.datetime1_minus_datetime2(
                 self.vote_deadline, self.now)
 
-        if self.max_guessers is not None and self.guessers is not None:
+        if self.guessers is not None:
             self.nb_remaining_potential_guessers = (
-                    self.max_guessers - len(self.guessers))
+                    self.max_guessers_per_game - len(self.guessers))
 
         if self.potential_voters is not None and self.voters is not None:
             self.remaining_potential_voters = utils.users.\

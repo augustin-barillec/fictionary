@@ -23,11 +23,10 @@ class ViewSubmissionHandler:
         self.game = context.build_game_func(self.game_id)
         self.exceptions_handler = ut.exceptions.ExceptionsHandler(self.game)
 
-    def finalize_setup_submission(self, question, truth, max_guessers):
+    def finalize_setup_submission(self, question, truth):
         self.game.setup_submission = reusable.time.get_now()
         self.game.question = question
         self.game.truth = truth
-        self.game.max_guessers = max_guessers
         resp = self.exceptions_handler.handle_setup_submission_exceptions()
         if resp is not None:
             return resp
@@ -35,8 +34,7 @@ class ViewSubmissionHandler:
         for attribute in [
             'setup_submission',
             'question',
-            'truth',
-            'max_guessers'
+            'truth'
         ]:
             self.game.dict[attribute] = self.game.__dict__[attribute]
         ut.firestore.FirestoreEditor(self.game).set_game(merge=True)
@@ -46,15 +44,13 @@ class ViewSubmissionHandler:
 
     def handle_setup_freestyle_submission(self):
         logger.info(self.view)
-        question, truth, max_guessers = ut.views.collect_setup_freestyle(
-            self.view)
-        return self.finalize_setup_submission(question, truth, max_guessers)
+        question, truth = ut.views.collect_setup_freestyle(self.view)
+        return self.finalize_setup_submission(question, truth)
 
     def handle_setup_automatic_submission(self):
         logger.info(self.view)
-        question, truth, max_guessers = ut.views.collect_setup_automatic(
-            self.view)
-        return self.finalize_setup_submission(question, truth, max_guessers)
+        question, truth = ut.views.collect_setup_automatic(self.view)
+        return self.finalize_setup_submission(question, truth)
 
     def handle_guess_submission(self):
         guess = ut.views.collect_guess(self.view)

@@ -126,7 +126,6 @@ def pre_guess_stage(event, context_):
     for attribute in [
         'upper_ts',
         'lower_ts',
-        'max_guessers',
         'guessers',
         'guess_start',
         'guess_deadline'

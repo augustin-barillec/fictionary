@@ -25,15 +25,13 @@ def questions_(language):
     questions = questions_dict['questions']
     answers = questions_dict['answers']
     sources = questions_dict['sources']
-    credits_ = questions_dict['credits']
     return render_template(
         'questions.html',
         capitalized_language=language.capitalize(),
         len_questions=len(questions),
         questions=questions,
         answers=answers,
-        sources=sources,
-        credits_=credits_)
+        sources=sources)
 
 
 @app.route('/privacy_policy')

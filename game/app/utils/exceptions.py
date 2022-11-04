@@ -61,7 +61,7 @@ class ExceptionsHandler:
                 >= self.game.max_running_games_per_organizer)
 
     def max_nb_these_guessers_reached(self):
-        return len(self.game.guessers) >= self.game.max_guessers
+        return len(self.game.guessers) >= self.game.max_guessers_per_game
 
     def no_time_left_to_guess(self):
         return self.game.time_left_to_guess <= 0
@@ -179,8 +179,8 @@ class ExceptionsHandler:
             msg = (f'Your guess: {guess}\n\n '
                    'It will not be taken into account '
                    'because there are already '
-                   f'{self.game.max_guessers} guessers. '
-                   'This is the maximal number allowed for this game.')
+                   f'{self.game.max_guessers_per_game} guessers. '
+                   'This is the maximal number allowed for a game.')
             return msg
 
     def build_vote_submission_exception_msg(self, vote):

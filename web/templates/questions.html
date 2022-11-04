@@ -3,38 +3,38 @@
 {% block body %}
 <a href="/">Home</a>
 <h2 class="questions">{{capitalized_language}} questions</h2>
-<ol>
+<button id="shuffle" onclick="Shuffle()">Shuffle</button>
+<ul id="id_questions">
 {%for i in range(len_questions)%}
         <li>
-            <div class="question">{{questions[i]}}</div>
+            <div class="question">{{i+1}}: {{questions[i]}}</div>
             <button onclick="ShowHide()">Show Answer</button>
-            <div class="answer" style="display: none">Answer: {{answers[i]}}</div>
-            <div style="display: none">Source: <a href={{sources[i]}} target="_blank">{{sources[i]}}</a></div>
-            <div style="display: none">Credit: <a href={{credits_[i]}} target="_blank">{{credits_[i]}}</a></div>
+            <div class="answer" style="display: none">{{answers[i]}}</div>
+            <div style="display: none"><a href={{sources[i]}} target="_blank">{{sources[i]}}</a></div>
         </li>
 {%endfor%}
-</ol>
+</ul>
 <script>
+    function Shuffle(event) {
+        console.log(Math.random()*5 | 0);
+        var ul = document.querySelector('#id_questions');
+        for (var i = ul.children.length; i >= 0; i--) {
+            ul.appendChild(ul.children[Math.random() * i | 0]);
+        }
+    }
+
     function ShowHide($event) {
         var button = event.target;
         var answer = button.nextElementSibling;
         var source = answer.nextElementSibling;
-        var credit = source.nextElementSibling;
         if (answer.style.display === "none") {
             button.innerHTML = 'Hide Answer';
             answer.style.display = "block";
             source.style.display = "block";
-            if (credit.firstChild.nextElementSibling.text.length === 0){
-               credit.style.display = "none";
-            }
-            else {
-               credit.style.display = "block";
-            }
         } else {
             button.innerHTML = 'Show Answer';
             answer.style.display = "none";
             source.style.display = "none";
-            credit.style.display = "none";
         }
     }
 </script>

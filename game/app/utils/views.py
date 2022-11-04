@@ -19,29 +19,16 @@ def build_exception_view(msg):
     return res
 
 
-def build_setup_freestyle_view(id_, max_guessers_per_game):
+def build_setup_freestyle_view(id_):
     res = deepcopy(setup_freestyle_view_template)
     res['callback_id'] = id_
-
-    res['blocks'][4]['accessory']['initial_option']['text']['text'] = \
-        str(max_guessers_per_game)
-    res['blocks'][4]['accessory']['initial_option']['value'] = \
-        str(max_guessers_per_game)
-    options = []
-    for i in range(2, max_guessers_per_game + 1):
-        option = deepcopy(res['blocks'][4]['accessory']['options'][0])
-        option['text']['text'] = str(i)
-        option['value'] = str(i)
-        options.append(option)
-    res['blocks'][4]['accessory']['options'] = options
     return res
 
 
 def build_setup_automatic_view(
         id_, pick_block_id, shuffle_block_id,
         language, url, max_number, number,
-        question, answer,
-        max_guessers_per_game):
+        question, answer):
     res = deepcopy(setup_automatic_view_template)
     res['callback_id'] = id_
     res['private_metadata'] = answer
@@ -56,18 +43,6 @@ def build_setup_automatic_view(
         'text'] = f'Between 1 and {max_number}'
     res['blocks'][5]['text']['text'] = f'Question *{number}* selected: '
     res['blocks'][6]['text']['text'] = question
-
-    res['blocks'][7]['accessory']['initial_option']['text']['text'] = \
-        str(max_guessers_per_game)
-    res['blocks'][7]['accessory']['initial_option']['value'] = \
-        str(max_guessers_per_game)
-    options = []
-    for i in range(2, max_guessers_per_game + 1):
-        option = deepcopy(res['blocks'][7]['accessory']['options'][0])
-        option['text']['text'] = str(i)
-        option['value'] = str(i)
-        options.append(option)
-    res['blocks'][7]['accessory']['options'] = options
     return res
 
 
@@ -84,18 +59,13 @@ def collect_setup_freestyle(setup_freestyle_view):
     values = setup_freestyle_view['state']['values']
     question = values['question']['question']['value']
     truth = values['truth']['truth']['value']
-    max_guessers = int(values['max_guessers']['max_guessers']
-                       ['selected_option']['value'])
-    return question, truth, max_guessers
+    return question, truth
 
 
 def collect_setup_automatic(setup_automatic_view):
     question = setup_automatic_view['blocks'][6]['text']['text']
     truth = setup_automatic_view['private_metadata']
-    values = setup_automatic_view['state']['values']
-    max_guessers = int(values['max_guessers']['max_guessers']
-                       ['selected_option']['value'])
-    return question, truth, max_guessers
+    return question, truth
 
 
 def collect_guess(guess_view):
@@ -119,7 +89,7 @@ class ViewBuilder:
 
     def build_setup_freestyle_view(self):
         id_ = self.surface_id_builder.build_setup_freestyle_view_id()
-        return build_setup_freestyle_view(id_, self.game.max_guessers_per_game)
+        return build_setup_freestyle_view(id_)
 
     def build_setup_automatic_view(
             self, url, max_number, number, question, answer):
@@ -127,11 +97,9 @@ class ViewBuilder:
         pick_block_id = self.surface_id_builder.build_pick_block_id()
         shuffle_block_id = self.surface_id_builder.build_shuffle_block_id()
         language = self.game.parameter
-        max_guessers_per_game = self.game.max_guessers_per_game
         return build_setup_automatic_view(
             id_, pick_block_id, shuffle_block_id,
-            language, url, max_number, number, question, answer,
-            max_guessers_per_game)
+            language, url, max_number, number, question, answer)
 
     def build_guess_view(self):
         id_ = self.surface_id_builder.build_guess_view_id()

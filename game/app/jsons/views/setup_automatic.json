@@ -87,34 +87,6 @@
 				"type": "plain_text",
 				"text": "{}"
 			}
-		},
-		{
-			"type": "section",
-			"block_id": "max_guessers",
-			"text": {
-				"type": "plain_text",
-				"text": "Maximum number of players"
-			},
-			"accessory": {
-				"type": "static_select",
-				"action_id": "max_guessers",
-				"initial_option": {
-					"text": {
-						"type": "plain_text",
-						"text": "{}"
-					},
-					"value": "{}"
-				},
-				"options": [
-					{
-						"text": {
-							"type": "plain_text",
-							"text": "{}"
-						},
-						"value": "{}"
-					}
-				]
-			}
 		}
 	]
 }

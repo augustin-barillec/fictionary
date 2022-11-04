@@ -10,7 +10,6 @@ columns = [
     'organizer_id',
     'slash_datetime',
     'setup_submission',
-    'max_guessers',
     'nb_guessers',
     'nb_voters',
     'version',
@@ -23,7 +22,6 @@ bq_schema = [
     bigquery.SchemaField('organizer_id', 'STRING'),
     bigquery.SchemaField('slash_datetime', 'TIMESTAMP'),
     bigquery.SchemaField('setup_submission', 'TIMESTAMP'),
-    bigquery.SchemaField('max_guessers', 'INTEGER'),
     bigquery.SchemaField('nb_guessers', 'INTEGER'),
     bigquery.SchemaField('nb_voters', 'INTEGER'),
     bigquery.SchemaField('version', 'STRING'),
@@ -39,7 +37,6 @@ def compute_row(game_id, game_dict, outcome):
         game_id)
     slash_datetime = reusable.time.compact_to_datetime(slash_datetime_compact)
     setup_submission = game_dict.get('setup_submission')
-    max_guessers = game_dict.get('max_guessers')
     if 'frozen_guessers' in game_dict:
         nb_guessers = len(game_dict['frozen_guessers'])
     else:
@@ -55,7 +52,6 @@ def compute_row(game_id, game_dict, outcome):
     row['organizer_id'] = organizer_id
     row['slash_datetime'] = slash_datetime
     row['setup_submission'] = setup_submission
-    row['max_guessers'] = max_guessers
     row['nb_guessers'] = nb_guessers
     row['nb_voters'] = nb_voters
     row['version'] = version
