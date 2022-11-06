@@ -10,7 +10,84 @@ steps:
   - tests-$PROJECT_ID
   - $_BUCKET_DIR_NAME
   - run_cypress
+  - exceptions/setup_submission/max_this_running.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/slash_command/invalid_parameter.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/slash_command/max_this_running.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/slash_command/not_invited.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/vote_click/already_voted.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
   - exceptions/vote_click/not_a_potential_voter.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - exceptions/vote_submission/no_time_left.cy.js
+  - '600'
+  dir: tests
+  entrypoint: python
+  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/tests_image
+- args:
+  - run.py
+  - $PROJECT_ID
+  - tests-$PROJECT_ID
+  - $_BUCKET_DIR_NAME
+  - run_cypress
+  - setups/english.cy.js
   - '600'
   dir: tests
   entrypoint: python
