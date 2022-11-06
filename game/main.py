@@ -3,12 +3,14 @@ import logging
 import time
 import hashlib
 import json
+import google.cloud.bigquery
 import google.cloud.pubsub_v1
 import google.cloud.firestore
 import reusable
 from argparse import Namespace
 from copy import deepcopy
 from flask import make_response
+from languages import LANGUAGES
 from version import VERSION
 from app import utils as ut
 from app import interactivity as inter
@@ -75,7 +77,7 @@ def slash_command(request):
     logger.info(f'game  stored, game_id={game_id}')
     if game.parameter == 'freestyle':
         ut.slack.SlackOperator(game).open_setup_freestyle_view(trigger_id)
-    elif game.parameter in ('english', 'french'):
+    elif game.parameter in LANGUAGES:
         url = ut.questions.get_questions_url(game)
         questions, answers = ut.questions.get_questions_answers(game)
         max_number = len(questions)
@@ -296,8 +298,7 @@ def result_stage(event, context_):
 
 def clean(event, context_):
     assert event == event and context_ == context_
-    from google.cloud import bigquery
-    bq_client = bigquery.Client()
+    bq_client = google.cloud.bigquery.Client()
     game_ids = []
     game_dicts = []
     outcomes = []

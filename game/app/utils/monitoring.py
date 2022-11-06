@@ -2,12 +2,16 @@ import pandas
 import reusable
 from google.cloud import bigquery
 from app.utils import ids
+from languages import LANGUAGES
 
 columns = [
     'outcome',
     'team_id',
     'channel_id',
     'organizer_id',
+    'parameter',
+    'question',
+    'truth',
     'slash_datetime',
     'setup_submission',
     'nb_guessers',
@@ -20,6 +24,9 @@ bq_schema = [
     bigquery.SchemaField('team_id', 'STRING'),
     bigquery.SchemaField('channel_id', 'STRING'),
     bigquery.SchemaField('organizer_id', 'STRING'),
+    bigquery.SchemaField('parameter', 'STRING'),
+    bigquery.SchemaField('question', 'STRING'),
+    bigquery.SchemaField('truth', 'STRING'),
     bigquery.SchemaField('slash_datetime', 'TIMESTAMP'),
     bigquery.SchemaField('setup_submission', 'TIMESTAMP'),
     bigquery.SchemaField('nb_guessers', 'INTEGER'),
@@ -37,6 +44,13 @@ def compute_row(game_id, game_dict, outcome):
         game_id)
     slash_datetime = reusable.time.compact_to_datetime(slash_datetime_compact)
     setup_submission = game_dict.get('setup_submission')
+    parameter = game_dict.get('parameter')
+    if parameter in LANGUAGES:
+        question = game_dict.get('question')
+        truth = game_dict.get('truth')
+    else:
+        question = None
+        truth = None
     if 'frozen_guessers' in game_dict:
         nb_guessers = len(game_dict['frozen_guessers'])
     else:
@@ -50,6 +64,9 @@ def compute_row(game_id, game_dict, outcome):
     row['team_id'] = team_id
     row['channel_id'] = channel_id
     row['organizer_id'] = organizer_id
+    row['parameter'] = parameter
+    row['question'] = question
+    row['truth'] = truth
     row['slash_datetime'] = slash_datetime
     row['setup_submission'] = setup_submission
     row['nb_guessers'] = nb_guessers

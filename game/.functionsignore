@@ -3,6 +3,7 @@
 !/app/**
 !/tools/**
 !/reusable/**
+!languages.py
 !version.py
 !requirements.txt
 !.

@@ -3,6 +3,7 @@ import reusable
 from flask import make_response, abort
 from slack_sdk.errors import SlackApiError
 from app.utils import slack, time, ids
+from languages import LANGUAGES
 
 logger = logging.getLogger(__name__)
 
@@ -146,9 +147,10 @@ class ExceptionsHandler:
             self, in_conversation, game_parameter, game_dicts):
         if not in_conversation:
             return 'Please invite me first to this conversation!'
-        if game_parameter not in ('help', 'freestyle', 'english', 'french'):
-            return (f"Game parameter must be one of "
-                    "help, freestyle, english or french.")
+        p = ['help', 'freestyle'] + LANGUAGES
+        if game_parameter not in p:
+            return ("Game parameter must be one of "
+                    f"{', '.join(p[:-1])} or {p[-1]}.")
         if self.max_nb_this_organizer_running_games_reached(game_dicts):
             m = self.build_max_nb_this_organizer_running_games_reached_msg(
                 remind=False)
