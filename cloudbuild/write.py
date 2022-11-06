@@ -47,13 +47,6 @@ parallelizable_sources = [
     'special_characters.cy.js'
 ]
 
-no_parallelizable_sources = []
-parallelizable_sources = [
-    'endings/well.cy.js',
-    'endings/zero.cy.js',
-    'exceptions/vote_click/not_a_potential_voter.cy.js'
-]
-
 
 assert not has_duplicates(no_parallelizable_sources + parallelizable_sources)
 
