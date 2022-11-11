@@ -10,3 +10,4 @@ cloud_deploy_function_*.txt
 data_dir/
 cypress/screenshots/
 cypress/videos/
+run.txt
