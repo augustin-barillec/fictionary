@@ -1,5 +1,4 @@
 import os
-import time
 import subprocess
 import glob
 import logging
@@ -78,15 +77,6 @@ def get_successes(bucket, bucket_dir_name):
 
 def get_fails(bucket, bucket_dir_name):
     return get_outcomes(bucket, bucket_dir_name, 'fail')
-
-
-def wait_end(bucket, bucket_dir_name, expected_nb_cases):
-    nb_cases = 0
-    while nb_cases < expected_nb_cases:
-        nb_successes = len(get_successes(bucket, bucket_dir_name))
-        nb_fails = len(get_fails(bucket, bucket_dir_name))
-        nb_cases = nb_successes + nb_fails
-        time.sleep(5)
 
 
 def write_stats(bucket, bucket_dir_name):
