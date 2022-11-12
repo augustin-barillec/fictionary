@@ -1,33 +1,31 @@
 import logging
+import flask
+import slack_sdk.errors
 import reusable
-from flask import make_response, abort
-from slack_sdk.errors import SlackApiError
-from app.utils import slack, time, ids
-from languages import LANGUAGES
-
+import app.utils as ut
+import languages
 logger = logging.getLogger(__name__)
 
 
 def game_is_too_old(game_id, max_life_span):
     now = reusable.time.get_now()
-    slash_datetime_compact = ids.game_id_to_slash_datetime_compact(game_id)
+    slash_datetime_compact = ut.ids.game_id_to_slash_datetime_compact(game_id)
     slash_datetime = reusable.time.compact_to_datetime(
         slash_datetime_compact)
-    delta = time.datetime1_minus_datetime2(
+    delta = ut.time.datetime1_minus_datetime2(
         now, slash_datetime)
     return delta > max_life_span
 
 
 class ExceptionsHandler:
-
     def __init__(self, game):
         self.game = game
-        self.slack_operator = slack.SlackOperator(self.game)
+        self.slack_operator = ut.slack.SlackOperator(self.game)
 
     def verify_signature(self, body, headers):
         if not self.game.slack_verifier.is_valid_request(body, headers):
             logger.error(f'verification failed, game_id={self.game.id}')
-            abort(401)
+            flask.abort(401)
 
     @staticmethod
     def game_is_running(game_dict):
@@ -43,7 +41,7 @@ class ExceptionsHandler:
         organizer_id = self.game.organizer_id
         running_games = self.get_running_games(game_dicts)
         return {gid: game_dicts[gid] for gid in running_games if
-                ids.game_id_to_organizer_id(gid) == organizer_id}
+                ut.ids.game_id_to_organizer_id(gid) == organizer_id}
 
     def count_running_games(self, game_dicts):
         return len(self.get_running_games(game_dicts))
@@ -86,7 +84,7 @@ class ExceptionsHandler:
         if last_trigger is None:
             return False
         now = reusable.time.get_now()
-        delta = time.datetime1_minus_datetime2(now, last_trigger)
+        delta = ut.time.datetime1_minus_datetime2(now, last_trigger)
         return delta < self.game.trigger_cooldown
 
     def guess_stage_was_recently_trigger(self):
@@ -147,7 +145,7 @@ class ExceptionsHandler:
             self, in_conversation, game_parameter, game_dicts):
         if not in_conversation:
             return 'Please invite me first to this conversation!'
-        p = ['help', 'freestyle'] + LANGUAGES
+        p = ['help', 'freestyle'] + languages.LANGUAGES
         if game_parameter not in p:
             return ("Game parameter must be one of "
                     f"{', '.join(p[:-1])} or {p[-1]}.")
@@ -226,10 +224,10 @@ class ExceptionsHandler:
             return
         if trigger_id is not None:
             self.slack_operator.open_exception_view(trigger_id, exception_msg)
-            return make_response('', 200)
+            return flask.make_response('', 200)
         elif view_id is not None:
             self.slack_operator.update_exception_view(view_id, exception_msg)
-            return make_response('', 200)
+            return flask.make_response('', 200)
         else:
             return self.slack_operator.build_exception_view_response(
                 exception_msg)
@@ -240,7 +238,7 @@ class ExceptionsHandler:
         in_conversation = True
         try:
             slack_operator.post_ephemeral(app_user_id, 'I was invited!')
-        except SlackApiError as e:
+        except slack_sdk.errors.SlackApiError as e:
             assert 'error' in e.response
             if e.response['error'] in ['channel_not_found', 'not_in_channel']:
                 in_conversation = False
@@ -254,7 +252,7 @@ class ExceptionsHandler:
             logger.info(
                 f'exception slash_command, {exception_msg} {self.game.id}')
             slack_operator.open_exception_view(trigger_id, exception_msg)
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_setup_submission_exceptions(self):
         game_dicts = self.game.firestore_reader.get_game_dicts()
@@ -289,7 +287,7 @@ class ExceptionsHandler:
             logger.info(
                 f'exception pick_submission, {exception_msg} {self.game.id}')
             self.slack_operator.push_exception_view(trigger_id, exception_msg)
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_guess_click_exceptions(self, user_id, trigger_id):
         exception_msg = self.build_guess_click_exception_msg(user_id)
@@ -297,7 +295,7 @@ class ExceptionsHandler:
             logger.info(
                 f'exception guess_click, {exception_msg} {self.game.id}')
             self.slack_operator.open_exception_view(trigger_id, exception_msg)
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_vote_click_exceptions(self, user_id, trigger_id):
         exception_msg = self.build_vote_click_exception_msg(user_id)
@@ -305,40 +303,40 @@ class ExceptionsHandler:
             logger.info(
                 f'exception vote_click, {exception_msg} {self.game.id}')
             self.slack_operator.open_exception_view(trigger_id, exception_msg)
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_pre_guess_stage_exceptions(self):
         if self.game.pre_guess_stage_already_triggered:
             logger.info(
                 self.build_aborted_cause_already_triggered_msg())
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_guess_stage_exceptions(self):
         if self.guess_stage_was_recently_trigger():
             logger.info(
                 self.build_aborted_cause_recently_triggered_msg())
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_pre_vote_stage_exceptions(self):
         if self.game.pre_vote_stage_already_triggered:
             logger.info(
                 self.build_aborted_cause_already_triggered_msg())
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_vote_stage_exceptions(self):
         if self.vote_stage_was_recently_trigger():
             logger.info(
                 self.build_aborted_cause_recently_triggered_msg())
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_pre_results_stage_exceptions(self):
         if self.game.pre_result_stage_already_triggered:
             logger.info(
                 self.build_aborted_cause_already_triggered_msg())
-            return make_response('', 200)
+            return flask.make_response('', 200)
 
     def handle_results_stage_exceptions(self):
         if self.game.result_stage_over:
             logger.info(
                 f'exception, results_stage over {self.game.id}')
-            return make_response('', 200)
+            return flask.make_response('', 200)

@@ -1,13 +1,13 @@
 import reusable
-from app.utils import ids
+import app.utils as ut
 
 
 class FirestoreReader:
     def __init__(self, db, game_id):
         self.db = db
         self.game_id = game_id
-        self.team_id = ids.game_id_to_team_id(self.game_id)
-        self.channel_id = ids.game_id_to_channel_id(self.game_id)
+        self.team_id = ut.ids.game_id_to_team_id(self.game_id)
+        self.channel_id = ut.ids.game_id_to_channel_id(self.game_id)
 
     def get_team_ref(self):
         return self.db.collection('teams').document(self.team_id)

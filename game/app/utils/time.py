@@ -1,8 +1,8 @@
-from datetime import timedelta
+import datetime
 
 
 def compute_deadline(start_datetime, time_left):
-    return start_datetime + timedelta(seconds=time_left)
+    return start_datetime + datetime.timedelta(seconds=time_left)
 
 
 def datetime1_minus_datetime2(d1, d2):

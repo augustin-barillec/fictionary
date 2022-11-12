@@ -1,12 +1,10 @@
 import argparse
 import logging
 import tools
-
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level='INFO')
 logger = logging.getLogger()
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--project_id', required=True)
 subparsers = parser.add_subparsers(dest='to_deploy')
@@ -16,7 +14,6 @@ functions_parser.add_argument('region')
 functions_parser.add_argument('port', type=int)
 functions_parser.add_argument('pre_sleep_duration', type=int)
 args = parser.parse_args()
-
 assert args.to_deploy in ('pubsub', 'function')
 if args.to_deploy == 'pubsub':
     tools.cloud_deploy.deploy_pubsub(args.project_id)

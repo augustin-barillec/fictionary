@@ -2,6 +2,7 @@ import os
 import subprocess
 import glob
 import logging
+import shutil
 import reusable
 import utils
 
@@ -15,6 +16,11 @@ DEBUG=cypress:server npx cypress run \
 --env PROJECT_ID={project_id} \
 --spec {spec}
 """
+
+
+def delete_screenshots_dir():
+    screenshots_path = 'cypress/screenshots'
+    reusable.delete_local.delete_folder(screenshots_path)
 
 
 def build_spec(source):
@@ -114,3 +120,10 @@ def report_successes(bucket, bucket_dir_name):
 
 def report_fails(bucket, bucket_dir_name):
     report(bucket, bucket_dir_name, 'fail')
+
+
+def upload_run_logs_if_exists(bucket, bucket_dir_name):
+    run_logs_basename = 'run.txt'
+    if os.path.exists(run_logs_basename):
+        utils.storage.upload_file_to_gs(
+            bucket, bucket_dir_name, run_logs_basename, run_logs_basename)

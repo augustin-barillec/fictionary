@@ -1,9 +1,9 @@
-from copy import deepcopy
-from app.utils import jsons, blocks, proposals
+import copy
+import app.utils as ut
 
 
 def get_view(basename):
-    return jsons.get_json('views', basename)
+    return ut.jsons.get_json('views', basename)
 
 
 exception_view_template = get_view('exception.json')
@@ -14,13 +14,13 @@ vote_view_template = get_view('vote.json')
 
 
 def build_exception_view(msg):
-    res = deepcopy(exception_view_template)
+    res = copy.deepcopy(exception_view_template)
     res['blocks'][0]['text']['text'] = msg
     return res
 
 
 def build_setup_freestyle_view(id_):
-    res = deepcopy(setup_freestyle_view_template)
+    res = copy.deepcopy(setup_freestyle_view_template)
     res['callback_id'] = id_
     return res
 
@@ -29,7 +29,7 @@ def build_setup_automatic_view(
         id_, pick_block_id, shuffle_block_id,
         language, url, max_number, number,
         question, answer):
-    res = deepcopy(setup_automatic_view_template)
+    res = copy.deepcopy(setup_automatic_view_template)
     res['callback_id'] = id_
     res['private_metadata'] = answer
 
@@ -47,10 +47,10 @@ def build_setup_automatic_view(
 
 
 def build_guess_view(id_, question):
-    res = deepcopy(guess_view_template)
+    res = copy.deepcopy(guess_view_template)
     res['callback_id'] = id_
-    input_block = deepcopy(res['blocks'][0])
-    question_block = blocks.build_text_block(question)
+    input_block = copy.deepcopy(res['blocks'][0])
+    question_block = ut.blocks.build_text_block(question)
     res['blocks'] = [question_block, input_block]
     return res
 
@@ -84,8 +84,8 @@ class ViewBuilder:
     def __init__(self, game):
         self.game = game
         self.surface_id_builder = self.game.surface_id_builder
-        self.proposals_browser = proposals.ProposalsBrowser(game)
-        self.block_builder = blocks.BlockBuilder(game)
+        self.proposals_browser = ut.proposals.ProposalsBrowser(game)
+        self.block_builder = ut.blocks.BlockBuilder(game)
 
     def build_setup_freestyle_view(self):
         id_ = self.surface_id_builder.build_setup_freestyle_view_id()
@@ -106,7 +106,7 @@ class ViewBuilder:
         return build_guess_view(id_, self.game.question)
 
     def build_vote_view(self, voter):
-        res = deepcopy(vote_view_template)
+        res = copy.deepcopy(vote_view_template)
         res['callback_id'] = self.surface_id_builder.build_vote_view_id()
         input_block_template = res['blocks'][0]
         votable_proposals_msg = ['Voting options:']
@@ -117,7 +117,7 @@ class ViewBuilder:
             index = viap['index']
             proposal = viap['proposal']
             votable_proposals_msg.append(f'{index}) {proposal}')
-            vote_option = deepcopy(option_template)
+            vote_option = copy.deepcopy(option_template)
             vote_option['text']['text'] = f'{index}'
             vote_option['value'] = f'{index}'
             vote_options.append(vote_option)
@@ -126,6 +126,6 @@ class ViewBuilder:
         input_block['element']['options'] = vote_options
         res['blocks'] = [
             self.block_builder.build_own_guess_block(voter),
-            blocks.build_text_block(votable_proposals_msg),
+            ut.blocks.build_text_block(votable_proposals_msg),
             input_block]
         return res

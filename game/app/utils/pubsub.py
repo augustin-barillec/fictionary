@@ -1,11 +1,9 @@
-import tools
 import logging
-
+import tools
 logger = logging.getLogger(__name__)
 
 
 class StageTriggerer:
-
     def __init__(self, publisher, project_id, game_id):
         self.publisher = publisher
         self.project_id = project_id

@@ -1,9 +1,9 @@
-from copy import deepcopy
-from app.utils import jsons, proposals, time, users
+import copy
+import app.utils as ut
 
 
 def get_block(basename):
-    return jsons.get_json('blocks', basename)
+    return ut.jsons.get_json('blocks', basename)
 
 
 def get_divider_block():
@@ -45,13 +45,12 @@ def build_button_block(msg, id_):
 
 def build_timer_block(time_left, kind):
     assert kind in ('guess', 'vote')
-    time_display = time.build_time_display_for_timer(time_left)
+    time_display = ut.time.build_time_display_for_timer(time_left)
     msg = f'Time left to {kind}: {time_display}'
     return build_text_block(msg)
 
 
 class BlockBuilder:
-
     def __init__(self, game):
         self.game = game
         self.surface_id_builder = self.game.surface_id_builder
@@ -67,7 +66,7 @@ class BlockBuilder:
             kind = 'Freestyle'
         else:
             kind = 'Automatic'
-        organizer = users.user_display(self.game.organizer_id)
+        organizer = ut.users.user_display(self.game.organizer_id)
         msg = f'{kind} game set up by {organizer}!'
         return build_text_block(msg)
 
@@ -101,7 +100,7 @@ class BlockBuilder:
 
     @staticmethod
     def build_users_blocks(users_, kind, no_users_msg):
-        msg = users.build_users_msg(users_, kind, no_users_msg)
+        msg = ut.users.build_users_msg(users_, kind, no_users_msg)
         return build_text_block(msg)
 
     def build_remaining_potential_voters_block(self):
@@ -125,7 +124,7 @@ class BlockBuilder:
     def build_indexed_anonymous_proposals_block(self):
         msg = ['Proposals:']
         indexed_anonymous_proposals = \
-            proposals.ProposalsBrowser(
+            ut.proposals.ProposalsBrowser(
                 self.game).build_indexed_anonymous_proposals()
         for iap in indexed_anonymous_proposals:
             index = iap['index']
@@ -135,7 +134,7 @@ class BlockBuilder:
         return build_text_block(msg)
 
     def build_own_guess_block(self, voter):
-        index, guess = proposals.ProposalsBrowser(
+        index, guess = ut.proposals.ProposalsBrowser(
             self.game).build_own_indexed_guess(voter)
         msg = f'Your guess: {index}) {guess}'
         return build_text_block(msg)
@@ -151,8 +150,8 @@ class BlockBuilder:
 
     def build_signed_guesses_block(self, show_index):
         msg = []
-        for r in deepcopy(self.game.results):
-            guesser = users.user_display(r['guesser'])
+        for r in copy.deepcopy(self.game.results):
+            guesser = ut.users.user_display(r['guesser'])
             index = r['index']
             guess = r['guess']
             if show_index:
@@ -171,13 +170,13 @@ class BlockBuilder:
 
     def build_voting_edges_block(self):
         msg = []
-        for r in deepcopy(self.game.results):
+        for r in copy.deepcopy(self.game.results):
             if 'vote_index' not in r:
                 continue
-            voter = users.user_display(r['guesser'])
+            voter = ut.users.user_display(r['guesser'])
             chosen_author = r['chosen_author']
             if chosen_author != 'Truth':
-                chosen_author = users.user_display(chosen_author)
+                chosen_author = ut.users.user_display(chosen_author)
             r_msg = f'• {voter} -> {chosen_author}'
             msg.append(r_msg)
         msg = '\n'.join(msg)
@@ -185,8 +184,8 @@ class BlockBuilder:
 
     def build_scores_block(self):
         msg = []
-        for r in deepcopy(self.game.results):
-            guesser = users.user_display(r['guesser'])
+        for r in copy.deepcopy(self.game.results):
+            guesser = ut.users.user_display(r['guesser'])
             score = r['score']
             assert score >= 0
             if score == 1:
@@ -204,13 +203,13 @@ class BlockBuilder:
         if lg == 0:
             return 'No one played this game :sob:.'
         if lg == 1:
-            g = users.user_display(list(self.game.frozen_guessers)[0])
+            g = ut.users.user_display(list(self.game.frozen_guessers)[0])
             return f'Thanks for your guess, {g}!'
         if lv == 0:
             return 'No one voted :sob:.'
         if lv == 1:
             r = self.game.results[0]
-            g = users.user_display(r['guesser'])
+            g = ut.users.user_display(r['guesser'])
             ca = r['chosen_author']
             if ca == 'Truth':
                 return f'Bravo {g}! You found the truth! :v:'
@@ -222,10 +221,10 @@ class BlockBuilder:
         if lw == lv:
             return "Well, it's a draw! :scales:"
         if lw == 1:
-            w = users.user_display(self.game.winners[0])
+            w = ut.users.user_display(self.game.winners[0])
             return f'And the winner is {w}! :first_place_medal:'
         if lw > 1:
-            ws = [users.user_display(w) for w in self.game.winners]
+            ws = [ut.users.user_display(w) for w in self.game.winners]
             msg_aux = ','.join(ws[:-1])
             msg_aux += f' and {ws[-1]}'
             return f'And the winners are {msg_aux}! :clap:'

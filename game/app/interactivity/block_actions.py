@@ -1,7 +1,6 @@
 import logging
-from flask import make_response
-from app import utils as ut
-
+import flask
+import app.utils as ut
 logger = logging.getLogger(__name__)
 
 
@@ -43,7 +42,7 @@ class BlockActionHandler:
             self.view_id, url, max_number, number_picked, question, answer)
         logger.info(f'question {number_picked} picked, '
                     f'user_id={self.user_id}, game_id={self.game.id}')
-        return make_response('', 200)
+        return flask.make_response('', 200)
 
     def handle_shuffle_click(self):
         url = ut.questions.get_questions_url(self.game)
@@ -55,7 +54,7 @@ class BlockActionHandler:
             self.view_id, url, max_number, number_random, question, answer)
         logger.info(f'question {number_random} shuffled, '
                     f'user_id={self.user_id}, game_id={self.game.id}')
-        return make_response('', 200)
+        return flask.make_response('', 200)
 
     def handle_guess_click(self):
         resp = self.exceptions_handler.handle_guess_click_exceptions(
@@ -65,7 +64,7 @@ class BlockActionHandler:
         self.slack_operator.open_guess_view(self.trigger_id)
         logger.info(f'guess_view opened, user_id={self.user_id}, '
                     f'game_id={self.game.id}')
-        return make_response('', 200)
+        return flask.make_response('', 200)
 
     def handle_vote_click(self):
         resp = self.exceptions_handler.handle_vote_click_exceptions(
@@ -75,7 +74,7 @@ class BlockActionHandler:
         self.slack_operator.open_vote_view(self.trigger_id, self.user_id)
         logger.info(f'vote_view opened, user_id={self.user_id}, '
                     f'game_id={self.game.id}')
-        return make_response('', 200)
+        return flask.make_response('', 200)
 
     def handle(self):
         self.exceptions_handler.verify_signature(self.body, self.headers)
@@ -109,5 +108,5 @@ class BlockActionHandler:
 def handle_block_action(body, headers, payload, context):
     if not payload['actions'][0]['block_id'].startswith(
             context.surface_prefix):
-        return make_response('', 200)
+        return flask.make_response('', 200)
     return BlockActionHandler(body, headers, payload, context).handle()

@@ -1,8 +1,7 @@
 import logging
+import flask
 import reusable
-from flask import make_response
-from app import utils as ut
-
+import app.utils as ut
 logger = logging.getLogger(__name__)
 
 
@@ -40,7 +39,7 @@ class ViewSubmissionHandler:
         ut.firestore.FirestoreEditor(self.game).set_game(merge=True)
         self.game.stage_triggerer.trigger_pre_guess_stage()
         logger.info(f'pre_guess_stage triggered, game_id={self.game.id}')
-        return make_response('', 200)
+        return flask.make_response('', 200)
 
     def handle_setup_freestyle_submission(self):
         logger.info(self.view)
@@ -63,7 +62,7 @@ class ViewSubmissionHandler:
         ut.firestore.FirestoreEditor(self.game).set_game(merge=True)
         logger.info(f'guess recorded, guesser_id={self.user_id}, '
                     f'game_id={self.game.id}')
-        return make_response('', 200)
+        return flask.make_response('', 200)
 
     def handle_vote_submission(self):
         vote = ut.views.collect_vote(self.view)
@@ -75,7 +74,7 @@ class ViewSubmissionHandler:
         ut.firestore.FirestoreEditor(self.game).set_game(merge=True)
         logger.info(f'vote recorded, voter_id={self.user_id}, '
                     f'game_id={self.game.id} ')
-        return make_response('', 200)
+        return flask.make_response('', 200)
 
     def handle(self):
         self.exceptions_handler.verify_signature(self.body, self.headers)
@@ -98,5 +97,5 @@ class ViewSubmissionHandler:
 
 def handle_view_submission(body, headers, payload, context):
     if not payload['view']['callback_id'].startswith(context.surface_prefix):
-        return make_response('', 200)
+        return flask.make_response('', 200)
     return ViewSubmissionHandler(body, headers, payload, context).handle()

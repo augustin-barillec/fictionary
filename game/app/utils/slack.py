@@ -1,7 +1,7 @@
 import json
+import flask
 import tools
-from flask import Response
-from app.utils import blocks, help, tag, users, views
+import app.utils as ut
 
 
 def auth_test(slack_client):
@@ -36,7 +36,7 @@ def push_view(slack_client, trigger_id, view):
 
 def build_view_response(view):
     res = {'response_action': 'update', 'view': view}
-    res = Response(
+    res = flask.Response(
         json.dumps(res),
         mimetype='application/json',
         status=200)
@@ -44,22 +44,22 @@ def build_view_response(view):
 
 
 def open_exception_view(slack_client, trigger_id, msg):
-    exception_view = views.build_exception_view(msg)
+    exception_view = ut.views.build_exception_view(msg)
     open_view(slack_client, trigger_id, exception_view)
 
 
 def update_exception_view(slack_client, view_id, msg):
-    exception_view = views.build_exception_view(msg)
+    exception_view = ut.views.build_exception_view(msg)
     update_view(slack_client, view_id, exception_view)
 
 
 def push_exception_view(slack_client, trigger_id, msg):
-    exception_view = views.build_exception_view(msg)
+    exception_view = ut.views.build_exception_view(msg)
     push_view(slack_client, trigger_id, exception_view)
 
 
 def build_exception_view_response(msg):
-    exception_view = views.build_exception_view(msg)
+    exception_view = ut.views.build_exception_view(msg)
     return build_view_response(exception_view)
 
 
@@ -67,23 +67,23 @@ class SlackOperator:
     def __init__(self, game):
         self.game = game
         self.slack_client = self.game.slack_client
-        self.block_builder = blocks.BlockBuilder(game)
-        self.view_builder = views.ViewBuilder(game)
+        self.block_builder = ut.blocks.BlockBuilder(game)
+        self.view_builder = ut.views.ViewBuilder(game)
         self.tagging = self.game.exists and self.game.tagging
 
     def add_tag_to_text(self, text):
         if self.tagging:
-            text = tag.add_tag_to_text(text, self.game.tag)
+            text = ut.tag.add_tag_to_text(text, self.game.tag)
         return text
 
     def add_tag_to_blocks(self, blocks_):
         if self.tagging:
-            blocks_ = tag.add_tag_to_json_list(blocks_, self.game.tag)
+            blocks_ = ut.tag.add_tag_to_json_list(blocks_, self.game.tag)
         return blocks_
 
     def add_tag_to_view(self, view):
         if self.tagging:
-            view = tag.add_tag_to_json(view, self.game.tag)
+            view = ut.tag.add_tag_to_json(view, self.game.tag)
         return view
 
     def get_app_user_id(self):
@@ -162,21 +162,21 @@ class SlackOperator:
         self.open_view(trigger_id, view)
 
     def send_help(self, user_id):
-        msg = help.build_msg(self.game)
+        msg = ut.help.build_msg(self.game)
         self.post_ephemeral(user_id, msg)
 
     def send_vote_reminders(self):
         for u in self.game.potential_voters:
             msg = (
-                f'Hey {users.user_display(u)}, '
-                'you can now vote in the fictionary game '
-                f'organized by {users.user_display(self.game.organizer_id)}!')
+                f'Hey {ut.users.user_display(u)}, '
+                'you can now vote in the fictionary game organized '
+                f'by {ut.users.user_display(self.game.organizer_id)}!')
             self.post_ephemeral(u, msg)
 
     def send_is_over_notifications(self):
         for u in self.game.frozen_guessers:
             msg = ("The fictionary game organized by "
-                   f"{users.user_display(self.game.organizer_id)} is over!")
+                   f"{ut.users.user_display(self.game.organizer_id)} is over!")
             self.post_ephemeral(u, msg)
 
     def post_pre_guess_stage_upper(self):

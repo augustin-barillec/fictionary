@@ -1,11 +1,10 @@
-from app.utils import proposals
+import app.utils as ut
 
 
 class ResultsBuilder:
-
     def __init__(self, game):
         self.game = game
-        self.proposals_browser = proposals.ProposalsBrowser(self.game)
+        self.proposals_browser = ut.proposals.ProposalsBrowser(self.game)
 
     def compute_truth_score(self, voter):
         return int(self.game.frozen_voters[voter][1] == self.game.truth_index)

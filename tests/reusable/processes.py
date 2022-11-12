@@ -1,6 +1,6 @@
+import os
 import signal
 import subprocess
-import os
 
 
 def list_processes(contains):

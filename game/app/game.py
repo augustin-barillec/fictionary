@@ -1,11 +1,10 @@
 import reusable
-from slack_sdk import WebClient
-from slack_sdk.signature import SignatureVerifier
-from app import utils
+import slack_sdk
+import slack_sdk.signature
+import app.utils as ut
 
 
 class Game:
-
     def __init__(
             self,
             game_id,
@@ -13,33 +12,33 @@ class Game:
             project_id,
             publisher,
             db):
-
         self.id = game_id
         self.surface_prefix = surface_prefix
         self.project_id = project_id
         self.publisher = publisher
         self.db = db
 
-        self.team_id = utils.ids.game_id_to_team_id(self.id)
-        self.channel_id = utils.ids.game_id_to_channel_id(self.id)
-        self.organizer_id = utils.ids.game_id_to_organizer_id(self.id)
+        self.team_id = ut.ids.game_id_to_team_id(self.id)
+        self.channel_id = ut.ids.game_id_to_channel_id(self.id)
+        self.organizer_id = ut.ids.game_id_to_organizer_id(self.id)
 
-        self.surface_id_builder = utils.ids.SurfaceIdBuilder(
+        self.surface_id_builder = ut.ids.SurfaceIdBuilder(
             self.surface_prefix, self.id)
 
-        self.stage_triggerer = utils.pubsub.StageTriggerer(
+        self.stage_triggerer = ut.pubsub.StageTriggerer(
             self.publisher, self.project_id, self.id)
 
-        self.firestore_reader = utils.firestore.FirestoreReader(
+        self.firestore_reader = ut.firestore.FirestoreReader(
             self.db, self.id)
         self.ref = self.firestore_reader.get_game_ref()
         self.team_dict = self.firestore_reader.get_team_dict()
 
         slack_token = self.team_dict['slack_token']
-        self.slack_client = WebClient(slack_token)
+        self.slack_client = slack_sdk.WebClient(slack_token)
 
         slack_signing_secret = self.team_dict['slack_signing_secret']
-        self.slack_verifier = SignatureVerifier(slack_signing_secret)
+        self.slack_verifier = slack_sdk.signature.SignatureVerifier(
+            slack_signing_secret)
 
         channel_dicts = self.firestore_reader.get_channel_dicts()
         if self.channel_id in channel_dicts:
@@ -106,11 +105,11 @@ class Game:
         self.now = reusable.time.get_now()
 
         if self.guess_deadline is not None:
-            self.time_left_to_guess = utils.time.datetime1_minus_datetime2(
+            self.time_left_to_guess = ut.time.datetime1_minus_datetime2(
                 self.guess_deadline, self.now)
 
         if self.vote_deadline is not None:
-            self.time_left_to_vote = utils.time.datetime1_minus_datetime2(
+            self.time_left_to_vote = ut.time.datetime1_minus_datetime2(
                 self.vote_deadline, self.now)
 
         if self.guessers is not None:
@@ -118,6 +117,6 @@ class Game:
                     self.max_guessers_per_game - len(self.guessers))
 
         if self.potential_voters is not None and self.voters is not None:
-            self.remaining_potential_voters = utils.users.\
+            self.remaining_potential_voters = ut.users.\
                 compute_remaining_potential_voters(
                     self.potential_voters, self.voters)

@@ -47,7 +47,6 @@ def game_id_to_organizer_id(game_id):
 
 
 class SurfaceIdBuilder:
-
     def __init__(self, surface_prefix, game_id):
         self.surface_prefix = surface_prefix
         self.game_id = game_id

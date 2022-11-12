@@ -71,6 +71,7 @@ last_sources = [
     'special_characters.cy.js'
 ]
 sources = first_sources + last_sources
+sources = sources[:2]
 
 logger.info('Deleting games...')
 cnt = 0
@@ -90,3 +91,4 @@ logger.info(f'Ended run tests [{duration}s]')
 rf.write_stats(bucket, bucket_dir_name)
 rf.report_successes(bucket, bucket_dir_name)
 rf.report_fails(bucket, bucket_dir_name)
+rf.upload_run_logs_if_exists(bucket, bucket_dir_name)
