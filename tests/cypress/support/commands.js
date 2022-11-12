@@ -2,7 +2,7 @@ const YAML = require('yamljs')
 const project_id = Cypress.env('PROJECT_ID')
 
 Cypress.Commands.add('run_context', (argument) => {
-  cy.exec(`python context.py --project_id ${project_id} ${argument}`)
+  cy.exec(`python context.py ${project_id} ${argument}`)
 })
 
 Cypress.Commands.add('print_conf', () => {
