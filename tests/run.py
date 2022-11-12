@@ -65,7 +65,6 @@ last_sources = [
     'special_characters.cy.js'
 ]
 sources = first_sources + last_sources
-sources = sources[:2]
 rf.delete_screenshots_dir_if_exists()
 logger.info('Deleting games...')
 cnt = 0
