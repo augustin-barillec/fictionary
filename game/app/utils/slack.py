@@ -4,6 +4,11 @@ import tools
 import app.utils as ut
 
 
+def verify_signature(slack_verifier, body, headers):
+    if not slack_verifier.is_valid_request(body, headers):
+        flask.abort(401)
+
+
 def auth_test(slack_client):
     return tools.slack_api.auth_test(slack_client)
 

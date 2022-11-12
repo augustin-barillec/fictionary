@@ -9,6 +9,7 @@ import flask
 import google.cloud.bigquery
 import google.cloud.pubsub_v1
 import google.cloud.firestore
+import slack_sdk.signature
 import reusable
 import app.utils as ut
 import app.interactivity
@@ -24,6 +25,9 @@ context.project_id = os.getenv('PROJECT_ID')
 context.surface_prefix = hashlib.md5(context.project_id.encode()).hexdigest()
 context.publisher = google.cloud.pubsub_v1.PublisherClient()
 context.db = google.cloud.firestore.Client(project=context.project_id)
+slack_signing_secret = ut.firestore.get_slack_signing_secret(context.db)
+slack_verifier = slack_sdk.signature.SignatureVerifier(
+            slack_signing_secret)
 
 
 def build_game(game_id):
@@ -41,6 +45,7 @@ context.build_game_func = build_game
 def slash_command(request):
     body = request.get_data()
     headers = request.headers
+    ut.slack.verify_signature(slack_verifier, body, headers)
     form = request.form
     team_id = form['team_id']
     channel_id = form['channel_id']
@@ -52,7 +57,6 @@ def slash_command(request):
         slash_datetime_compact, team_id, channel_id, organizer_id, trigger_id)
     game = build_game(game_id=game_id)
     logger.info(f'game  built, game_id={game_id}')
-    ut.exceptions.ExceptionsHandler(game).verify_signature(body, headers)
     game.version = version.VERSION
     text_split = text.split(' ')
     parameter = text_split[0]
@@ -89,14 +93,15 @@ def slash_command(request):
 def interactivity(request):
     body = request.get_data()
     headers = request.headers
+    ut.slack.verify_signature(slack_verifier, body, headers)
     payload = json.loads(request.form['payload'])
     payload_type = payload['type']
     if payload_type == 'view_submission':
         return app.interactivity.view_submissions.handle_view_submission(
-            body, headers, payload, context)
+            context, payload)
     elif payload_type == 'block_actions':
         return app.interactivity.block_actions.handle_block_action(
-            body, headers, payload, context)
+            context, payload)
     return flask.make_response('', 200)
 
 
@@ -150,7 +155,6 @@ def guess_stage(event, context_):
         return resp
     game.dict['guess_stage_last_trigger'] = reusable.time.get_now()
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
-
     while True:
         game = build_game(game_id)
         ut.slack.SlackOperator(game).update_guess_stage_lower()
@@ -225,7 +229,6 @@ def vote_stage(event, context_):
         return resp
     game.dict['vote_stage_last_trigger'] = reusable.time.get_now()
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
-
     while True:
         game = build_game(game_id)
         ut.slack.SlackOperator(game).update_vote_stage_lower()

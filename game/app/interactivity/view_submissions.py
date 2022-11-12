@@ -6,12 +6,9 @@ logger = logging.getLogger(__name__)
 
 
 class ViewSubmissionHandler:
-
-    def __init__(self, body, headers, payload, context):
-        self.body = body
-        self.headers = headers
-        self.payload = payload
+    def __init__(self, context, payload):
         self.context = context
+        self.payload = payload
         assert self.payload['type'] == 'view_submission'
         self.user_id = self.payload['user']['id']
         self.view = self.payload['view']
@@ -77,7 +74,6 @@ class ViewSubmissionHandler:
         return flask.make_response('', 200)
 
     def handle(self):
-        self.exceptions_handler.verify_signature(self.body, self.headers)
         resp = self.exceptions_handler.handle_is_dead_exception()
         if resp is not None:
             return resp
@@ -95,7 +91,7 @@ class ViewSubmissionHandler:
             return self.handle_vote_submission()
 
 
-def handle_view_submission(body, headers, payload, context):
+def handle_view_submission(context, payload):
     if not payload['view']['callback_id'].startswith(context.surface_prefix):
         return flask.make_response('', 200)
-    return ViewSubmissionHandler(body, headers, payload, context).handle()
+    return ViewSubmissionHandler(context, payload).handle()

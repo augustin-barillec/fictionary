@@ -2,6 +2,19 @@ import reusable
 import app.utils as ut
 
 
+def get_constants(db):
+    return db.collection('constants').document(
+        'constants').get().to_dict()['url']
+
+
+def get_home_url(db):
+    return get_constants(db)['url']
+
+
+def get_slack_signing_secret(db):
+    return get_constants(db)['slack_signing_secret']
+
+
 class FirestoreReader:
     def __init__(self, db, game_id):
         self.db = db
@@ -42,7 +55,6 @@ class FirestoreReader:
 
 
 class FirestoreEditor:
-
     def __init__(self, game):
         self.game = game
 

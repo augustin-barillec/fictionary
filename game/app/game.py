@@ -1,6 +1,5 @@
 import reusable
 import slack_sdk
-import slack_sdk.signature
 import app.utils as ut
 
 
@@ -35,10 +34,6 @@ class Game:
 
         slack_token = self.team_dict['slack_token']
         self.slack_client = slack_sdk.WebClient(slack_token)
-
-        slack_signing_secret = self.team_dict['slack_signing_secret']
-        self.slack_verifier = slack_sdk.signature.SignatureVerifier(
-            slack_signing_secret)
 
         channel_dicts = self.firestore_reader.get_channel_dicts()
         if self.channel_id in channel_dicts:

@@ -22,11 +22,6 @@ class ExceptionsHandler:
         self.game = game
         self.slack_operator = ut.slack.SlackOperator(self.game)
 
-    def verify_signature(self, body, headers):
-        if not self.game.slack_verifier.is_valid_request(body, headers):
-            logger.error(f'verification failed, game_id={self.game.id}')
-            flask.abort(401)
-
     @staticmethod
     def game_is_running(game_dict):
         c1 = 'setup_submission' in game_dict

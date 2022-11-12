@@ -3,9 +3,8 @@ import app.utils as ut
 
 
 def get_questions_url(game):
-    res = ut.url.get_url(game)
-    res = f'{res}/questions_{game.parameter}'
-    return res
+    home_url = ut.firestore.get_home_url(game.db)
+    return f'{home_url}/questions_{game.parameter}'
 
 
 def get_questions_answers(game):
