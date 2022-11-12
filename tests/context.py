@@ -9,7 +9,7 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--project_id', required=True)
+parser.add_argument('project_id')
 subparsers = parser.add_subparsers(dest='command')
 subparsers.add_parser('setup_team')
 subparsers.add_parser('setup_channels')

@@ -6,7 +6,7 @@ logging.basicConfig(
     level='INFO')
 logger = logging.getLogger()
 parser = argparse.ArgumentParser()
-parser.add_argument('--project_id', required=True)
+parser.add_argument('project_id')
 subparsers = parser.add_subparsers(dest='to_deploy')
 subparsers.add_parser('pubsub')
 functions_parser = subparsers.add_parser('function')

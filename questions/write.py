@@ -3,7 +3,7 @@ import google.cloud.firestore
 import pandas
 import extract_columns
 parser = argparse.ArgumentParser()
-parser.add_argument('--project_id', required=True)
+parser.add_argument('project_id')
 args = parser.parse_args()
 db = google.cloud.firestore.Client(project=args.project_id)
 

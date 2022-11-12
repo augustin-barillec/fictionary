@@ -4,7 +4,7 @@ import app.utils as ut
 
 def get_constants(db):
     return db.collection('constants').document(
-        'constants').get().to_dict()['url']
+        'constants').get().to_dict()
 
 
 def get_home_url(db):

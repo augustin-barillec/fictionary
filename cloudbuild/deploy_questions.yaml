@@ -1,7 +1,6 @@
 steps:
 - args:
   - write.py
-  - --project_id
   - $PROJECT_ID
   dir: questions
   entrypoint: python
