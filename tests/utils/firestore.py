@@ -1,12 +1,11 @@
 import logging
 import reusable
-
 logger = logging.getLogger(__name__)
 
 
 def store_team_params(team_ref, params):
     logger.info(f'Storing params for {team_ref.id}...')
-    team_ref.set(params, merge=False)
+    team_ref.set(params, merge=True)
     logger.info(f'Stored params for team {team_ref.id}')
 
 

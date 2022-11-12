@@ -1,5 +1,4 @@
-from copy import deepcopy
-
+import copy
 team_params = {
     'max_guessers_per_game': 20,
     'max_life_span': 3600,
@@ -11,8 +10,7 @@ team_params = {
     'time_to_guess': 900,
     'time_to_vote': 600,
     'trigger_cooldown': 30}
-
-channel_default_params = deepcopy(team_params)
+channel_default_params = copy.deepcopy(team_params)
 channel_default_params['max_guessers_per_game'] = 3
 channel_default_params['max_running_games'] = 100
 channel_default_params['max_running_games_per_organizer'] = 100

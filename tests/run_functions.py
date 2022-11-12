@@ -1,14 +1,10 @@
-import os
-import subprocess
 import glob
 import logging
-import shutil
+import subprocess
+import os
 import reusable
 import utils
-
 logger = logging.getLogger(__name__)
-
-
 command_template = """
 DEBUG=cypress:server npx cypress run \
 --headless \
@@ -18,9 +14,9 @@ DEBUG=cypress:server npx cypress run \
 """
 
 
-def delete_screenshots_dir():
+def delete_screenshots_dir_if_exists():
     screenshots_path = 'cypress/screenshots'
-    reusable.delete_local.delete_folder(screenshots_path)
+    reusable.delete_local.delete_folder_if_exists(screenshots_path)
 
 
 def build_spec(source):

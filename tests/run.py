@@ -1,25 +1,21 @@
-import logging
 import argparse
+import logging
 import google.cloud.storage
 import google.cloud.firestore
-import run_functions as rf
-import utils
 import reusable
-
+import utils
+import run_functions as rf
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s', level='INFO')
 logger = logging.getLogger()
-
 parser = argparse.ArgumentParser()
 parser.add_argument('project_id')
 args = parser.parse_args()
 bucket_name = f'tests-{args.project_id}'
 bucket_dir_name = reusable.time.get_now_compact_format()
 timeout = 600
-
 storage_client = google.cloud.storage.Client(project=args.project_id)
 bucket = storage_client.bucket(bucket_name)
-
 cypress_context_conf = utils.secret_manager.access_payload_parsed(
     args.project_id, 'cypress_context_conf')
 team_id = cypress_context_conf['team_id']
@@ -27,8 +23,6 @@ db = google.cloud.firestore.Client(project=args.project_id)
 teams_ref = db.collection('teams')
 team_ref = teams_ref.document(team_id)
 games_ref = team_ref.collection('games')
-
-
 first_sources = [
     'small.cy.js',
     'exceptions/slash_command/max_running.cy.js',
@@ -72,14 +66,13 @@ last_sources = [
 ]
 sources = first_sources + last_sources
 sources = sources[:2]
-
+rf.delete_screenshots_dir_if_exists()
 logger.info('Deleting games...')
 cnt = 0
 for g in games_ref.stream():
     g.reference.delete()
     cnt += 1
 logger.info(f'Deleted {cnt} games')
-
 logger.info(f'Starting run {len(sources)} tests...')
 start_datetime = reusable.time.get_now()
 for source in sources:
@@ -87,7 +80,6 @@ for source in sources:
 end_datetime = reusable.time.get_now()
 duration = round((end_datetime - start_datetime).total_seconds())
 logger.info(f'Ended run tests [{duration}s]')
-
 rf.write_stats(bucket, bucket_dir_name)
 rf.report_successes(bucket, bucket_dir_name)
 rf.report_fails(bucket, bucket_dir_name)

@@ -1,10 +1,9 @@
-import logging
 import argparse
+import logging
 import google.cloud.firestore
 import utils
 import context_functions as cf
 import channels
-
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s', level='INFO')
 logger = logging.getLogger()
@@ -41,7 +40,6 @@ teams_ref = db.collection('teams')
 team_ref = teams_ref.document(team_id)
 games_ref = team_ref.collection('games')
 channels_ref = team_ref.collection('channels')
-
 
 if args.command == 'setup_team':
     cf.setup_team(team_ref)

@@ -2,7 +2,6 @@ import logging
 import reusable
 import utils
 from params import team_params
-
 logger = logging.getLogger(__name__)
 
 
@@ -20,9 +19,7 @@ def setup_channels(
         user_ids,
         app_user_id,
         cypress_user_id):
-
     utils.firestore.clean_channels_in_firestore(channels_ref)
-
     channel_name_to_channel_id = dict()
     for channel_name in channel_names:
         logger.info(f'Setting {channel_name}...')

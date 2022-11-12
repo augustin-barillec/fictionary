@@ -89,8 +89,7 @@ def slash_command(request):
 def interactivity(request):
     body = request.get_data()
     headers = request.headers
-    form = request.form
-    payload = json.loads(form['payload'])
+    payload = json.loads(request.form['payload'])
     payload_type = payload['type']
     if payload_type == 'view_submission':
         return app.interactivity.view_submissions.handle_view_submission(

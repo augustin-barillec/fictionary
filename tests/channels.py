@@ -1,6 +1,5 @@
-from copy import deepcopy
-from params import channel_default_params
-
+import copy
+import params
 channel_names = [
     'ending_bravo',
     'ending_hey',
@@ -38,12 +37,11 @@ channel_names = [
     'transition_vote_shorten_time',
     'help',
     'special_characters']
-
 channel_to_params = dict()
 channel_to_user_indexes = dict()
 channel_to_app_kicked = dict()
 for n in channel_names:
-    channel_to_params[n] = deepcopy(channel_default_params)
+    channel_to_params[n] = copy.deepcopy(params.channel_default_params)
     channel_to_user_indexes[n] = [0, 1, 2, 3]
     channel_to_app_kicked[n] = False
 

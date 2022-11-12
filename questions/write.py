@@ -1,8 +1,7 @@
 import argparse
-import pandas
 import google.cloud.firestore
+import pandas
 import extract_columns
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--project_id', required=True)
 args = parser.parse_args()
@@ -16,8 +15,6 @@ def read_tsv(basename):
 questions_dataframes = dict()
 questions_dataframes['english'] = read_tsv('questions - english.tsv')
 questions_dataframes['french'] = read_tsv('questions - french.tsv')
-
-
 for language in ['english', 'french']:
     questions_dataframe = questions_dataframes[language]
     questions, answers, sources = extract_columns.extract_columns(
