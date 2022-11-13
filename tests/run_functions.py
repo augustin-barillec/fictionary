@@ -114,7 +114,7 @@ def report_fails(bucket, bucket_dir_name):
 
 
 def upload_run_logs_if_exists(bucket, bucket_dir_name):
-    run_logs_basename = 'run.txt'
-    if os.path.exists(run_logs_basename):
+    run_logs_path = utils.local_paths.run_logs_file
+    if os.path.exists(run_logs_path):
         utils.storage.upload_file_to_gs(
-            bucket, bucket_dir_name, run_logs_basename, run_logs_basename)
+            bucket, bucket_dir_name, run_logs_path, run_logs_path)

@@ -77,16 +77,16 @@ class ViewSubmissionHandler:
         resp = self.exceptions_handler.handle_is_dead_exception()
         if resp is not None:
             return resp
-        if self.view_callback_id.startswith(
+        elif self.view_callback_id.startswith(
                 self.context.surface_prefix + '#setup_freestyle_view'):
             return self.handle_setup_freestyle_submission()
-        if self.view_callback_id.startswith(
+        elif self.view_callback_id.startswith(
                 self.context.surface_prefix + '#setup_automatic_view'):
             return self.handle_setup_automatic_submission()
-        if self.view_callback_id.startswith(
+        elif self.view_callback_id.startswith(
                 self.context.surface_prefix + '#guess_view'):
             return self.handle_guess_submission()
-        if self.view_callback_id.startswith(
+        elif self.view_callback_id.startswith(
                 self.context.surface_prefix + '#vote_view'):
             return self.handle_vote_submission()
 

@@ -1,4 +1,5 @@
 import reusable
+import utils
 
 
 def clean_cypress():
@@ -7,7 +8,8 @@ def clean_cypress():
 
 
 def clean_run_logs():
-    reusable.delete_local.delete_file_if_exists('run.txt')
+    reusable.delete_local.delete_file_if_exists(
+        utils.local_paths.run_logs_file)
 
 
 def clean():

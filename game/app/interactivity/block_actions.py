@@ -91,13 +91,13 @@ class BlockActionHandler:
                 trigger_id=self.trigger_id)
         if resp is not None:
             return resp
-        if c1:
+        elif c1:
             return self.handle_pick_submission()
-        if c2:
+        elif c2:
             return self.handle_shuffle_click()
-        if c3:
+        elif c3:
             return self.handle_guess_click()
-        if c4:
+        elif c4:
             return self.handle_vote_click()
 
 
