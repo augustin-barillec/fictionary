@@ -74,7 +74,7 @@ for g in games_ref.stream():
 logger.info(f'Deleted {cnt} games')
 logger.info(f'Starting run {len(sources)} tests...')
 start_datetime = reusable.time.get_now()
-for source in sources[:1]:
+for source in sources:
     rf.run_cypress(args.project_id, bucket, bucket_dir_name, source, timeout)
 end_datetime = reusable.time.get_now()
 duration = round((end_datetime - start_datetime).total_seconds())
