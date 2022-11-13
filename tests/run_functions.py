@@ -14,11 +14,6 @@ DEBUG=cypress:server npx cypress run \
 """
 
 
-def delete_screenshots_dir_if_exists():
-    screenshots_path = 'cypress/screenshots'
-    reusable.delete_local.delete_folder_if_exists(screenshots_path)
-
-
 def build_spec(source):
     return f'cypress/e2e/{source}'
 

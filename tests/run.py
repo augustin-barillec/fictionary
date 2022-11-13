@@ -65,7 +65,7 @@ last_sources = [
     'special_characters.cy.js'
 ]
 sources = first_sources + last_sources
-rf.delete_screenshots_dir_if_exists()
+utils.local_clean.clean_cypress()
 logger.info('Deleting games...')
 cnt = 0
 for g in games_ref.stream():
@@ -74,7 +74,7 @@ for g in games_ref.stream():
 logger.info(f'Deleted {cnt} games')
 logger.info(f'Starting run {len(sources)} tests...')
 start_datetime = reusable.time.get_now()
-for source in sources:
+for source in sources[:1]:
     rf.run_cypress(args.project_id, bucket, bucket_dir_name, source, timeout)
 end_datetime = reusable.time.get_now()
 duration = round((end_datetime - start_datetime).total_seconds())
