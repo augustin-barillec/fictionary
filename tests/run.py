@@ -64,16 +64,6 @@ last_sources = [
     'help.cy.js',
     'special_characters.cy.js'
 ]
-first_sources = [
-
-]
-last_sources = [
-    'endings/thanks.cy.js',
-    'exceptions/guess_submission/max_these_guessers.cy.js',
-    'exceptions/vote_click/not_a_potential_voter.cy.js',
-    'transitions/guess_full_time.cy.js'
-]
-
 sources = first_sources + last_sources
 utils.local_clean.clean_cypress()
 logger.info('Deleting games...')
