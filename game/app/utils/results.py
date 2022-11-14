@@ -44,9 +44,7 @@ class ResultsBuilder:
 
         def sort_key(r_):
             return 'vote_index' not in r_, -r_['score'], r_['guesser']
-
         results.sort(key=lambda r_: sort_key(r_))
-
         return results
 
 
