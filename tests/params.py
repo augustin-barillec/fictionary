@@ -8,7 +8,7 @@ team_params = {
     'self_trigger_threshold': 60,
     'tagging': False,
     'time_to_guess': 900,
-    'time_to_vote': 600,
+    'time_to_vote': 300,
     'trigger_cooldown': 30}
 channel_default_params = copy.deepcopy(team_params)
 channel_default_params['max_guessers_per_game'] = 3
