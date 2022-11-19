@@ -3,8 +3,6 @@ steps:
   - build
   - -t
   - europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/questions_image
-  - -f
-  - Dockerfile
   - .
   dir: questions
   name: gcr.io/cloud-builders/docker

@@ -1,13 +1,10 @@
 import argparse
-import logging
 import google.cloud.firestore
+import reusable
 import utils
 import context_functions as cf
 import channels
-logging.basicConfig(
-    format='%(asctime)s - %(levelname)s - %(message)s', level='INFO')
-logger = logging.getLogger()
-
+logger = reusable.root_logger.configure_root_logger()
 parser = argparse.ArgumentParser()
 parser.add_argument('project_id')
 subparsers = parser.add_subparsers(dest='command')

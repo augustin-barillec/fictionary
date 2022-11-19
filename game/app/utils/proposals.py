@@ -5,8 +5,7 @@ import app.utils as ut
 def build_indexed_signed_proposals(game):
     sorted_frozen_guessers = ut.users.sort_users(game.frozen_guessers)
     assert 'Truth' not in sorted_frozen_guessers
-    res = [(k, game.frozen_guessers[k][1])
-           for k in sorted_frozen_guessers]
+    res = [(k, game.frozen_guessers[k][1]) for k in sorted_frozen_guessers]
     res.append(('Truth', game.truth))
     random.seed(game.id)
     if not game.tagging:
@@ -46,8 +45,8 @@ class ProposalsBrowser:
         res = []
         for isp in self.game.indexed_signed_proposals:
             if isp['author'] != voter:
-                res.append({'index': isp['index'],
-                            'proposal': isp['proposal']})
+                res.append(
+                    {'index': isp['index'], 'proposal': isp['proposal']})
         return res
 
     def build_indexed_anonymous_proposals(self):

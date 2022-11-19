@@ -3,8 +3,6 @@ steps:
   - build
   - -t
   - europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/web_image
-  - -f
-  - Dockerfile
   - .
   dir: web
   name: gcr.io/cloud-builders/docker

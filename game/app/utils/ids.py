@@ -12,7 +12,9 @@ def build_game_id(
 
 
 def build_surface_id(surface_prefix, object_name, game_id):
-    return f'{surface_prefix}#{object_name}#{game_id}'
+    res = f'{surface_prefix}#{object_name}#{game_id}'
+    assert res.count('#') == 2
+    return res
 
 
 def surface_id_to_game_id(surface_id):
@@ -25,13 +27,11 @@ def split_game_id(game_id):
 
 
 def game_id_to_slash_datetime_compact(game_id):
-    splitted_game_id = split_game_id(game_id)
-    return splitted_game_id[0]
+    return split_game_id(game_id)[0]
 
 
 def game_id_to_ids(game_id):
-    splitted_game_id = split_game_id(game_id)
-    return splitted_game_id[1:]
+    return split_game_id(game_id)[1:]
 
 
 def game_id_to_team_id(game_id):
@@ -52,8 +52,7 @@ class SurfaceIdBuilder:
         self.game_id = game_id
 
     def build_surface_id(self, object_name):
-        return build_surface_id(
-            self.surface_prefix, object_name, self.game_id)
+        return build_surface_id(self.surface_prefix, object_name, self.game_id)
 
     def build_setup_freestyle_view_id(self):
         return self.build_surface_id('setup_freestyle_view')

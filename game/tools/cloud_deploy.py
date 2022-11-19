@@ -32,7 +32,6 @@ def deploy_function(project_id, region, port, pre_sleep_duration):
     --docker-registry artifact-registry \
     --runtime python310 \
     --timeout 540s \
-    --ignore-file .functionsignore \
     --trigger-{trigger_type} {min_instances} \
     --set-env-vars PROJECT_ID={project_id} 2>&1 | tee {filepath}
     """

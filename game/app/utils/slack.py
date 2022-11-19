@@ -13,9 +13,9 @@ def auth_test(slack_client):
     return tools.slack_api.auth_test(slack_client)
 
 
-def post_message(slack_client, channel_id, blocks_):
+def post_message(slack_client, channel_id, blocks):
     return tools.slack_api.chat_postmessage(
-        slack_client, channel_id, blocks_)
+        slack_client, channel_id, blocks)
 
 
 def post_ephemeral(slack_client, channel_id, user_id, msg):
@@ -23,8 +23,8 @@ def post_ephemeral(slack_client, channel_id, user_id, msg):
         slack_client, channel_id, user_id, msg)
 
 
-def update_message(slack_client, channel_id, blocks_, ts):
-    tools.slack_api.chat_update(slack_client, channel_id, blocks_, ts)
+def update_message(slack_client, channel_id, blocks, ts):
+    tools.slack_api.chat_update(slack_client, channel_id, blocks, ts)
 
 
 def open_view(slack_client, trigger_id, view):
@@ -81,10 +81,10 @@ class SlackOperator:
             text = ut.tag.add_tag_to_text(text, self.game.tag)
         return text
 
-    def add_tag_to_blocks(self, blocks_):
+    def add_tag_to_blocks(self, blocks):
         if self.tagging:
-            blocks_ = ut.tag.add_tag_to_json_list(blocks_, self.game.tag)
-        return blocks_
+            blocks = ut.tag.add_tag_to_json_list(blocks, self.game.tag)
+        return blocks
 
     def add_tag_to_view(self, view):
         if self.tagging:
@@ -94,20 +94,19 @@ class SlackOperator:
     def get_app_user_id(self):
         return auth_test(self.slack_client)['user_id']
 
-    def post_message(self, blocks_):
-        blocks_ = self.add_tag_to_blocks(blocks_)
+    def post_message(self, blocks):
+        blocks = self.add_tag_to_blocks(blocks)
         return post_message(
-            self.slack_client, self.game.channel_id, blocks_)
+            self.slack_client, self.game.channel_id, blocks)
 
     def post_ephemeral(self, user_id, msg):
         msg = self.add_tag_to_text(msg)
         post_ephemeral(
             self.slack_client, self.game.channel_id, user_id, msg)
 
-    def update_message(self, blocks_, ts):
-        blocks_ = self.add_tag_to_blocks(blocks_)
-        update_message(self.slack_client, self.game.channel_id,
-                       blocks_, ts)
+    def update_message(self, blocks, ts):
+        blocks = self.add_tag_to_blocks(blocks)
+        update_message(self.slack_client, self.game.channel_id, blocks, ts)
 
     def open_view(self, trigger_id, view):
         view = self.add_tag_to_view(view)
@@ -137,11 +136,11 @@ class SlackOperator:
         msg = self.add_tag_to_text(msg)
         return build_exception_view_response(msg)
 
-    def update_upper(self, blocks_):
-        self.update_message(blocks_, self.game.upper_ts)
+    def update_upper(self, blocks):
+        self.update_message(blocks, self.game.upper_ts)
 
-    def update_lower(self, blocks_):
-        self.update_message(blocks_, self.game.lower_ts)
+    def update_lower(self, blocks):
+        self.update_message(blocks, self.game.lower_ts)
 
     def open_setup_freestyle_view(self, trigger_id):
         view = self.view_builder.build_setup_freestyle_view()
@@ -180,8 +179,8 @@ class SlackOperator:
 
     def send_is_over_notifications(self):
         for u in self.game.frozen_guessers:
-            msg = ("The fictionary game organized by "
-                   f"{ut.users.user_display(self.game.organizer_id)} is over!")
+            msg = ('The fictionary game organized by '
+                   f'{ut.users.user_display(self.game.organizer_id)} is over!')
             self.post_ephemeral(u, msg)
 
     def post_pre_guess_stage_upper(self):

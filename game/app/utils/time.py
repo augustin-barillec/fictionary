@@ -23,11 +23,3 @@ def build_time_display_for_timer(seconds):
     minutes, seconds = seconds_to_minutes_seconds(seconds)
     seconds_approx = seconds - seconds % 5
     return f'{minutes}min {seconds_approx}s'
-
-
-def build_time_display_for_setup_view(seconds):
-    minutes, seconds = seconds_to_minutes_seconds(seconds)
-    res = f'{minutes}min'
-    if seconds != 0:
-        res += f' {seconds}s'
-    return res

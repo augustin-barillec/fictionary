@@ -49,7 +49,7 @@ class ResultsBuilder:
 
 
 def compute_max_score(game):
-    scores = [r['score'] for r in game.results if 'score' in r]
+    scores = [r['score'] for r in game.results]
     if len(scores) == 0:
         return -1
     else:

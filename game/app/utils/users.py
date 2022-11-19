@@ -14,13 +14,13 @@ def user_displays(user_ids):
 
 
 def sort_users(users):
-    res = sorted(users, key=lambda k: users[k][0])
-    return res
+    user_ids = sorted(users, key=lambda k: users[k][0])
+    return user_ids
 
 
 def build_users_msg(users, kind, no_users_msg):
     if not users:
         return no_users_msg
-    users = sort_users(users)
-    msg = f'{kind}: {user_displays(users)}'
+    user_ids = sort_users(users)
+    msg = f'{kind}: {user_displays(user_ids)}'
     return msg

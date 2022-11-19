@@ -49,8 +49,8 @@ def build_setup_automatic_view(
 def build_guess_view(id_, question):
     res = copy.deepcopy(guess_view_template)
     res['callback_id'] = id_
-    input_block = copy.deepcopy(res['blocks'][0])
     question_block = ut.blocks.build_text_block(question)
+    input_block = copy.deepcopy(res['blocks'][0])
     res['blocks'] = [question_block, input_block]
     return res
 

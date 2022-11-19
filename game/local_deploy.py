@@ -1,10 +1,7 @@
 import argparse
-import logging
+import reusable
 import tools
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level='INFO')
-logger = logging.getLogger()
+logger = reusable.root_logger.configure_root_logger()
 parser = argparse.ArgumentParser()
 parser.add_argument('project_id')
 parser.add_argument('to_deploy')

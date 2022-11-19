@@ -3,9 +3,9 @@ import os
 import flask
 import google.cloud.firestore
 logging.basicConfig(
-    format='%(asctime)s : %(levelname)s : %(message)s',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 project_id = os.getenv('PROJECT_ID')
 db = google.cloud.firestore.Client(project=project_id)
 app = flask.Flask(__name__)

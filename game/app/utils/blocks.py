@@ -18,10 +18,6 @@ def get_button_block_template():
     return get_block('button.json')
 
 
-def get_image_block_template():
-    return get_block('image.json')
-
-
 def u(blocks):
     return [get_divider_block()] + blocks
 
@@ -94,13 +90,13 @@ class BlockBuilder:
         return build_button_block('Vote', id_)
 
     def build_nb_remaining_potential_guessers_block(self):
-        x = self.game.nb_remaining_potential_guessers
-        msg = f'Potential guessers: {x}'
+        nb = self.game.nb_remaining_potential_guessers
+        msg = f'Potential guessers: {nb}'
         return build_text_block(msg)
 
     @staticmethod
-    def build_users_blocks(users_, kind, no_users_msg):
-        msg = ut.users.build_users_msg(users_, kind, no_users_msg)
+    def build_users_blocks(users, kind, no_users_msg):
+        msg = ut.users.build_users_msg(users, kind, no_users_msg)
         return build_text_block(msg)
 
     def build_remaining_potential_voters_block(self):
@@ -110,16 +106,16 @@ class BlockBuilder:
             self.game.remaining_potential_voters, kind, no_users_msg)
 
     def build_guessers_block(self):
-        users_ = self.game.guessers
+        users = self.game.guessers
         kind = 'Guessers'
         no_users_msg = 'No one has guessed yet.'
-        return self.build_users_blocks(users_, kind, no_users_msg)
+        return self.build_users_blocks(users, kind, no_users_msg)
 
     def build_voters_block(self):
-        users_ = self.game.voters
+        users = self.game.voters
         kind = 'Voters'
         no_users_msg = 'No one has voted yet.'
-        return self.build_users_blocks(users_, kind, no_users_msg)
+        return self.build_users_blocks(users, kind, no_users_msg)
 
     def build_indexed_anonymous_proposals_block(self):
         msg = ['Proposals:']
@@ -200,30 +196,29 @@ class BlockBuilder:
     def build_conclusion_msg(self):
         lg = len(self.game.frozen_guessers)
         lv = len(self.game.frozen_voters)
+        lw = len(self.game.winners)
         if lg == 0:
             return 'No one played this game :sob:.'
-        if lg == 1:
+        elif lg == 1:
             g = ut.users.user_display(list(self.game.frozen_guessers)[0])
             return f'Thanks for your guess, {g}!'
-        if lv == 0:
+        elif lv == 0:
             return 'No one voted :sob:.'
-        if lv == 1:
+        elif lv == 1:
             r = self.game.results[0]
             g = ut.users.user_display(r['guesser'])
             ca = r['chosen_author']
             if ca == 'Truth':
                 return f'Bravo {g}! You found the truth! :v:'
-            else:
-                return f'Hey {g}, at least you voted! :grimacing:'
-        if self.game.max_score == 0:
+            return f'Hey {g}, at least you voted! :grimacing:'
+        elif self.game.max_score == 0:
             return 'Zero points scored!'
-        lw = len(self.game.winners)
-        if lw == lv:
+        elif lw == lv:
             return "Well, it's a draw! :scales:"
-        if lw == 1:
+        elif lw == 1:
             w = ut.users.user_display(self.game.winners[0])
             return f'And the winner is {w}! :first_place_medal:'
-        if lw > 1:
+        elif lw > 1:
             ws = [ut.users.user_display(w) for w in self.game.winners]
             msg_aux = ','.join(ws[:-1])
             msg_aux += f' and {ws[-1]}'
@@ -310,7 +305,7 @@ class BlockBuilder:
         lv = len(self.game.frozen_voters)
         if lg == 1:
             res.append(signed_noindexed_guesses_block)
-        if lg >= 2:
+        elif lg >= 2:
             res.append(signed_indexed_guesses_block)
             if lv >= 1:
                 res += [voting_edges_block, scores_block]

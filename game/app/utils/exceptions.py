@@ -186,8 +186,7 @@ class ExceptionsHandler:
             return msg
 
     @staticmethod
-    def build_pick_submission_exception_msg(
-            max_number, number_picked_str):
+    def build_pick_submission_exception_msg(max_number, number_picked_str):
         try:
             number_picked = int(number_picked_str)
         except ValueError:
@@ -217,15 +216,14 @@ class ExceptionsHandler:
         exception_msg = self.build_game_is_dead_msg()
         if exception_msg is None:
             return
-        if trigger_id is not None:
+        elif trigger_id is not None:
             self.slack_operator.open_exception_view(trigger_id, exception_msg)
             return flask.make_response('', 200)
         elif view_id is not None:
             self.slack_operator.update_exception_view(view_id, exception_msg)
             return flask.make_response('', 200)
-        else:
-            return self.slack_operator.build_exception_view_response(
-                exception_msg)
+        return self.slack_operator.build_exception_view_response(
+            exception_msg)
 
     def handle_slash_command_exceptions(self, trigger_id):
         slack_operator = self.slack_operator
@@ -302,36 +300,30 @@ class ExceptionsHandler:
 
     def handle_pre_guess_stage_exceptions(self):
         if self.game.pre_guess_stage_already_triggered:
-            logger.info(
-                self.build_aborted_cause_already_triggered_msg())
+            logger.info(self.build_aborted_cause_already_triggered_msg())
             return flask.make_response('', 200)
 
     def handle_guess_stage_exceptions(self):
         if self.guess_stage_was_recently_trigger():
-            logger.info(
-                self.build_aborted_cause_recently_triggered_msg())
+            logger.info(self.build_aborted_cause_recently_triggered_msg())
             return flask.make_response('', 200)
 
     def handle_pre_vote_stage_exceptions(self):
         if self.game.pre_vote_stage_already_triggered:
-            logger.info(
-                self.build_aborted_cause_already_triggered_msg())
+            logger.info(self.build_aborted_cause_already_triggered_msg())
             return flask.make_response('', 200)
 
     def handle_vote_stage_exceptions(self):
         if self.vote_stage_was_recently_trigger():
-            logger.info(
-                self.build_aborted_cause_recently_triggered_msg())
+            logger.info(self.build_aborted_cause_recently_triggered_msg())
             return flask.make_response('', 200)
 
     def handle_pre_results_stage_exceptions(self):
         if self.game.pre_result_stage_already_triggered:
-            logger.info(
-                self.build_aborted_cause_already_triggered_msg())
+            logger.info(self.build_aborted_cause_already_triggered_msg())
             return flask.make_response('', 200)
 
     def handle_results_stage_exceptions(self):
         if self.game.result_stage_over:
-            logger.info(
-                f'exception, results_stage over {self.game.id}')
+            logger.info(f'exception, results_stage over {self.game.id}')
             return flask.make_response('', 200)

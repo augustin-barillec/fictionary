@@ -20,12 +20,12 @@ class ViewSubmissionHandler:
         self.exceptions_handler = ut.exceptions.ExceptionsHandler(self.game)
 
     def finalize_setup_submission(self, question, truth):
-        self.game.setup_submission = reusable.time.get_now()
-        self.game.question = question
-        self.game.truth = truth
         resp = self.exceptions_handler.handle_setup_submission_exceptions()
         if resp is not None:
             return resp
+        self.game.setup_submission = reusable.time.get_now()
+        self.game.question = question
+        self.game.truth = truth
         self.game.dict = dict()
         for attribute in [
             'setup_submission',
@@ -39,12 +39,10 @@ class ViewSubmissionHandler:
         return flask.make_response('', 200)
 
     def handle_setup_freestyle_submission(self):
-        logger.info(self.view)
         question, truth = ut.views.collect_setup_freestyle(self.view)
         return self.finalize_setup_submission(question, truth)
 
     def handle_setup_automatic_submission(self):
-        logger.info(self.view)
         question, truth = ut.views.collect_setup_automatic(self.view)
         return self.finalize_setup_submission(question, truth)
 

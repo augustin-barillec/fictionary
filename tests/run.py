@@ -1,13 +1,10 @@
 import argparse
-import logging
 import google.cloud.storage
 import google.cloud.firestore
 import reusable
 import utils
 import run_functions as rf
-logging.basicConfig(
-    format='%(asctime)s - %(levelname)s - %(message)s', level='INFO')
-logger = logging.getLogger()
+logger = reusable.root_logger.configure_root_logger()
 parser = argparse.ArgumentParser()
 parser.add_argument('project_id')
 args = parser.parse_args()
@@ -72,7 +69,7 @@ for g in games_ref.stream():
     g.reference.delete()
     cnt += 1
 logger.info(f'Deleted {cnt} games')
-logger.info(f'Starting run {len(sources)} tests...')
+logger.info(f'Starting run these {len(sources)} tests: {sources}...')
 start_datetime = reusable.time.get_now()
 for source in sources:
     rf.run_cypress(args.project_id, bucket, bucket_dir_name, source, timeout)

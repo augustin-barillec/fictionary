@@ -2,7 +2,6 @@ import argparse
 import copy
 import hashlib
 import json
-import logging
 import os
 import time
 import flask
@@ -16,10 +15,7 @@ import app.interactivity
 import app.game
 import version
 import languages
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level='INFO')
-logger = logging.getLogger()
+logger = reusable.root_logger.configure_root_logger()
 context = argparse.Namespace()
 context.project_id = os.getenv('PROJECT_ID')
 context.surface_prefix = hashlib.md5(context.project_id.encode()).hexdigest()
@@ -55,7 +51,7 @@ def slash_command(request):
     slash_datetime_compact = reusable.time.get_now_compact_format()
     game_id = ut.ids.build_game_id(
         slash_datetime_compact, team_id, channel_id, organizer_id, trigger_id)
-    game = build_game(game_id=game_id)
+    game = build_game(game_id)
     logger.info(f'game  built, game_id={game_id}')
     game.version = version.VERSION
     text_split = text.split(' ')
@@ -72,11 +68,11 @@ def slash_command(request):
         game).handle_slash_command_exceptions(trigger_id)
     if resp is not None:
         return resp
-    if game.parameter == 'help':
+    elif game.parameter == 'help':
         ut.slack.SlackOperator(game).send_help(organizer_id)
         return flask.make_response('', 200)
     ut.firestore.FirestoreEditor(game).set_game(merge=False)
-    logger.info(f'game  stored, game_id={game_id}')
+    logger.info(f'game stored, game_id={game_id}')
     if game.parameter == 'freestyle':
         ut.slack.SlackOperator(game).open_setup_freestyle_view(trigger_id)
     elif game.parameter in languages.LANGUAGES:
@@ -153,7 +149,7 @@ def guess_stage(event, context_):
         game).handle_guess_stage_exceptions()
     if resp is not None:
         return resp
-    game.dict['guess_stage_last_trigger'] = reusable.time.get_now()
+    game.dict['guess_stage_last_trigger'] = call_datetime
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
     while True:
         game = build_game(game_id)
@@ -227,7 +223,7 @@ def vote_stage(event, context_):
     resp = ut.exceptions.ExceptionsHandler(game).handle_vote_stage_exceptions()
     if resp is not None:
         return resp
-    game.dict['vote_stage_last_trigger'] = reusable.time.get_now()
+    game.dict['vote_stage_last_trigger'] = call_datetime
     ut.firestore.FirestoreEditor(game).set_game(merge=True)
     while True:
         game = build_game(game_id)

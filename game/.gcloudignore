@@ -1,0 +1,10 @@
+*
+!/app
+!/reusable
+!/tools
+!/languages.py
+!/main.py
+!/requirements.txt
+!/version.py
+!.
+__pycache__
