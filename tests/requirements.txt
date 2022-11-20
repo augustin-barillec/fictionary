@@ -1,4 +1,4 @@
-firebase-admin==5.*
+firebase-admin==6.*
 google-cloud-secret-manager==2.*
 google-cloud-storage==2.*
 pyyaml==6.*

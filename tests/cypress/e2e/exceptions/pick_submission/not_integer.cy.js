@@ -1,7 +1,5 @@
 describe('main', () => {
-
   it('main', () => {
-
     cy.get_conf().then((conf) => {
       cy.get_channel_id('exception_pick_submission_not_integer').then((channel_id) => {
         const tag = Cypress._.random(100000, 999999)

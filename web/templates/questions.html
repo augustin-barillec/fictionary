@@ -16,7 +16,6 @@
 </ul>
 <script>
     function Shuffle(event) {
-        console.log(Math.random()*5 | 0);
         var ul = document.querySelector('#id_questions');
         for (var i = ul.children.length; i >= 0; i--) {
             ul.appendChild(ul.children[Math.random() * i | 0]);

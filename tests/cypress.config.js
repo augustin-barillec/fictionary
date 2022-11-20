@@ -4,7 +4,7 @@ module.exports = defineConfig({
   chromeWebSecurity: false,
   watchForFileChanges: false,
   waitForAnimations: true,
-  trashAssetsBeforeRuns: false,
+  trashAssetsBeforeRuns: true,
   video: false,
   defaultCommandTimeout: 15000,
 

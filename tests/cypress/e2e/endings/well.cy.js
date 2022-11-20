@@ -1,7 +1,5 @@
 describe('main', () => {
-
   it('main', () => {
-
     cy.get_conf().then((conf) => {
       cy.get_channel_id('ending_well').then((channel_id) => {
         const tag = Cypress._.random(100000, 999999)

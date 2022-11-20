@@ -16,9 +16,9 @@ def setup_channels(
         channel_to_params,
         channel_to_user_indexes,
         channel_to_app_kicked,
-        user_ids,
+        cypress_user_id,
         app_user_id,
-        cypress_user_id):
+        user_ids):
     utils.firestore.clean_channels_in_firestore(channels_ref)
     channel_name_to_channel_id = dict()
     for channel_name in channel_names:
@@ -93,12 +93,3 @@ def delete_game(games_ref, tag):
             g.reference.delete()
             cnt += 1
     assert cnt == 1
-
-
-def kick_from_channel(slack_client, channel_id, user_id):
-    if utils.slack.is_member(slack_client, channel_id, user_id):
-        utils.slack.kick(slack_client, channel_id, [user_id])
-
-
-def invite_to_channel(slack_client, channel_id, user_id):
-    utils.slack.invite(slack_client, channel_id, [user_id])

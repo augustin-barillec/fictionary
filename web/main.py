@@ -1,5 +1,5 @@
-import logging
 import os
+import logging
 import flask
 import google.cloud.firestore
 logging.basicConfig(

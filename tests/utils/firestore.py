@@ -11,10 +11,12 @@ def store_team_params(team_ref, params):
 
 def clean_channels_in_firestore(channels_ref):
     logger.info('Deleting channels in firestore...')
+    cnt = 0
     for channel in channels_ref.stream():
         channel.reference.delete()
         logger.info(f'{channel.id} deleted')
-    logger.info('Deleted channels in firestore')
+        cnt += 1
+    logger.info(f'Deleted {cnt} channels in firestore')
 
 
 def store_channel_params(channels_ref, channel_id, params):

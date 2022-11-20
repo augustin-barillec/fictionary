@@ -1,7 +1,5 @@
 describe('main', () => {
-
   it('main', () => {
-
     cy.get_conf().then((conf) => {
       cy.get_channel_id('exception_vote_click_not_a_potential_voter').then((channel_id) => {
         const tag = Cypress._.random(100000, 999999)

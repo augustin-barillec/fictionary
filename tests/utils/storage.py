@@ -6,11 +6,9 @@ def upload_file_to_gs(bucket, bucket_dir_name, blob_basename, local_file_path):
     blob_name = build_blob_name(bucket_dir_name, blob_basename)
     blob = bucket.blob(blob_name)
     blob.upload_from_filename(local_file_path)
-    return blob.public_url
 
 
 def upload_string_to_gs(bucket, bucket_dir_name, blob_basename, string):
-    blob_name = f'{bucket_dir_name}/{blob_basename}'
+    blob_name = build_blob_name(bucket_dir_name, blob_basename)
     blob = bucket.blob(blob_name)
     blob.upload_from_string(string)
-    return blob.public_url

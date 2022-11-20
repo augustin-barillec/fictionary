@@ -4,9 +4,9 @@ import google.cloud.secretmanager
 
 def access_payload(project_id, secret_id):
     client = google.cloud.secretmanager.SecretManagerServiceClient()
-    name = f"projects/{project_id}/secrets/{secret_id}/versions/latest"
+    name = f'projects/{project_id}/secrets/{secret_id}/versions/latest'
     response = client.access_secret_version(request={"name": name})
-    payload = response.payload.data.decode("UTF-8")
+    payload = response.payload.data.decode('UTF-8')
     return payload
 
 

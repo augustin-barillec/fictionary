@@ -50,9 +50,9 @@ elif args.command == 'setup_channels':
         channels.channel_to_params,
         channels.channel_to_user_indexes,
         channels.channel_to_app_kicked,
-        user_ids,
+        cypress_user_id,
         app_user_id,
-        cypress_user_id)
+        user_ids)
 elif args.command == 'print_conf':
     print(cypress_context_conf)
 elif args.command == 'print_channel_id':

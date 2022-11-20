@@ -49,7 +49,7 @@ def run_cypress(project_id, bucket, bucket_dir_name, source, timeout):
         screenshot_paths = glob.glob(
             f'cypress/screenshots/{source_basename}/*.png')
         logger.info(f'screenshot_paths = {screenshot_paths}')
-        if len(screenshot_paths) >= 1:
+        if len(screenshot_paths) == 1:
             screenshot_path = screenshot_paths[0]
             screenshot_blob_basename = f'screenshot#{source_rewritten}'
             utils.storage.upload_file_to_gs(
@@ -80,7 +80,7 @@ def write_stats(bucket, bucket_dir_name):
     nb_successes = len(get_successes(bucket, bucket_dir_name))
     nb_fails = len(get_fails(bucket, bucket_dir_name))
     nb_cases = nb_successes + nb_fails
-    ratio = nb_successes / nb_cases
+    ratio = round(nb_successes / nb_cases, 2)
     stats = {
         'nb_cases': nb_cases,
         'nb_successes': nb_successes,
