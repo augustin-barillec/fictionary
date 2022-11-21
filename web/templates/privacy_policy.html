@@ -7,11 +7,10 @@
     Fictionary is a Slack app for fun. It collects only the data necessary to its functioning.
 </p>
 <p>
-    All data is stored in a Firestore instance in Europe. It is a private database
-    provided by Google Cloud Platform.
+    All data is stored in a private Google Cloud Platform project.
 </p>
 <p>
-    During the installation, we collect the following information:
+    During the installation, the following data is collected:
 </p>
 <ul>
 	<li>Team ID, ex: TXXXXXXX. This allows the bot to select the correct authorization token in order to interact with your workspace.</li>
@@ -25,7 +24,7 @@
 	<li>commands. It enables the app to provide a slash command which lets a user launch a game.</li>
 </ul>
 <p>
-    For each game, we collect the following information:
+    For each game, the following data is collected:
 </p>
 <ul>
 	<li>User IDs involved with the game, ex: UXXXXXX.</li>
@@ -35,12 +34,12 @@
 </ul>
 <p>
     If a game ends successfully, the data written by the users is automatically
-    deleted within a day. If a game crashes, it is kept to help for debugging.
-    Once the code is fixed, it is deleted manually. The data not written by the
-    users is stored for monitoring purposes.
+    deleted within 25 hours. If a game crashes, it is kept to help for
+    debugging. Once the code is fixed, it is deleted manually. The data not
+    written by the users is stored for monitoring purposes.
 </p>
 <p>
-    If you want the data associated with your workspace to be removed, you can
+    If you want the data associated with your workspace to be deleted, you can
     send an email at augustin.barillec@yokyok.ninja with your team ID.
 </p>
 {% endblock %}
