@@ -20,17 +20,17 @@ class ViewSubmissionHandler:
         self.exceptions_handler = ut.exceptions.ExceptionsHandler(self.game)
 
     def finalize_setup_submission(self, question, truth):
+        self.game.question = question
+        self.game.truth = truth
         resp = self.exceptions_handler.handle_setup_submission_exceptions()
         if resp is not None:
             return resp
         self.game.setup_submission = reusable.time.get_now()
-        self.game.question = question
-        self.game.truth = truth
         self.game.dict = dict()
         for attribute in [
-            'setup_submission',
             'question',
-            'truth'
+            'truth',
+            'setup_submission'
         ]:
             self.game.dict[attribute] = self.game.__dict__[attribute]
         ut.firestore.FirestoreEditor(self.game).set_game(merge=True)

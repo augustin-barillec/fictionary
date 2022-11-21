@@ -61,30 +61,9 @@ last_sources = [
     'help.cy.js',
     'special_characters.cy.js'
 ]
-first_sources = [
-    'exceptions/slash_command/max_running.cy.js',
-]
-last_sources = [
-    'endings/thanks.cy.js',
-    'endings/winners.cy.js',
-    'exceptions/game_dead/view_response.cy.js',
-    'exceptions/guess_click/already_guessed.cy.js',
-    'exceptions/guess_submission/max_these_guessers.cy.js',
-    'exceptions/pick_submission/not_between.cy.js',
-    'exceptions/pick_submission/not_integer.cy.js',
-    'exceptions/setup_submission/max_this_running.cy.js',
-    'exceptions/slash_command/invalid_parameter.cy.js',
-    'exceptions/slash_command/max_this_running.cy.js',
-    'exceptions/slash_command/not_invited.cy.js',
-    'exceptions/vote_click/already_voted.cy.js',
-    'exceptions/vote_submission/no_time_left.cy.js',
-    'help.cy.js',
-    'setups/english.cy.js',
-    'setups/french.cy.js',
-    'transitions/guess_full_time.cy.js',
-    'transitions/guess_shorten_time.cy.js'
-]
+
 sources = first_sources + last_sources
+len_sources = len(sources)
 utils.local_clean.clean_cypress()
 logger.info('Deleting games...')
 cnt = 0
@@ -92,10 +71,12 @@ for g in games_ref.stream():
     g.reference.delete()
     cnt += 1
 logger.info(f'Deleted {cnt} games')
-logger.info(f'Starting run these {len(sources)} tests: {sources}...')
+logger.info(f'Starting run these {len_sources} tests: {sources}...')
 start_datetime = reusable.time.get_now()
-for source in sources:
+for i, source in enumerate(sources, 1):
+    logger.info(f'Starting test {i}/{len_sources}...')
     rf.run_cypress(args.project_id, bucket, bucket_dir_name, source, timeout)
+    logger.info(f'Ended test {i}/{len_sources}')
 end_datetime = reusable.time.get_now()
 duration = round((end_datetime - start_datetime).total_seconds())
 logger.info(f'Ended run tests [{duration}s]')
