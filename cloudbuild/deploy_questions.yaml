@@ -1,7 +1,9 @@
 steps:
-- args:
-  - write.py
-  - $PROJECT_ID
-  dir: questions
+- dir: questions
+  name: gcr.io/cloud-builders/docker
+  args: [build, -t, questions_image, .]
+
+- dir: questions
+  name: questions_image
   entrypoint: python
-  name: europe-west1-docker.pkg.dev/$PROJECT_ID/from-dockerfile/questions_image
+  args: [write.py, $PROJECT_ID]
