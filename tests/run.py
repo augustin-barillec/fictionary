@@ -62,13 +62,6 @@ last_sources = [
     'special_characters.cy.js'
 ]
 
-
-first_sources = []
-last_sources = [
-    'exceptions/slash_command/max_this_running.cy.js',
-    'help.cy.js',
-    'special_characters.cy.js']
-
 sources = first_sources + last_sources
 len_sources = len(sources)
 utils.local_clean.clean_cypress()
