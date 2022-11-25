@@ -6,7 +6,7 @@ import reusable
 import utils
 logger = logging.getLogger(__name__)
 command_template = """
-DEBUG=cypress:server npx cypress run \
+npx cypress run \
 --headless \
 --browser chrome \
 --env PROJECT_ID={project_id} \
