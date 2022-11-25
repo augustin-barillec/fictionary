@@ -1,61 +1,47 @@
 steps:
-- id: start
-  name: gcr.io/cloud-builders/gcloud
-  entrypoint: echo
-  args: [start]
-
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
   args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5000', '0']
-  waitFor: [start]
 
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
-  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5001', '60']
-  waitFor: [start]
+  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5001', '0']
 
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
-  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5002', '120']
-  waitFor: [start]
+  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5002', '0']
 
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
-  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5003', '180']
-  waitFor: [start]
+  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5003', '0']
 
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
-  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5004', '240']
-  waitFor: [start]
+  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5004', '0']
 
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
-  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5005', '300']
-  waitFor: [start]
+  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5005', '0']
 
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
-  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5006', '360']
-  waitFor: [start]
+  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5006', '0']
 
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
-  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5007', '420']
-  waitFor: [start]
+  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5007', '0']
 
 - dir: game
   name: gcr.io/cloud-builders/gcloud
   entrypoint: python3
-  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5008', '480']
-  waitFor: [start]
+  args: [cloud_deploy.py, $PROJECT_ID, function, europe-west1, '5008', '0']
 
 timeout: 1200s
