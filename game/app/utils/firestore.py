@@ -8,7 +8,7 @@ def get_constants(db):
 
 
 def get_home_url(db):
-    return get_constants(db)['url']
+    return get_constants(db)['home_url']
 
 
 def get_slack_signing_secret(db):
