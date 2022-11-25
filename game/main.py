@@ -94,10 +94,9 @@ def slash_command(request):
 def interactivity(request):
     body = request.get_data()
     headers = request.headers
-    form = request.form
-    team_id = form['team_id']
+    payload = json.loads(request.form['payload'])
+    team_id = payload['team']['id']
     verify_signature(team_id, body, headers)
-    payload = json.loads(form)
     payload_type = payload['type']
     if payload_type == 'view_submission':
         return app.interactivity.view_submissions.handle_view_submission(
