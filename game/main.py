@@ -21,9 +21,14 @@ context.project_id = os.getenv('PROJECT_ID')
 context.surface_prefix = hashlib.md5(context.project_id.encode()).hexdigest()
 context.publisher = google.cloud.pubsub_v1.PublisherClient()
 context.db = google.cloud.firestore.Client(project=context.project_id)
-slack_signing_secret = ut.firestore.get_slack_signing_secret(context.db)
-slack_verifier = slack_sdk.signature.SignatureVerifier(
-            slack_signing_secret)
+
+
+def verify_signature(team_id, body, headers):
+    slack_signing_secret = ut.firestore.get_slack_signing_secret(
+        context.db, team_id)
+    slack_verifier = slack_sdk.signature.SignatureVerifier(
+        slack_signing_secret)
+    ut.slack.verify_signature(slack_verifier, body, headers)
 
 
 def build_game(game_id):
@@ -41,9 +46,9 @@ context.build_game_func = build_game
 def slash_command(request):
     body = request.get_data()
     headers = request.headers
-    ut.slack.verify_signature(slack_verifier, body, headers)
     form = request.form
     team_id = form['team_id']
+    verify_signature(team_id, body, headers)
     channel_id = form['channel_id']
     organizer_id = form['user_id']
     trigger_id = form['trigger_id']
@@ -89,8 +94,10 @@ def slash_command(request):
 def interactivity(request):
     body = request.get_data()
     headers = request.headers
-    ut.slack.verify_signature(slack_verifier, body, headers)
-    payload = json.loads(request.form['payload'])
+    form = request.form
+    team_id = form['team_id']
+    verify_signature(team_id, body, headers)
+    payload = json.loads(form)
     payload_type = payload['type']
     if payload_type == 'view_submission':
         return app.interactivity.view_submissions.handle_view_submission(
