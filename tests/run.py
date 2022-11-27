@@ -63,28 +63,14 @@ last_sources = [
 ]
 
 
-first_sources = [
-    'exceptions/setup_submission/max_running.cy.js'
-]
+first_sources = []
 last_sources = [
     'endings/bravo.cy.js',
-    'endings/hey.cy.js',
     'endings/winner.cy.js',
-    'endings/winners.cy.js',
     'endings/zero.cy.js',
-    'exceptions/game_dead/open_view.cy.js',
-    'exceptions/guess_click/organizer.cy.js',
     'exceptions/slash_command/invalid_parameter.cy.js',
-    'exceptions/slash_command/not_invited.cy.js',
-    'exceptions/vote_click/already_voted.cy.js',
-    'exceptions/vote_click/not_a_potential_voter.cy.js',
     'exceptions/vote_submission/no_time_left.cy.js',
-    'setups/english.cy.js',
-    'setups/freestyle.cy.js',
-    'setups/french.cy.js',
-    'special_characters.cy.js',
-    'transitions/guess_shorten_time.cy.js'
-]
+    'transitions/guess_shorten_time.cy.js']
 sources = first_sources + last_sources
 len_sources = len(sources)
 utils.local_clean.clean_cypress()
