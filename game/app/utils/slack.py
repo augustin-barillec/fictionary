@@ -23,6 +23,7 @@ def multi_tries(f):
                 return f(*args, **kwargs)
             except Exception as e:
                 logger.warning(e, stack_info=True)
+                logger.warning(f'sleeping {duration} seconds before next try')
                 time.sleep(duration)
         return f(*args, **kwargs)
     return decored
