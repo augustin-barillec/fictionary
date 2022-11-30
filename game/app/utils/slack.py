@@ -1,7 +1,30 @@
 import json
+import logging
+import time
 import flask
 import tools
 import app.utils as ut
+logger = logging.getLogger(__name__)
+
+
+def no_crash(f):
+    def decored(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except Exception as e:
+            logger.warning(e, stack_info=True)
+    return decored
+
+
+def multi_tries(f):
+    def decored(*args, **kwargs):
+        for duration in [10, 30, 60]:
+            try:
+                return f(*args, **kwargs)
+            except Exception as e:
+                logger.warning(e, stack_info=True)
+                time.sleep(duration)
+    return decored
 
 
 def verify_signature(slack_verifier, body, headers):
@@ -75,6 +98,12 @@ class SlackOperator:
         self.block_builder = ut.blocks.BlockBuilder(game)
         self.view_builder = ut.views.ViewBuilder(game)
         self.tagging = self.game.exists and self.game.tagging
+        self.multi_tries_post_message = multi_tries(self.post_message)
+        self.multi_tries_update_upper = multi_tries(self.update_upper)
+        self.multi_tries_update_lower = multi_tries(self.update_lower)
+        self.no_crash_post_ephemeral = no_crash(self.post_ephemeral)
+        self.no_crash_update_upper = no_crash(self.update_upper)
+        self.no_crash_update_lower = no_crash(self.update_lower)
 
     def add_tag_to_text(self, text):
         if self.tagging:
@@ -175,60 +204,60 @@ class SlackOperator:
                 f'Hey {ut.users.user_display(u)}, '
                 'you can now vote in the fictionary game organized '
                 f'by {ut.users.user_display(self.game.organizer_id)}!')
-            self.post_ephemeral(u, msg)
+            self.no_crash_post_ephemeral(u, msg)
 
     def send_is_over_notifications(self):
         for u in self.game.frozen_guessers:
             msg = ('The fictionary game organized by '
                    f'{ut.users.user_display(self.game.organizer_id)} is over!')
-            self.post_ephemeral(u, msg)
+            self.no_crash_post_ephemeral(u, msg)
 
     def post_pre_guess_stage_upper(self):
-        return self.post_message(
+        return self.multi_tries_post_message(
             self.block_builder.build_pre_guess_stage_upper_blocks())
 
     def post_pre_guess_stage_lower(self):
-        return self.post_message(
+        return self.multi_tries_post_message(
             self.block_builder.build_pre_guess_stage_lower_blocks())
 
     def update_pre_vote_stage_upper(self):
-        self.update_upper(
+        self.no_crash_update_upper(
             self.block_builder.build_pre_vote_stage_upper_blocks())
 
     def update_pre_vote_stage_lower(self):
-        self.update_lower(
+        self.no_crash_update_lower(
             self.block_builder.build_pre_vote_stage_lower_blocks())
 
     def update_pre_result_stage_upper(self):
-        self.update_upper(
+        self.no_crash_update_upper(
             self.block_builder.build_pre_result_stage_upper_blocks())
 
     def update_pre_result_stage_lower(self):
-        self.update_lower(
+        self.no_crash_update_lower(
             self.block_builder.build_pre_result_stage_lower_blocks())
 
     def update_guess_stage_upper(self):
-        self.update_upper(
+        self.multi_tries_update_upper(
             self.block_builder.build_guess_stage_upper_blocks())
 
     def update_guess_stage_lower(self):
-        self.update_lower(
+        self.no_crash_update_lower(
             self.block_builder.build_guess_stage_lower_blocks())
 
     def update_vote_stage_upper(self):
-        self.update_upper(
+        self.multi_tries_update_upper(
             self.block_builder.build_vote_stage_upper_blocks())
 
     def update_vote_stage_lower(self):
-        self.update_lower(
+        self.no_crash_update_lower(
             self.block_builder.build_vote_stage_lower_blocks())
 
     def update_result_stage_upper(self):
-        self.update_upper(
+        self.multi_tries_update_upper(
             self.block_builder.build_result_stage_upper_blocks())
 
     def update_result_stage_lower(self):
-        self.update_lower(
+        self.multi_tries_update_lower(
             self.block_builder.build_result_stage_lower_blocks())
 
     def post_pre_guess_stage(self):
