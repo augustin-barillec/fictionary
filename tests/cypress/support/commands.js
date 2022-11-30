@@ -47,6 +47,8 @@ Cypress.Commands.add('login', (signin_url, email, password) => {
       cy.wait(1000)
       cy.visit(signin_url)
       cy.wait(1000)
+      cy.contains('sign in with a password instead').click()
+      cy.wait(1000)
       cy.get('#email').click().type(email).should('have.value', email)
       cy.get('#password').click().type(password, {log: false })
       cy.get('#signin_btn').click()
