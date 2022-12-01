@@ -79,7 +79,7 @@ class BlockBuilder:
 
     @staticmethod
     def build_computing_results_stage_block():
-        return build_text_block('Computing results :drum_with_drumsticks:')
+        return build_text_block('Computing results... :drum_with_drumsticks:')
 
     def build_guess_button_block(self):
         id_ = self.surface_id_builder.build_guess_button_block_id()
@@ -198,12 +198,12 @@ class BlockBuilder:
         lv = len(self.game.frozen_voters)
         lw = len(self.game.winners)
         if lg == 0:
-            return 'No one played this game :sob:.'
+            return 'No one played this game. :sob:'
         elif lg == 1:
             g = ut.users.user_display(list(self.game.frozen_guessers)[0])
             return f'Thanks for your guess, {g}!'
         elif lv == 0:
-            return 'No one voted :sob:.'
+            return 'No one voted. :sob:'
         elif lv == 1:
             r = self.game.results[0]
             g = ut.users.user_display(r['guesser'])
