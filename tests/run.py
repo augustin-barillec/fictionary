@@ -65,9 +65,7 @@ first_sources = [
 ]
 last_sources = [
     'exceptions/game_dead/view_response.cy.js',
-    'exceptions/slash_command/max_this_running.cy.js',
-    'exceptions/vote_click/not_a_potential_voter.cy.js',
-    'transitions/guess_shorten_time.cy.js'
+    'exceptions/vote_click/not_a_potential_voter.cy.js'
 ]
 sources = first_sources + last_sources
 len_sources = len(sources)
