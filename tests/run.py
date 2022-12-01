@@ -22,13 +22,9 @@ team_ref = teams_ref.document(team_id)
 games_ref = team_ref.collection('games')
 first_sources = []
 last_sources = [
-    'endings/winner.cy.js',
     'exceptions/game_dead/view_response.cy.js',
-    'exceptions/guess_submission/max_these_guessers.cy.js',
-    'exceptions/slash_command/max_this_running.cy.js',
     'exceptions/vote_click/not_a_potential_voter.cy.js',
-    'special_characters.cy.js',
-    'transitions/guess_full_time.cy.js'
+    'special_characters.cy.js'
 ]
 sources = first_sources + last_sources
 len_sources = len(sources)
