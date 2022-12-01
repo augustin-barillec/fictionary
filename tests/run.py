@@ -22,7 +22,6 @@ team_ref = teams_ref.document(team_id)
 games_ref = team_ref.collection('games')
 first_sources = []
 last_sources = [
-    'exceptions/game_dead/view_response.cy.js',
     'exceptions/vote_click/not_a_potential_voter.cy.js',
     'special_characters.cy.js'
 ]
