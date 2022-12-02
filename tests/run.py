@@ -63,7 +63,6 @@ last_sources = [
 ]
 first_sources = []
 last_sources = [
-    'endings/winners.cy.js',
     'exceptions/vote_click/not_a_potential_voter.cy.js',
 ]
 sources = first_sources + last_sources
