@@ -65,7 +65,6 @@ first_sources = []
 last_sources = [
     'endings/winners.cy.js',
     'exceptions/vote_click/not_a_potential_voter.cy.js',
-    'setups/french.cy.js'
 ]
 sources = first_sources + last_sources
 len_sources = len(sources)
