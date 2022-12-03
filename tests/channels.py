@@ -92,7 +92,7 @@ channel_to_params['exception_vote_click_already_voted'][
     'max_guessers_per_game'] = 2
 
 channel_to_params['exception_vote_click_not_a_potential_voter'][
-    'time_to_guess'] = 40
+    'max_guessers_per_game'] = 2
 
 channel_to_params['exception_vote_submission_no_time_left'][
     'max_guessers_per_game'] = 2
