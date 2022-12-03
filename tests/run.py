@@ -61,6 +61,21 @@ last_sources = [
     'help.cy.js',
     'special_characters.cy.js'
 ]
+first_sources = [
+    'exceptions/slash_command/max_running.cy.js',
+    'exceptions/setup_submission/max_running.cy.js'
+]
+last_sources = [
+    'endings/bravo.cy.js',
+    'endings/zero.cy.js',
+    'exceptions/setup_submission/max_this_running.cy.js',
+    'exceptions/slash_command/not_invited.cy.js',
+    'exceptions/vote_click/not_a_potential_voter.cy.js',
+    'exceptions/vote_submission/no_time_left.cy.js',
+    'setups/english.cy.js',
+    'special_characters.cy.js',
+    'transitions/vote_shorten_time.cy.js'
+]
 sources = first_sources + last_sources
 len_sources = len(sources)
 utils.local_clean.clean_cypress()
