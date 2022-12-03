@@ -64,7 +64,6 @@ last_sources = [
 first_sources = [
 ]
 last_sources = [
-    'exceptions/slash_command/not_invited.cy.js',
     'exceptions/vote_click/not_a_potential_voter.cy.js'
 ]
 sources = first_sources + last_sources
