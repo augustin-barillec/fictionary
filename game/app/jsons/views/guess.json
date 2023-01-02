@@ -3,7 +3,7 @@
     "callback_id": "{}",
 	"title": {
 		"type": "plain_text",
-		"text": "fictionary"
+		"text": "Fictionary"
 	},
 	"submit": {
 		"type": "plain_text",

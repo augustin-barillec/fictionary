@@ -204,13 +204,13 @@ class SlackOperator:
         for u in self.game.potential_voters:
             msg = (
                 f'Hey {ut.users.user_display(u)}, '
-                'you can now vote in the fictionary game organized '
+                'you can now vote in the Fictionary game organized '
                 f'by {ut.users.user_display(self.game.organizer_id)}!')
             self.no_crash_post_ephemeral(u, msg)
 
     def send_is_over_notifications(self):
         for u in self.game.frozen_guessers:
-            msg = ('The fictionary game organized by '
+            msg = ('The Fictionary game organized by '
                    f'{ut.users.user_display(self.game.organizer_id)} is over!')
             self.no_crash_post_ephemeral(u, msg)
 
