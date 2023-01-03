@@ -44,6 +44,11 @@ a:hover {
     font-size: 1.05rem;
 }
 
+iframe {
+    width: 325px;
+    height: 182.5px;
+}
+
 .question {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
@@ -74,5 +79,9 @@ a:hover {
   /* Destktop */
   body {
     zoom: 100%;
+  }
+  iframe {
+    width: 650px;
+    height: 365px;
   }
 }
