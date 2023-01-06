@@ -17,11 +17,11 @@ describe('main', () => {
 
         cy.wait(30000)
 
-        cy.contains(`${tag}: Freestyle game set up by @augustin!`)
+        cy.contains(`${tag}: Freestyle game set up by @A0!`)
         cy.contains(`${tag}: question`)
         cy.contains(`${tag}: • Truth: truth`)
-        cy.contains(`${tag}: • @augustin1: g1`)
-        cy.contains(`${tag}: Thanks for your guess, @augustin1!`)
+        cy.contains(`${tag}: • @A1: g1`)
+        cy.contains(`${tag}: Thanks for your guess, @A1!`)
       })
     })
   })
