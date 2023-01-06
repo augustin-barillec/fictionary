@@ -77,12 +77,13 @@ global parameters for the games (for instance the parameters time_to_guess or
 max_guessers_per_game). 
 
 Each team_id document has a collection named games. When a user sends the slash
-command to set up a game, a game_id is stored in this collection. 
+command to set up a game, a game_id is stored in this collection and a game 
+setup view is displayed to the user. When the user submits the view, 
+the interactivity function triggers the pre_guess_stage function.
 
-The slash_commands then triggers the pre_guess_stage function which prepares, 
-displays the guess button and the timer and triggers the guess_stage function.
-This function is a timed loop which refreshes the timer and add the names of 
-new guessers in Slack. 
+The latter computes the guess deadline, displays the guess button and the timer
+and triggers the guess_stage function. This function is a timed loop which 
+refreshes the timer and the names of guessers in Slack. 
 
 The names of the guessers and the guesses are stored in Firestore in the 
 game document by the interactivity function when they submit their guess. 

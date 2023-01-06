@@ -44,6 +44,23 @@ context.build_game_func = build_game
 
 
 def slash_command(request):
+    """This HTTP Cloud Function is triggered when a user sends the slash
+    command "/fictionary" followed by one the four following parameters:
+    "help", "freestyle", "french" or "english".
+
+    With the last three parameters, a game is stored in Firestore with
+    the following attributes: version, parameter and tag. The tag is used
+    during the Cypress tests for tagging messages.
+
+    "/fictionary help" displays an ephemeral message which explains the user
+    how to use this slash command.
+
+    "/fictionary freestyle" opens a game setup view where the user has to
+    come up with the question and the answer.
+
+    "/fictionary english" or "/fictionary french" opens a game setup view
+    where the user can pick a question from a bank question.
+    """
     body = request.get_data()
     headers = request.headers
     form = request.form
@@ -92,6 +109,11 @@ def slash_command(request):
 
 
 def interactivity(request):
+    """This HTTP function is triggered any time a user interacts with an
+    object of a game: game setup view configuration and submission,
+    guess button click and guess view submission, vote button click and
+    vote view submission.
+    """
     body = request.get_data()
     headers = request.headers
     payload = json.loads(request.form['payload'])
@@ -108,8 +130,12 @@ def interactivity(request):
 
 
 def pre_guess_stage(event, context_):
-    assert context_ == context_
+    """This event-driven function is triggered by the interactivity function
+    when a game setup view is submitted.
 
+
+    """
+    assert context_ == context_
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
     game = build_game(game_id)
