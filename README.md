@@ -105,6 +105,13 @@ A0, A1, A2 and A3.
 You can deploy the game and the questions on P, using the files in the 
 cloudbuild directory. 
 
+You have also to create Pub/Sub topics (one for each event-driven function). 
+For this, you can run from the game directory:
+
+```shell
+python cloud_deploy.py P pubsub
+```
+
 You can create your own Fictionary Slack app in T with the following manifest:
 
 ```yaml
@@ -221,4 +228,19 @@ Finally, to launch all the tests, you can run from the tests directory:
 
 ```shell
 python run.py P
+```
+
+Instead of using the Pub/Sub and the Cloud Functions from P, you can emulate them
+locally to test quickly changes in the code. 
+
+You can emulate Pub/Sub by running this command from the game directory:
+
+```shell
+python local_deploy.py P pubsub
+```
+
+You can emulate the Cloud Functions by running this command from the game directory:
+
+```shell
+python local_deploy.py P functions
 ```
