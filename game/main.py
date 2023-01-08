@@ -50,7 +50,8 @@ def slash_command(request):
 
     With the last three parameters, a game is stored in Firestore with
     the following attributes: version, parameter and tag. The tag is used
-    during the Cypress tests for tagging messages.
+    during the Cypress tests for tagging messages. Thus they can be
+    identified during the tests.
 
     "/fictionary help" displays an ephemeral message which explains the user
     how to use this slash command.
@@ -131,9 +132,23 @@ def interactivity(request):
 
 def pre_guess_stage(event, context_):
     """This event-driven function is triggered by the interactivity function
-    when a game setup view is submitted.
+    when a game setup view is submitted. It displays two messages: the upper
+    message and the lower message.
 
+    These two messages are updated through the whole game. The upper message is
+    updated only when the game changes of stage. The upper message will contain
+    the guess button and the click button. The lower messages is updated
+    frequently (every 4 seconds). It contains the timer and the names of the
+    users guessing or voting. With only one message, the buttons would have
+    been also refreshed every 4 seconds which is inconvenient for the users.
 
+    This function stores the timestamps of the publication of these two
+    messages in Firestore so that they can be updated later.
+
+    This function computes also the starting time and the deadline for guessing
+    and stores it in Firestore.
+
+    Finally it triggers the guess stage function.
     """
     assert context_ == context_
     game_id = event['attributes']['game_id']
@@ -172,6 +187,12 @@ def pre_guess_stage(event, context_):
 
 
 def guess_stage(event, context_):
+    """This event-driven function is triggered by the pre_guess_stage function.
+    This function refreshes the lower message containing the guessing timer and
+    the names of the guessers. It triggers the pre_vote_stage function where
+    there is no more time to guess or when the maximal number of players is
+    reached.
+    """
     assert context_ == context_
     call_datetime = reusable.time.get_now()
     game_id = event['attributes']['game_id']
@@ -205,6 +226,11 @@ def guess_stage(event, context_):
 
 
 def pre_vote_stage(event, context_):
+    """This event-driven function is triggered by the vote_stage function.
+    It shuffles all the guesses, computes the voting start time and deadline.
+    It then displays the shuffled messages in Slack and triggers the
+    vote_stage function.
+    """
     assert context_ == context_
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
@@ -247,6 +273,12 @@ def pre_vote_stage(event, context_):
 
 
 def vote_stage(event, context_):
+    """This event-driven function is triggered by the pre_vote_stage function.
+    This function refreshed the lower message containing the voting timer and
+    the names of the voters. It triggers the pre_result_stage function where
+    there is no more time to vote or when the maximal number of voters is
+    reached.
+    """
     assert context_ == context_
     call_datetime = reusable.time.get_now()
     game_id = event['attributes']['game_id']
@@ -280,6 +312,11 @@ def vote_stage(event, context_):
 
 
 def pre_result_stage(event, context_):
+    """This event-driven function is triggered by the vote_stage function.
+    It computes the results of the game which contain the scores, the voting
+    graph and the winners for that game. It then displays this information
+    in Slack and triggers the result_stage function.
+    """
     assert context_ == context_
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
@@ -308,6 +345,10 @@ def pre_result_stage(event, context_):
 
 
 def result_stage(event, context_):
+    """This event-driven function is triggered by the pre_result_stage
+    function. It essentially only reports in Firestore that the game ended
+    successfully.
+    """
     assert context_ == context_
     game_id = event['attributes']['game_id']
     logger.info(f'start, game_id={game_id}')
@@ -324,6 +365,15 @@ def result_stage(event, context_):
 
 
 def clean(event, context_):
+    """This event-driven function is designed to be triggered periodically.
+    In production, it is triggered once per day.
+
+    An old game is a game that started more than one hour ago. This function
+    deletes old games that ended succesfully and report data about them in
+    BigQuery (but not data written by users). This function moves old games
+    that failed (meaning they do not contain in Firestore the entry
+    'result_stage_over') in the fails collection for further examination.
+    """
     assert event == event and context_ == context_
     bq_client = google.cloud.bigquery.Client()
     game_ids = []
