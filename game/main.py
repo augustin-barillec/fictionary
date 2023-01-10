@@ -23,9 +23,9 @@ context.publisher = google.cloud.pubsub_v1.PublisherClient()
 context.db = google.cloud.firestore.Client(project=context.project_id)
 
 
-def verify_signature(team_id, body, headers):
+def verify_signature(body, headers):
     slack_signing_secret = ut.firestore.get_slack_signing_secret(
-        context.db, team_id)
+        context.db)
     slack_verifier = slack_sdk.signature.SignatureVerifier(
         slack_signing_secret)
     ut.slack.verify_signature(slack_verifier, body, headers)
@@ -64,9 +64,9 @@ def slash_command(request):
     """
     body = request.get_data()
     headers = request.headers
+    verify_signature(body, headers)
     form = request.form
     team_id = form['team_id']
-    verify_signature(team_id, body, headers)
     channel_id = form['channel_id']
     organizer_id = form['user_id']
     trigger_id = form['trigger_id']
@@ -117,9 +117,8 @@ def interactivity(request):
     """
     body = request.get_data()
     headers = request.headers
+    verify_signature(body, headers)
     payload = json.loads(request.form['payload'])
-    team_id = payload['team']['id']
-    verify_signature(team_id, body, headers)
     payload_type = payload['type']
     if payload_type == 'view_submission':
         return app.interactivity.view_submissions.handle_view_submission(

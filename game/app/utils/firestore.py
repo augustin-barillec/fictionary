@@ -11,9 +11,9 @@ def get_home_url(db):
     return get_constants(db)['home_url']
 
 
-def get_slack_signing_secret(db, team_id):
-    return db.collection('teams').document(
-        team_id).get().to_dict()['slack_signing_secret']
+def get_slack_signing_secret(db):
+    return db.collection('constants').document(
+        'constants').get().to_dict()['slack_signing_secret']
 
 
 class FirestoreReader:

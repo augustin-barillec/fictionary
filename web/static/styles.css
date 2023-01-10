@@ -28,7 +28,7 @@ h2 {
     font-weight: 600;
 }
 
-h2.questions, h2.privacy_policy {
+h2.questions, h2.privacy_policy, h2.thank_you, h2.try_again{
     color: var(--primary-color);
     text-align: center;
 }
@@ -63,6 +63,11 @@ iframe {
     font-style: italic;
     text-align: center;
     margin-bottom: 1rem;
+}
+
+#add_to_slack {
+    width: 139px;
+    height: 40px;
 }
 
 #footnote {

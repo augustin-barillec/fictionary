@@ -6,7 +6,7 @@ This app runs on a single GCP project_id. Let's call it P for the rest of this d
 
 ## Links
 
-- Website: https://yokyok.ninja/
+- Website: https://yokyok.ninja
 - Demo: https://www.youtube.com/watch?v=QCxpt5dB5KU
 - Source code: https://github.com/augustin-barillec/fictionary
 
@@ -28,7 +28,7 @@ The web directory contains the code for the app website (see link above).
 The game directory contains the code which run the Fictionary games. The 
 entry point is a main.py file containing 9 Cloud Functions.
 
-The cloud build directory contains 3 files:
+The cloudbuild directory contains 3 files:
 
 - deploy_game.yaml
 - deploy_questions.yaml
