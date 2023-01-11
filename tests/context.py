@@ -8,7 +8,6 @@ logger = reusable.root_logger.configure_root_logger()
 parser = argparse.ArgumentParser()
 parser.add_argument('project_id')
 subparsers = parser.add_subparsers(dest='command')
-subparsers.add_parser('setup_team')
 subparsers.add_parser('setup_channels')
 subparsers.add_parser('print_conf')
 get_channel_id_parser = subparsers.add_parser('print_channel_id')
@@ -38,9 +37,7 @@ team_ref = teams_ref.document(team_id)
 games_ref = team_ref.collection('games')
 channels_ref = team_ref.collection('channels')
 
-if args.command == 'setup_team':
-    cf.setup_team(team_ref)
-elif args.command == 'setup_channels':
+if args.command == 'setup_channels':
     from slack_sdk import WebClient
     slack_client = WebClient(cypress_slack_token)
     cf.setup_channels(

@@ -5,7 +5,8 @@ def store_installation_state(db, installation_state):
     state_ref = db.collection('installation_states').document(
         installation_state)
     now = time.time()
-    state_ref.set({'ts': now}, merge=False)
+    now_plus_3600 = now + 3600
+    state_ref.set({'ts': now, 'ts_plus_3600': now_plus_3600}, merge=False)
 
 
 def consume_installation_state(db, installation_state):
