@@ -22,15 +22,15 @@ class ExceptionsHandler:
         self.game = game
         self.slack_operator = ut.slack.SlackOperator(self.game)
 
-    @staticmethod
-    def game_is_running(game_dict):
-        c1 = 'setup_submission' in game_dict
-        c2 = 'result_stage_over' not in game_dict
-        return c1 and c2
+    def game_is_running(self, game_id, game_dict):
+        c1 = not game_is_too_old(game_id, self.game.max_life_span)
+        c2 = 'setup_submission' in game_dict
+        c3 = 'result_stage_over' not in game_dict
+        return c1 and c2 and c3
 
     def get_running_games(self, game_dicts):
         return {gid: game_dicts[gid] for gid in game_dicts if
-                self.game_is_running(game_dicts[gid])}
+                self.game_is_running(gid, game_dicts[gid])}
 
     def get_this_organizer_running_games(self, game_dicts):
         organizer_id = self.game.organizer_id
@@ -144,6 +144,8 @@ class ExceptionsHandler:
         if game_parameter not in p:
             return ("Game parameter must be one of "
                     f"{', '.join(p[:-1])} or {p[-1]}.")
+        if game_parameter == 'help':
+            return
         if self.max_nb_this_organizer_running_games_reached(game_dicts):
             m = self.build_max_nb_this_organizer_running_games_reached_msg(
                 remind=False)
