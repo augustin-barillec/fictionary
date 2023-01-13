@@ -12,7 +12,9 @@ class Game:
             publisher,
             db):
         """This class contains the data of a game. This data is stored
-        in Firestore in a document named game_id.
+        in Firestore in a document named game_id, whose path is
+        /teams/team_id/games/game_id (team_id is the id of the team
+        hosting the game).
 
         A game_id is a string containing the following information:
             - the timestamp when the slash command was sent
