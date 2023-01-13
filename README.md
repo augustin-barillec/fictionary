@@ -2,7 +2,7 @@
 
 Fictionary is a Slack app to play [fictionary](https://en.wikipedia.org/wiki/Fictionary).
 
-This app runs on a single GCP project_id. Let's call it P for the rest of this document.
+This app runs on a single GCP project_id.
 
 ## Links
 
@@ -21,24 +21,18 @@ This project has five directories:
 - web
 
 The questions directory contains the questions of the game and a script to 
-write them to the Firestore instance of P. 
+write them to Firestore.
 
-The web directory contains the code for the app website (see link above).
+The web directory contains the code for the app website.
 
-The game directory contains the code which run the Fictionary games. The 
-entry point is a main.py file containing 9 Cloud Functions.
+The game directory contains the code which runs the Fictionary games. The 
+entry point is the main.py file containing 9 Cloud Functions.
 
-The cloudbuild directory contains 3 files:
+The cloudbuild directory contains 3 files. These define Cloud Build triggers 
+which deploy the game, the questions and the website.
 
-- deploy_game.yaml
-- deploy_questions.yaml
-- deploy_web.yaml
-
-These 3 files define 3 Cloud Build Triggers on P which deploy the game, the questions
-and the website. 
-
-The tests directory contains Cypress code that simulate different game scenarios on a 
-real Slack workspace.
+The tests directory contains Cypress code that simulates different game 
+scenarios on a real Slack workspace.
 
 ## Game
 
@@ -52,28 +46,37 @@ the following:
 - pre_vote_stage
 - vote_stage
 - pre_result_stage
+- result_stage
 - clean
 
-The slash_command and interactivity Cloud Functions are HTTP Functions. The other
-are triggered by Pub/Sub topics. 
+The slash_command and interactivity Cloud Functions are HTTP Functions. The 
+others are triggered by Pub/Sub topics. 
 
-The slash_commmand function handles the slash command "/fictionary" written by a 
-user. It has 4 parameters: "help", "freestyle", "english" and "french". The last three
-enable to open a game setup view for the user to set up a game. 
+The slash_commmand function handles the slash command "/fictionary". It has 4 
+parameters: "help", "freestyle", "english" and "french". The first one displays 
+information about the app. The last three open a view for the user to configure 
+and start a game.
 
-The interactivity function handles all the user interactions with Slack objects of 
-a game: game setup view configuration and submission, guess button click and guess 
-view submission, vote button click and vote view submission.
+The interactivity function handles all the user interactions with Slack objects 
+of a game: game setup view configuration and submission, guess button click and 
+guess view submission, vote button click and vote view submission.
 
-The clean function is designed to be triggered periodically (for example once a day)
-via Cloud Scheduler. It deletes old games (that finished successfully) 
-stored in Firestore and sends some monitoring information about these games 
-into BigQuery (but no data written by user is kept). The games that failed are kept 
-in Firestore for later examination. 
+The clean function is triggered once a day via Cloud Scheduler. It deletes games
+that were created more than one hour ago and that finished successfully from 
+Firestore. It moves games that where created more than one hour ago and that 
+failed in a collection named fails in Firestore to help for debugging. These 
+failed games are automatically deleted 71 hours after they were moved.
 
-Firestore contains a collection named teams containing team_ids (ex: TXXXXXXX). 
+The clean function sends also some monitoring information about these games 
+into BigQuery (but no data written by users is sent).
+
+Thus, data written by users in successful games (which should be the usual case) 
+are kept at most 25 hours. Data written by users in failed games are kept 71
+hours more.
+
+Firestore contains a collection named teams containing team_ids (e.g. TXXXXXXX). 
 These are the teams where the app is installed. Each team_id document has some 
-global parameters for the games (for instance the parameters time_to_guess or 
+global parameters for its games (for instance the parameters time_to_guess or 
 max_guessers_per_game). 
 
 Each team_id document has a collection named games. When a user sends the slash
@@ -82,11 +85,11 @@ setup view is displayed to the user. When the user submits the view,
 the interactivity function triggers the pre_guess_stage function.
 
 The latter computes the guess deadline, displays the guess button and the timer
-and triggers the guess_stage function. This function is a timed loop which 
+and triggers the guess_stage function. This function is a loop which 
 refreshes the timer and the names of guessers in Slack. 
 
 The names of the guessers and the guesses are stored in Firestore in the 
-game document by the interactivity function when they submit their guess. 
+game document by the interactivity function when guessers submit their guess. 
 
 When the timer is over or the maximum numbers of guessers is reached, the
 guess_stage function triggers the pre_vote_stage function. The pre_vote_stage
@@ -100,11 +103,10 @@ function which displays them.
 
 First you need your own GCP project P and your own Slack workspace T. 
 
-In the Slack workspace T, you need to create 4 users. Let's name them 
-A0, A1, A2 and A3. 
+In the Slack workspace T, you need to create 4 users named A0, A1, A2 and A3. 
 
-You can deploy the game and the questions on P, using the files in the 
-cloudbuild directory. 
+On P, you can deploy the game, the questions and the website, using the files 
+in the cloudbuild directory. 
 
 You have also to create Pub/Sub topics (one for each event-driven function). 
 For this, you can run from the game directory:
@@ -145,7 +147,8 @@ settings:
 ```
 
 Then you have to create a second Slack app named cypress just for 
-creating channels in the workspace T. Each channel will host a specific Cypress test. 
+creating channels in the workspace T. Each channel will host a specific 
+Cypress test. 
 
 ```yaml
 display_information:
@@ -191,13 +194,17 @@ users:
     password: password of A3
 ```
 
-Then you can run from the tests directory:
+At the root of Firestore, create a collection named constants containing 
+a single document named constants. Include the following information in this
+document (it is used by all the games, not only by those of team T):
 
-```shell
-python context.py P setup_team
+```yaml
+home_url: the url of the website
+slack_signing_secret: the slack signing secret of the Fictionary app
 ```
 
-It will store in Firestore, the global parameters for the team T, which are:
+In the document /teams/T store the following information (these parameters
+are only used by the games of T):
 
 ```yaml
 max_guessers_per_game: 20
@@ -206,7 +213,6 @@ max_running_games: 5
 max_running_games_per_organizer: 10
 refresh_interval: 4
 self_trigger_threshold: 60
-slack_signing_secret: the slack signing secret of the Fictionary app
 slack_token: the slack token of the Fictionary app
 tagging: false
 time_to_guess: 900
@@ -214,14 +220,14 @@ time_to_vote: 300
 trigger_cooldown: 30
 ```
 
-Then you can run the following command:
+You can then run the following command:
 
 ```shell
 python context.py P setup_channels
 ```
 
 It will create in Firestore a channels collection in the document T with 
-specific global parameters for each channel that will be used during the tests.
+specific parameters for each channel that will be used during the tests.
 
 You have to create a bucket tests-P to store the test results.
 

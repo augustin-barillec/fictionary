@@ -13,7 +13,7 @@
     During the installation, the following data is collected:
 </p>
 <ul>
-	<li>Team ID, ex: TXXXXXXX. This allows the bot to select the correct authorization token in order to interact with your workspace.</li>
+	<li>Team ID, e.g. TXXXXXXX. This allows the bot to select the correct authorization token in order to interact with your workspace.</li>
 	<li>Authorization Token, the token granted by Slack to our bot in order to securely communicate with your workspace.</li>
 </ul>
 <p>
@@ -27,16 +27,18 @@
     For each game, the following data is collected:
 </p>
 <ul>
-	<li>User IDs involved with the game, ex: UXXXXXX.</li>
-	<li>Channel ID where the game takes place, ex: CXXXXXX.</li>
+	<li>User IDs involved with the game, e.g. UXXXXXX.</li>
+	<li>Channel ID where the game takes place, e.g. CXXXXXX.</li>
     <li>The question written by the organizer if it is a freestyle game.</li>
 	<li>The answers written by the players.</li>
 </ul>
 <p>
-    If a game ends successfully, the data written by the users is automatically
-    deleted within 25 hours. If a game crashes, it is kept to help for
-    debugging. Once the code is fixed, it is deleted manually. The data not
-    written by the users is stored for monitoring purposes.
+    If a game ends successfully, the data written by the users is deleted
+    within 25 hours. If a game crashes, it is kept 71 hours more to help
+    for debugging.
+
+    The data not written by the users is stored for logging and
+    monitoring purposes. It is deleted 30 days after its creation.
 </p>
 <p>
     If you want the data associated with your workspace to be deleted, you can

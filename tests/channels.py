@@ -118,3 +118,5 @@ channel_to_params['transition_vote_full_time']['max_guessers_per_game'] = 2
 channel_to_params['transition_vote_full_time']['time_to_vote'] = 20
 
 channel_to_params['transition_vote_shorten_time']['max_guessers_per_game'] = 2
+
+channel_to_params['help']['max_running_games_per_organizer'] = 1

@@ -50,11 +50,11 @@ def slash_command(request):
 
     With the last three parameters, a game is stored in Firestore with
     the following attributes: version, parameter and tag. The tag is used
-    during the Cypress tests for tagging messages. Thus they can be
+    during the Cypress tests for tagging messages. Thus, they can be
     identified during the tests.
 
-    "/fictionary help" displays an ephemeral message which explains the user
-    how to use this slash command.
+    "/fictionary help" displays an ephemeral message which gives information
+    about this app.
 
     "/fictionary freestyle" opens a game setup view where the user has to
     come up with the question and the answer.
@@ -147,7 +147,7 @@ def pre_guess_stage(event, context_):
     This function computes also the starting time and the deadline for guessing
     and stores it in Firestore.
 
-    Finally it triggers the guess stage function.
+    Finally, it triggers the guess stage function.
     """
     assert context_ == context_
     game_id = event['attributes']['game_id']
@@ -273,8 +273,8 @@ def pre_vote_stage(event, context_):
 
 def vote_stage(event, context_):
     """This event-driven function is triggered by the pre_vote_stage function.
-    This function refreshed the lower message containing the voting timer and
-    the names of the voters. It triggers the pre_result_stage function where
+    This function refreshes the lower message containing the voting timer and
+    the names of the voters. It triggers the pre_result_stage function when
     there is no more time to vote or when the maximal number of voters is
     reached.
     """
@@ -359,7 +359,7 @@ def result_stage(event, context_):
     game.dict['result_stage_over'] = True
     firestore_editor = ut.firestore.FirestoreEditor(game)
     firestore_editor.set_game(merge=True)
-    logger.info(f'sucessfully ended, game_id={game_id}')
+    logger.info(f'successfully ended, game_id={game_id}')
     return flask.make_response('', 200)
 
 
@@ -368,10 +368,13 @@ def clean(event, context_):
     In production, it is triggered once per day.
 
     An old game is a game that started more than one hour ago. This function
-    deletes old games that ended succesfully and report data about them in
-    BigQuery (but not data written by users). This function moves old games
-    that failed (meaning they do not contain in Firestore the entry
-    'result_stage_over') in the fails collection for further examination.
+    deletes old games that ended successfully and report data about them in
+    BigQuery (but not data written by users).
+
+    This function moves old games that failed (meaning they do not contain in
+    Firestore the entry 'result_stage_over') in the fails collection to help
+    for debugging. These failed games are automatically deleted 71 hours after
+    they were moved.
     """
     assert event == event and context_ == context_
     bq_client = google.cloud.bigquery.Client()
@@ -395,6 +398,8 @@ def clean(event, context_):
                     outcome = 'unsubmitted'
                 else:
                     ref = context.db.collection('fails').document(game_id)
+                    ts_to_expire = time.time() + 259200
+                    game_dict['ts_to_expire'] = ts_to_expire
                     ref.set(game_dict, merge=False)
                     outcome = 'fail'
                 g.reference.delete()
@@ -407,6 +412,4 @@ def clean(event, context_):
     ut.monitoring.upload_monitoring(
         bq_client, context.project_id, monitoring)
     logger.info(f'monitoring uploaded: {len(monitoring)} lines')
-    ut.monitoring.deduplicate_monitoring(bq_client, context.project_id)
-    logger.info('monitoring deduplicated')
     return flask.make_response('', 200)
