@@ -80,7 +80,8 @@ def oauth_callback():
         'team_name': team_name,
         'token_type': token_type,
         'user_id': user_id}
-    installation_dict = {**installation_dict, **reusable.game_params.game_params}
+    installation_dict = {
+        **installation_dict, **reusable.game_params.game_params}
     tools.firestore.store_installation(db, team_id, installation_dict)
     return flask.render_template('thank_you.html')
 

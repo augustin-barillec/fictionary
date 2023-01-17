@@ -65,14 +65,14 @@ The clean function is triggered once a day via Cloud Scheduler. It deletes games
 that were created more than one hour ago and that finished successfully from 
 Firestore. It moves games that where created more than one hour ago and that 
 failed in a collection named fails in Firestore to help for debugging. These 
-failed games are automatically deleted 71 hours after they were moved.
+failed games are automatically deleted about 3 days after they were moved.
 
 The clean function sends also some monitoring information about these games 
 into BigQuery (but no data written by users is sent).
 
 Thus, data written by users in successful games (which should be the usual case) 
-are kept at most 25 hours. Data written by users in failed games are kept 71
-hours more.
+are kept at most about 1 day. Data written by users in failed games are kept 
+about 3 days more.
 
 Firestore contains a collection named teams containing team_ids (e.g. TXXXXXXX). 
 These are the teams where the app is installed. Each team_id document has some 
@@ -146,8 +146,8 @@ settings:
   token_rotation_enabled: false
 ```
 
-Then you have to create a second Slack app named cypress just for 
-creating channels in the workspace T. Each channel will host a specific 
+Then you have to create a second Slack app named cypress for 
+setting up channels in the workspace T. Each channel will host a specific 
 Cypress test. 
 
 ```yaml

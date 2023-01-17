@@ -89,7 +89,8 @@ def compute_monitoring(game_ids, game_dicts, outcomes):
 def upload_monitoring(bq_client, project_id, monitoring):
     today_no_dash = str(
         datetime.datetime.now(datetime.timezone.utc).date()).replace('-', '')
-    destination_table_id = f'{project_id}.monitoring.monitoring_{today_no_dash}'
+    dataset_id = f'{project_id}.monitoring'
+    destination_table_id = f'{dataset_id}.monitoring_{today_no_dash}'
     job_config = google.cloud.bigquery.LoadJobConfig(
         schema=bq_schema,
         write_disposition='WRITE_APPEND')

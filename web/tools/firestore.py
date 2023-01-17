@@ -4,9 +4,9 @@ import time
 def store_installation_state(db, installation_state):
     state_ref = db.collection('installation_states').document(
         installation_state)
-    now = time.time()
-    now_plus_3600 = now + 3600
-    state_ref.set({'ts': now, 'ts_plus_3600': now_plus_3600}, merge=False)
+    ts = time.time()
+    ts_to_expire = ts + 3600
+    state_ref.set({'ts': ts, 'ts_to_expire': ts_to_expire}, merge=False)
 
 
 def consume_installation_state(db, installation_state):

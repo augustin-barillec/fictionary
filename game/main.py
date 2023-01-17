@@ -373,8 +373,8 @@ def clean(event, context_):
 
     This function moves old games that failed (meaning they do not contain in
     Firestore the entry 'result_stage_over') in the fails collection to help
-    for debugging. These failed games are automatically deleted 71 hours after
-    they were moved.
+    for debugging. These failed games are automatically deleted about 3 days
+    after they were moved.
     """
     assert event == event and context_ == context_
     bq_client = google.cloud.bigquery.Client()
@@ -398,7 +398,7 @@ def clean(event, context_):
                     outcome = 'unsubmitted'
                 else:
                     ref = context.db.collection('fails').document(game_id)
-                    ts_to_expire = time.time() + 259200
+                    ts_to_expire = time.time() + 72*3600
                     game_dict['ts_to_expire'] = ts_to_expire
                     ref.set(game_dict, merge=False)
                     outcome = 'fail'
