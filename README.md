@@ -215,7 +215,7 @@ refresh_interval: 4
 self_trigger_threshold: 60
 slack_token: the slack token of the Fictionary app
 tagging: false
-time_to_guess: 900
+time_to_guess: 600
 time_to_vote: 300
 trigger_cooldown: 30
 ```
