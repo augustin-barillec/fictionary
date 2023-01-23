@@ -146,9 +146,8 @@ settings:
   token_rotation_enabled: false
 ```
 
-Then you have to create a second Slack app named cypress for 
-setting up channels in the workspace T. Each channel will host a specific 
-Cypress test. 
+Then you have to create a second Slack app named cypress for setting up 
+channels in the workspace T. Each channel will host a specific Cypress test. 
 
 ```yaml
 display_information:
@@ -170,8 +169,8 @@ settings:
   token_rotation_enabled: false
 ```
 
-In a secret named cypress_context_conf of the project P, 
-store the following information:
+In a secret named cypress_context_conf of the project P, store the following 
+information:
 
 ```yaml
 team_id: the team_id T
@@ -237,8 +236,8 @@ Finally, to launch all the tests, you can run from the tests directory:
 python run.py P
 ```
 
-Instead of using the Pub/Sub and the Cloud Functions from P, you can emulate them
-locally to test quickly changes in the code. 
+Instead of using the Pub/Sub and the Cloud Functions from P, you can emulate 
+them locally to test quickly changes in the code. 
 
 You can emulate Pub/Sub by running this command from the game directory:
 
@@ -246,7 +245,8 @@ You can emulate Pub/Sub by running this command from the game directory:
 python local_deploy.py P pubsub
 ```
 
-You can emulate the Cloud Functions by running this command from the game directory:
+You can emulate the Cloud Functions by running this command from the game 
+directory:
 
 ```shell
 python local_deploy.py P functions
