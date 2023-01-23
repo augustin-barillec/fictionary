@@ -1,5 +1,14 @@
 import copy
-import params
+import reusable
+channel_default_params = copy.deepcopy(reusable.game_params.game_params)
+channel_default_params['max_guessers_per_game'] = 3
+channel_default_params['max_running_games'] = 100
+channel_default_params['max_running_games_per_organizer'] = 100
+channel_default_params['refresh_interval'] = 4
+channel_default_params['tagging'] = True
+channel_default_params['time_to_guess'] = 180
+channel_default_params['time_to_vote'] = 180
+
 channel_names = [
     'ending_bravo',
     'ending_hey',
@@ -41,7 +50,7 @@ channel_to_params = dict()
 channel_to_user_indexes = dict()
 channel_to_app_kicked = dict()
 for n in channel_names:
-    channel_to_params[n] = copy.deepcopy(params.channel_default_params)
+    channel_to_params[n] = copy.deepcopy(channel_default_params)
     channel_to_user_indexes[n] = [0, 1, 2, 3]
     channel_to_app_kicked[n] = False
 
@@ -109,3 +118,5 @@ channel_to_params['transition_vote_full_time']['max_guessers_per_game'] = 2
 channel_to_params['transition_vote_full_time']['time_to_vote'] = 20
 
 channel_to_params['transition_vote_shorten_time']['max_guessers_per_game'] = 2
+
+channel_to_params['help']['max_running_games_per_organizer'] = 1

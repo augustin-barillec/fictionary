@@ -1,3 +1,4 @@
+import datetime
 import google.cloud.bigquery
 import pandas
 import reusable
@@ -86,23 +87,13 @@ def compute_monitoring(game_ids, game_dicts, outcomes):
 
 
 def upload_monitoring(bq_client, project_id, monitoring):
-    destination_table_id = f'{project_id}.monitoring.monitoring'
+    today_no_dash = str(
+        datetime.datetime.now(datetime.timezone.utc).date()).replace('-', '')
+    dataset_id = f'{project_id}.monitoring'
+    destination_table_id = f'{dataset_id}.monitoring_{today_no_dash}'
     job_config = google.cloud.bigquery.LoadJobConfig(
         schema=bq_schema,
         write_disposition='WRITE_APPEND')
     job = bq_client.load_table_from_dataframe(
         monitoring, destination_table_id, job_config=job_config)
-    job.result()
-
-
-def deduplicate_monitoring(bq_client, project_id):
-    query = f"""
-    select * from {project_id}.monitoring.monitoring
-    qualify row_number() over (partition by game_id) = 1
-    """
-    destination_table_id = f'{project_id}.monitoring.monitoring'
-    job_config = google.cloud.bigquery.QueryJobConfig()
-    job_config.destination = destination_table_id
-    job_config.write_disposition = 'WRITE_TRUNCATE'
-    job = bq_client.query(query=query, job_config=job_config)
     job.result()

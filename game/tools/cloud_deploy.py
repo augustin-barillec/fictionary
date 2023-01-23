@@ -6,14 +6,14 @@ logger = logging.getLogger(__name__)
 
 
 def deploy_pubsub(project_id):
-    from google.cloud import pubsub_v1
+    import google.cloud.pubsub_v1
     port_to_function_name = tools.ports.port_to_function_name
     port_to_signature_type = tools.ports.port_to_signature_type
     for port in tools.ports.ports:
         function_name = port_to_function_name[port]
         signature_type = port_to_signature_type[port]
         if signature_type == 'event':
-            publisher = pubsub_v1.PublisherClient()
+            publisher = google.cloud.pubsub_v1.PublisherClient()
             topic_name = tools.pubsub_names.topic.format(
                 function_name=function_name)
             topic_path = publisher.topic_path(project_id, topic_name)

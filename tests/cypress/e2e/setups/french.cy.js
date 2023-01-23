@@ -8,7 +8,7 @@ describe('main', () => {
         cy.slash_french(tag)
         cy.contains('Shuffle').click()
         cy.submit_view()
-        cy.contains(`${tag}: Automatic game set up by @augustin!`)
+        cy.contains(`${tag}: Automatic game set up by @A0!`)
         cy.contains(`${tag}: Guess`)
       })
     })
