@@ -169,6 +169,9 @@ settings:
   token_rotation_enabled: false
 ```
 
+You may have to change a setting in Administration / Workspace Settings / Permissions / Channel Management
+so that the cypress app is able to kick users from a channel.
+
 In a secret named cypress_context_conf of the project P, store the following 
 information:
 

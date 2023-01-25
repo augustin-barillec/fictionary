@@ -64,7 +64,7 @@ def create_fake_running_game(games_ref, organizer_id):
     game_id = reusable.ids.build_game_id(
         slash_datetime_compact, 'team_id',
         'channel_id', organizer_id, 'trigger_id')
-    game_dict = {'setup_submission': reusable.time.get_now()}
+    game_dict = {'setup_submission': reusable.time.get_now(), 'tag': 'tag'}
     game_ref = games_ref.document(game_id)
     game_ref.set(game_dict, merge=False)
 
