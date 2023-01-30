@@ -1,5 +1,7 @@
 *
+!/reusable
 !/static
 !/templates
+!/tools
 !/main.py
 !/requirements.txt
