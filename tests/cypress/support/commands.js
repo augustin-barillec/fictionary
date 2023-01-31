@@ -68,7 +68,7 @@ Cypress.Commands.add('go_to_channel_from_channel_id', (conf, channel_id) => {
   cy.visit(url)
   cy.wait(1000)
   cy.visit(url)
-  cy.wait(1000)
+  cy.wait(5000)
 })
 
 Cypress.Commands.add('slash_command', (tag, parameter) => {

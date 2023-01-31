@@ -142,7 +142,7 @@ class ExceptionsHandler:
             return 'Please invite me first to this conversation!'
         p = ['help', 'freestyle'] + languages.LANGUAGES
         if game_parameter not in p:
-            return ("Game parameter must be one of "
+            return ("Parameter must be one of "
                     f"{', '.join(p[:-1])} or {p[-1]}.")
         if game_parameter == 'help':
             return
