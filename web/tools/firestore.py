@@ -1,12 +1,14 @@
+import datetime
 import time
+import reusable
 
 
 def store_installation_state(db, installation_state):
     state_ref = db.collection('installation_states').document(
         installation_state)
     ts = time.time()
-    ts_to_expire = ts + 3600
-    state_ref.set({'ts': ts, 'ts_to_expire': ts_to_expire}, merge=False)
+    expire_at = reusable.time.get_now() + datetime.timedelta(hours=1)
+    state_ref.set({'ts': ts, 'expire_at': expire_at}, merge=False)
 
 
 def consume_installation_state(db, installation_state):

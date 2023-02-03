@@ -1,5 +1,6 @@
 import argparse
 import copy
+import datetime
 import hashlib
 import json
 import os
@@ -398,8 +399,9 @@ def clean(event, context_):
                     outcome = 'unsubmitted'
                 else:
                     ref = context.db.collection('fails').document(game_id)
-                    ts_to_expire = time.time() + 72*3600
-                    game_dict['ts_to_expire'] = ts_to_expire
+                    expire_at = \
+                        reusable.time.get_now() + datetime.timedelta(days=3)
+                    game_dict['expire_at'] = expire_at
                     ref.set(game_dict, merge=False)
                     outcome = 'fail'
                 g.reference.delete()
