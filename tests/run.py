@@ -63,22 +63,15 @@ last_sources = [
 ]
 first_sources = [
     'small.cy.js',
-    'exceptions/slash_command/max_running.cy.js',
 ]
 last_sources = [
     'endings/winners.cy.js',
     'endings/zero.cy.js',
     'exceptions/game_dead/open_view.cy.js',
-    'exceptions/guess_click/organizer.cy.js',
-    'exceptions/slash_command/invalid_parameter.cy.js',
     'exceptions/slash_command/max_this_running.cy.js',
-    'exceptions/slash_command/not_invited.cy.js',
     'help.cy.js',
-    'setups/english.cy.js',
-    'setups/french.cy.js',
     'special_characters.cy.js',
     'transitions/guess_full_time.cy.js',
-    'transitions/guess_shorten_time.cy.js',
     'transitions/vote_shorten_time.cy.js'
 ]
 sources = first_sources + last_sources
