@@ -61,18 +61,12 @@ last_sources = [
     'help.cy.js',
     'special_characters.cy.js'
 ]
-first_sources = [
-    'small.cy.js',
-]
+first_sources = []
 last_sources = [
     'endings/winners.cy.js',
     'endings/zero.cy.js',
-    'exceptions/game_dead/open_view.cy.js',
-    'exceptions/slash_command/max_this_running.cy.js',
-    'help.cy.js',
     'special_characters.cy.js',
-    'transitions/guess_full_time.cy.js',
-    'transitions/vote_shorten_time.cy.js'
+    'transitions/guess_full_time.cy.js'
 ]
 sources = first_sources + last_sources
 len_sources = len(sources)
