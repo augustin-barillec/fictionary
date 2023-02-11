@@ -55,20 +55,14 @@ def oauth_callback():
         client_secret=slack_client_secret,
         code=code)
     installed_team = oauth_response.get('team', {})
-    installer = oauth_response.get('authed_user', {})
+    team_id = installed_team.get('id')
     bot_token = oauth_response.get('access_token')
     bot_id = None
     if bot_token is not None:
         auth_test = client.auth_test(token=bot_token)
         bot_id = auth_test['bot_id']
     app_id = oauth_response.get('app_id')
-    team_id = installed_team.get('id')
-    team_name = installed_team.get('name')
-    bot_token = bot_token
-    bot_id = bot_id
-    bot_user_id = oauth_response.get('bot_user_id')
     bot_scopes = oauth_response.get('scope')
-    user_id = installer.get('id')
     token_type = oauth_response.get('token_type')
 
     installation_dict = {
@@ -76,10 +70,7 @@ def oauth_callback():
         'bot_id': bot_id,
         'bot_scopes': bot_scopes,
         'slack_token': bot_token,
-        'bot_user_id': bot_user_id,
-        'team_name': team_name,
-        'token_type': token_type,
-        'user_id': user_id}
+        'token_type': token_type}
     installation_dict = {
         **installation_dict, **reusable.game_params.game_params}
     tools.firestore.store_installation(db, team_id, installation_dict)
