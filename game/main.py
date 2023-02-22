@@ -18,7 +18,7 @@ import version
 import languages
 logger = reusable.root_logger.configure_root_logger()
 context = argparse.Namespace()
-context.project_id = os.getenv('PROJECT_ID')
+context.project_id = os.environ['PROJECT_ID']
 context.surface_prefix = hashlib.md5(context.project_id.encode()).hexdigest()
 context.publisher = google.cloud.pubsub_v1.PublisherClient()
 context.db = google.cloud.firestore.Client(project=context.project_id)

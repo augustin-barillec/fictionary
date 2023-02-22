@@ -9,7 +9,7 @@ import reusable
 import tools
 logger = reusable.root_logger.configure_root_logger()
 app = flask.Flask(__name__)
-project_id = os.getenv('PROJECT_ID')
+project_id = os.environ['PROJECT_ID']
 db = google.cloud.firestore.Client(project=project_id)
 oauth_credentials = reusable.secret_manager.access_payload_parsed(
     project_id, 'oauth_credentials')
