@@ -3,7 +3,6 @@ import flask
 import slack_sdk.errors
 import reusable
 import app.utils as ut
-import languages
 logger = logging.getLogger(__name__)
 
 
@@ -20,6 +19,8 @@ def game_is_too_old(game_id, max_life_span):
 class ExceptionsHandler:
     def __init__(self, game):
         self.game = game
+        self.language = self.game.language
+        self.em = ut.text.exclamation_mark[self.language]
         self.slack_operator = ut.slack.SlackOperator(self.game)
 
     def game_is_running(self, game_id, game_dict):
@@ -91,21 +92,25 @@ class ExceptionsHandler:
             self.game.vote_stage_last_trigger)
 
     def build_remind_question_truth_msg(self):
+        x1 = ut.text.Question[self.language]
+        x2 = ut.text.Answer[self.language]
         msg = (
-            f'Question: {self.game.question}\n\n' 
-            f'Answer: {self.game.truth}\n\n')
+            f'{x1}: {self.game.question}\n\n' 
+            f'{x2}: {self.game.truth}\n\n')
         return msg
 
     def build_max_nb_running_games_reached_msg(self, remind):
-        msg_template = ('There {} already {} game{} running! '
-                        'This is the maximal number allowed.')
+        x1 = ut.text.There_is_already[self.language]
+        x2 = ut.text.There_are_already[self.language]
+        x3 = ut.text.game[self.language]
+        x4 = ut.text.games[self.language]
+        x5 = ut.text.running[self.language]
+        x6 = ut.text.This_is_the_maximal_number_allowed[self.language]
         if self.game.max_running_games == 1:
-            be = 'is'
-            plural = ''
+            msg = f'{x1} {self.game.max_running_games} {x3} {x5}{self.em}'
         else:
-            be = 'are'
-            plural = 's'
-        msg = msg_template.format(be, self.game.max_running_games, plural)
+            msg = f'{x2} {self.game.max_running_games} {x4} {x5}{self.em}'
+        msg += f' {x6}.'
         if remind:
             remind_msg = self.build_remind_question_truth_msg()
             msg = remind_msg + msg
@@ -113,14 +118,15 @@ class ExceptionsHandler:
 
     def build_max_nb_this_organizer_running_games_reached_msg(
             self, remind):
-        msg_template = ('You are already the organizer of {} running game{}. '
-                        'This is the maximum number allowed.')
+        x1 = ut.text.You_are_already_the_organizer_of[self.language]
+        x2 = ut.text.running_game[self.language]
+        x3 = ut.text.running_games[self.language]
+        x4 = ut.text.This_is_the_maximal_number_allowed[self.language]
         if self.game.max_running_games_per_organizer == 1:
-            plural = ''
+            msg = f'{x1} {self.game.max_running_games} {x2}.'
         else:
-            plural = 's'
-        msg = msg_template.format(
-            self.game.max_running_games_per_organizer, plural)
+            msg = f'{x1} {self.game.max_running_games} {x3}.'
+        msg += x4
         if remind:
             remind_msg = self.build_remind_question_truth_msg()
             msg = remind_msg + msg
@@ -128,7 +134,7 @@ class ExceptionsHandler:
 
     def build_game_is_dead_msg(self):
         if self.game_is_dead():
-            return 'This game is dead!'
+            return f'{ut.text.This_game_is_dead[self.language]}{self.em}'
 
     def build_aborted_cause_recently_triggered_msg(self):
         return f'aborted cause recently triggered, game_id={self.game.id}'
@@ -139,11 +145,13 @@ class ExceptionsHandler:
     def build_slash_command_exception_msg(
             self, in_conversation, game_parameter, game_dicts):
         if not in_conversation:
-            return 'Please invite me first to this conversation!'
-        p = ['help', 'freestyle'] + languages.LANGUAGES
+            msg = ut.text.This_app_is_not_in_the_conversation[
+                self.language]
+            msg += self.em
+            return msg
+        p = ['help', 'freestyle', 'automatic']
         if game_parameter not in p:
-            return ("Parameter must be one of "
-                    f"{', '.join(p[:-1])} or {p[-1]}.")
+            return ut.text.Parameter_must_be_one_of[self.language]
         if game_parameter == 'help':
             return
         if self.max_nb_this_organizer_running_games_reached(game_dicts):
@@ -167,48 +175,44 @@ class ExceptionsHandler:
 
     def build_guess_submission_exception_msg(self, guess):
         if self.no_time_left_to_guess():
-            msg = (f'Your guess: {guess}\n\n'
-                   'It will not be taken into account '
-                   'because the guessing deadline '
-                   'has passed!')
+            msg = ut.text.guessing_deadline_has_passed[self.language].format(
+                guess=guess)
             return msg
         if self.max_nb_these_guessers_reached():
-            msg = (f'Your guess: {guess}\n\n '
-                   'It will not be taken into account '
-                   'because there are already '
-                   f'{self.game.max_guessers_per_game} guessers. '
-                   'This is the maximal number allowed for a game.')
+            msg = ut.text.already_too_many_guessers[self.language].format(
+                guess=guess,
+                max_guessers_per_game=self.game.max_guessers_per_game)
             return msg
 
     def build_vote_submission_exception_msg(self, vote):
         if self.no_time_left_to_vote():
-            msg = (f'Your vote: proposal {vote}.\n\n'
-                   'It will not be taken into account '
-                   'because the voting deadline has passed!')
+            msg = ut.text.voting_deadline_has_passed[self.language].format(
+                vote=vote)
             return msg
 
-    @staticmethod
-    def build_pick_submission_exception_msg(max_number, number_picked_str):
+    def build_pick_submission_exception_msg(
+            self, max_number, number_picked_str):
         try:
             number_picked = int(number_picked_str)
         except ValueError:
-            return 'Input must be an integer.'
+            return ut.text.Input_must_be_a_integer[self.language]
         if number_picked not in range(1, max_number + 1):
-            msg = f'{number_picked} is not between 1 and {max_number}.'
+            msg = ut.text.not_between[self.language].format(
+                number_picked=number_picked, max_number=max_number)
             return msg
 
     def build_guess_click_exception_msg(self, user_id):
         if user_id == self.game.organizer_id and \
                 self.game.parameter == 'freestyle':
-            return 'As the organizer of this freestyle game, you cannot guess!'
+            return ut.text.as_the_organizer[self.language]
         if user_id in self.game.guessers:
-            return 'You have already guessed!'
+            return ut.text.you_have_already_guessed[self.language]
 
     def build_vote_click_exception_msg(self, user_id):
         if user_id not in self.game.potential_voters:
-            return 'Only guessers can vote!'
+            return ut.text.only_guessers_can_vote[self.language]
         if user_id in self.game.voters:
-            return 'You have already voted!'
+            return ut.text.you_have_already_voted[self.language]
 
     def handle_is_dead_exception(self, trigger_id=None, view_id=None):
         if trigger_id is not None:

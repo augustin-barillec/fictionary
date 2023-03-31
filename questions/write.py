@@ -13,9 +13,9 @@ def read_tsv(basename):
 
 
 questions_dataframes = dict()
-questions_dataframes['english'] = read_tsv('questions - english.tsv')
-questions_dataframes['french'] = read_tsv('questions - french.tsv')
-for language in ['english', 'french']:
+questions_dataframes['English'] = read_tsv('questions - English.tsv')
+questions_dataframes['French'] = read_tsv('questions - French.tsv')
+for language in ['English', 'French']:
     questions_dataframe = questions_dataframes[language]
     questions, answers, sources = extract_columns.extract_columns(
         questions_dataframe)

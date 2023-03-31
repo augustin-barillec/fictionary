@@ -1,6 +1,6 @@
 {
 	"type": "modal",
-	"callback_id": "{}",
+	"callback_id": "callback_id",
 	"title": {
 		"type": "plain_text",
 		"text": "Fictionary"
@@ -14,6 +14,20 @@
 		"text": "Cancel"
 	},
 	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "Your guess: 3) proposal_3"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "Voting options:\n1) proposal_1\n2) proposal_2\n4) proposal_4"
+			}
+		},
 		{
 			"type": "input",
 			"block_id": "vote",
@@ -32,9 +46,23 @@
 					{
 						"text": {
 							"type": "plain_text",
-							"text": "{}"
+							"text": "1"
 						},
-						"value": "{}"
+						"value": "1"
+					},
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "2"
+						},
+						"value": "2"
+					},
+					{
+						"text": {
+							"type": "plain_text",
+							"text": "4"
+						},
+						"value": "4"
 					}
 				]
 			}

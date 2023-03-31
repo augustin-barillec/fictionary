@@ -1,11 +1,12 @@
 {
   "type": "actions",
+  "block_id": "block_id",
   "elements": [
       {
           "type": "button",
           "text": {
               "type": "plain_text",
-              "text": "{}"
+              "text": "Click"
           }
       }
   ]

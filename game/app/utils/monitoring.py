@@ -3,7 +3,6 @@ import google.cloud.bigquery
 import pandas
 import reusable
 import app.utils as ut
-import languages
 
 columns = [
     'outcome',
@@ -46,12 +45,12 @@ def compute_row(game_id, game_dict, outcome):
     slash_datetime = reusable.time.compact_to_datetime(slash_datetime_compact)
     setup_submission = game_dict.get('setup_submission')
     parameter = game_dict.get('parameter')
-    if parameter in languages.LANGUAGES:
+    assert parameter in ('freestyle', 'automatic')
+    question = None
+    truth = None
+    if parameter == 'automatic':
         question = game_dict.get('question')
         truth = game_dict.get('truth')
-    else:
-        question = None
-        truth = None
     if 'frozen_guessers' in game_dict:
         nb_guessers = len(game_dict['frozen_guessers'])
     else:

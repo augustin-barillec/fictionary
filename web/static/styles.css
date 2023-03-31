@@ -49,6 +49,11 @@ iframe {
     height: 168.75px;
 }
 
+.container_inline_flex {
+    display: inline-flex;
+    align-items: center;
+}
+
 .question {
     margin-top: 1rem;
     margin-bottom: 0.5rem;
@@ -68,6 +73,20 @@ iframe {
 #add_to_slack {
     width: 139px;
     height: 40px;
+}
+
+#label_languages, #languages, #language, #add_to_slack {
+    margin-right: 0.5rem;
+}
+
+#label_languages, #languages {
+    margin-top: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+#question_bank {
+    margin-top: 0.5rem;
+    margin-bottom: 0.8rem;
 }
 
 #footnote {

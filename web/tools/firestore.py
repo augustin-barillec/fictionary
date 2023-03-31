@@ -11,6 +11,12 @@ def store_installation_state(db, installation_state):
     state_ref.set({'ts': ts, 'expire_at': expire_at}, merge=False)
 
 
+def add_language_to_installation_state(db, installation_state, language):
+    state_ref = db.collection('installation_states').document(
+        installation_state)
+    state_ref.update({'language': language})
+
+
 def consume_installation_state(db, installation_state):
     state_ref = db.collection('installation_states').document(
         installation_state)

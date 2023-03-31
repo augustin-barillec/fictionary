@@ -15,13 +15,12 @@ import app.utils as ut
 import app.interactivity
 import app.game
 import version
-import languages
 logger = reusable.root_logger.configure_root_logger()
 context = argparse.Namespace()
-context.project_id = os.environ['PROJECT_ID']
-context.surface_prefix = hashlib.md5(context.project_id.encode()).hexdigest()
 context.publisher = google.cloud.pubsub_v1.PublisherClient()
+context.project_id = os.environ['PROJECT_ID']
 context.db = google.cloud.firestore.Client(project=context.project_id)
+context.surface_prefix = hashlib.md5(context.project_id.encode()).hexdigest()
 
 
 def verify_signature(body, headers):
@@ -34,11 +33,11 @@ def verify_signature(body, headers):
 
 def build_game(game_id):
     return app.game.Game(
-        game_id=game_id,
+        db=context.db,
+        publisher=context.publisher,
         surface_prefix=context.surface_prefix,
         project_id=context.project_id,
-        publisher=context.publisher,
-        db=context.db)
+        game_id=game_id)
 
 
 context.build_game_func = build_game
@@ -76,7 +75,7 @@ def slash_command(request):
     game_id = ut.ids.build_game_id(
         slash_datetime_compact, team_id, channel_id, organizer_id, trigger_id)
     game = build_game(game_id)
-    logger.info(f'game  built, game_id={game_id}')
+    logger.info(f'game built, game_id={game_id}')
     game.version = version.VERSION
     text_split = text.split(' ')
     parameter = text_split[0]
@@ -95,11 +94,11 @@ def slash_command(request):
     elif game.parameter == 'help':
         ut.slack.SlackOperator(game).send_help(organizer_id)
         return flask.make_response('', 200)
-    ut.firestore.FirestoreEditor(game).set_game(merge=False)
+    ut.firestore.FirestoreEditor(game).set_game()
     logger.info(f'game stored, game_id={game_id}')
     if game.parameter == 'freestyle':
         ut.slack.SlackOperator(game).open_setup_freestyle_view(trigger_id)
-    elif game.parameter in languages.LANGUAGES:
+    elif game.parameter == 'automatic':
         url = ut.questions.get_questions_url(game)
         questions, answers = ut.questions.get_questions_answers(game)
         max_number = len(questions)
@@ -159,7 +158,7 @@ def pre_guess_stage(event, context_):
     if resp is not None:
         return resp
     game.dict['pre_guess_stage_already_triggered'] = True
-    ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    ut.firestore.FirestoreEditor(game).set_game()
 
     slack_operator = ut.slack.SlackOperator(game)
     resp_upper, resp_lower = slack_operator.post_pre_guess_stage()
@@ -177,7 +176,7 @@ def pre_guess_stage(event, context_):
         'guess_deadline'
     ]:
         game.dict[attribute] = game.__dict__[attribute]
-    ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    ut.firestore.FirestoreEditor(game).set_game()
 
     game = build_game(game_id)
     ut.slack.SlackOperator(game).update_guess_stage()
@@ -203,7 +202,7 @@ def guess_stage(event, context_):
     if resp is not None:
         return resp
     game.dict['guess_stage_last_trigger'] = call_datetime
-    ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    ut.firestore.FirestoreEditor(game).set_game()
     while True:
         game = build_game(game_id)
         ut.slack.SlackOperator(game).update_guess_stage_lower()
@@ -212,7 +211,7 @@ def guess_stage(event, context_):
         if c1 or c2:
             game.dict['frozen_guessers'] = copy.deepcopy(game.dict['guessers'])
             game.dict['guess_stage_over'] = True
-            ut.firestore.FirestoreEditor(game).set_game(merge=True)
+            ut.firestore.FirestoreEditor(game).set_game()
             game.stage_triggerer.trigger_pre_vote_stage()
             logger.info(f'pre_vote_stage triggered, game_id={game_id}')
             return flask.make_response('', 200)
@@ -240,7 +239,7 @@ def pre_vote_stage(event, context_):
     if resp is not None:
         return resp
     game.dict['pre_vote_stage_already_triggered'] = True
-    ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    ut.firestore.FirestoreEditor(game).set_game()
     ut.slack.SlackOperator(game).update_pre_vote_stage()
 
     game.indexed_signed_proposals = \
@@ -261,7 +260,7 @@ def pre_vote_stage(event, context_):
         'vote_deadline'
     ]:
         game.dict[attribute] = game.__dict__[attribute]
-    ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    ut.firestore.FirestoreEditor(game).set_game()
 
     game = build_game(game_id)
     slack_operator = ut.slack.SlackOperator(game)
@@ -288,7 +287,7 @@ def vote_stage(event, context_):
     if resp is not None:
         return resp
     game.dict['vote_stage_last_trigger'] = call_datetime
-    ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    ut.firestore.FirestoreEditor(game).set_game()
     while True:
         game = build_game(game_id)
         ut.slack.SlackOperator(game).update_vote_stage_lower()
@@ -298,7 +297,7 @@ def vote_stage(event, context_):
         if c1 or c2 or c3:
             game.dict['frozen_voters'] = copy.deepcopy(game.dict['voters'])
             game.dict['vote_stage_over'] = True
-            ut.firestore.FirestoreEditor(game).set_game(merge=True)
+            ut.firestore.FirestoreEditor(game).set_game()
             game.stage_triggerer.trigger_pre_result_stage()
             logger.info(f'pre_result_stage triggered, game_id={game_id}')
             return flask.make_response('', 200)
@@ -326,7 +325,7 @@ def pre_result_stage(event, context_):
     if resp is not None:
         return resp
     game.dict['pre_result_stage_already_triggered'] = True
-    ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    ut.firestore.FirestoreEditor(game).set_game()
     ut.slack.SlackOperator(game).update_pre_result_stage()
 
     game.results = ut.results.ResultsBuilder(game).build_results()
@@ -334,7 +333,7 @@ def pre_result_stage(event, context_):
     game.winners = ut.results.compute_winners(game)
     for attribute in ['results', 'max_score', 'winners']:
         game.dict[attribute] = game.__dict__[attribute]
-    ut.firestore.FirestoreEditor(game).set_game(merge=True)
+    ut.firestore.FirestoreEditor(game).set_game()
 
     slack_operator = ut.slack.SlackOperator(game)
     slack_operator.update_result_stage()
@@ -359,7 +358,7 @@ def result_stage(event, context_):
         return resp
     game.dict['result_stage_over'] = True
     firestore_editor = ut.firestore.FirestoreEditor(game)
-    firestore_editor.set_game(merge=True)
+    firestore_editor.set_game()
     logger.info(f'successfully ended, game_id={game_id}')
     return flask.make_response('', 200)
 
@@ -378,7 +377,7 @@ def clean(event, context_):
     after they were moved.
     """
     assert event == event and context_ == context_
-    bq_client = google.cloud.bigquery.Client()
+    bq_client = google.cloud.bigquery.Client(project=context.project_id)
     game_ids = []
     game_dicts = []
     outcomes = []
@@ -398,11 +397,11 @@ def clean(event, context_):
                         'parameter', 'tag', 'version']:
                     outcome = 'unsubmitted'
                 else:
-                    ref = context.db.collection('fails').document(game_id)
+                    fail_ref = context.db.collection('fails').document(game_id)
                     expire_at = \
                         reusable.time.get_now() + datetime.timedelta(days=3)
                     game_dict['expire_at'] = expire_at
-                    ref.set(game_dict, merge=False)
+                    fail_ref.set(game_dict, merge=False)
                     outcome = 'fail'
                 g.reference.delete()
                 logger.info(f'{outcome}, game_id={g.id}')

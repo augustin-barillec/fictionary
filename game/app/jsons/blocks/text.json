@@ -1,9 +1,7 @@
 {
 	"type": "section",
 	"text": {
-		"type": "mrkdwn",
-		"text": "{}"
+		"type": "plain_text",
+		"text": "Computing results... :drum_with_drumsticks:"
 	}
 }
-
-

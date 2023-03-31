@@ -1,1 +1,0 @@
-LANGUAGES = ['english', 'french']

@@ -2,35 +2,34 @@
 {% block title %}<title>Fictionary</title>{% endblock %}
 {% block body %}
 <h1>Fictionary</h1>
-<div id="pitch">A Slack app to play <a href="https://en.wikipedia.org/wiki/Fictionary" >fictionary</a>.</div>
+<div id="pitch">An app for Slack to play <a href="https://en.wikipedia.org/wiki/Fictionary" >fictionary</a>.</div>
 <h2>Demo</h2>
 <p>
 	<iframe src="https://www.youtube.com/embed/QCxpt5dB5KU"></iframe>
 </p>
 <h2>Installation</h2>
-<p>
-	<a href="{{url}}"><img id="add_to_slack" alt="Add to Slack" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"/></a>
-</p>
+<div class="container_inline_flex">
+	<label id="label_languages" for="languages">Languages:</label>
+	<select id="languages" onchange="WriteLanguageSelected()" >
+		<option selected>English</option>
+		<option>French</option>
+	</select>
+</div>
+<div class="container_inline_flex">
+	<div id="language" ></div>
+	<a id="add_to_slack"><img alt="Add to Slack" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"/></a>
+</div>
+<div id="question_bank"></div>
 <h2>Set up a game</h2>
 <p>The organizer types one of the following command:</p>
 <ul>
 	<li>/fictionary freestyle</li>
-	<li>/fictionary english</li>
-	<li>/fictionary french</li>
+	<li>/fictionary automatic</li>
 </ul>
 <p>
 	The first command lets the organizer write a question and an answer.
-	The other commands let the organizer pick a question from one of the question banks below.
+	The second command lets the organizer pick a question from the question bank.
 </p>
-<h2>Question Banks</h2>
-<ul>
-	<li>
-		<a href="/questions_english" >English</a>
-	</li>
-	<li>
-		<a href="/questions_french" >French</a>
-	</li>
-</ul>
 <h2>Gameplay</h2>
 <ol>
 	<li>Players see only the question and write a credible answer.</li>
@@ -49,4 +48,26 @@
 <div id="footnote">
 	<p>Made with ❤️ by Augustin Barillec</p>
 </div>
+<script>
+const languages = document.getElementById("languages");
+const add_to_slack = document.getElementById("add_to_slack");
+const language = document.getElementById("language");
+const question_bank = document.getElementById("question_bank");
+
+function ResetLanguages(){
+ 	for (var i = 0; i < languages.length; i++) {languages[i].selected = languages[i].defaultSelected;};
+}
+
+function WriteLanguageSelected() {
+	var language_selected = languages.options[languages.selectedIndex].text;
+	add_to_slack.href = `/language_${language_selected}_{{installation_state}}`;
+	language.innerHTML = `${language_selected} version:`;
+	question_bank.innerHTML = `This version uses the <a href="/questions_${language_selected}">${language_selected} question bank</a>.`;
+}
+
+window.addEventListener("pageshow", () => {
+ 	ResetLanguages();
+ 	WriteLanguageSelected();
+ })
+</script>
 {% endblock %}

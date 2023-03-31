@@ -1,8 +1,7 @@
 {
     "type": "modal",
-    "callback_id": "{}",
+    "callback_id": "callback_id",
 	"title": {
-		"type": "plain_text",
 		"text": "Fictionary"
 	},
 	"submit": {
@@ -15,15 +14,26 @@
 	},
 	"blocks": [
 		{
+			"type": "section",
+			"text": {
+				"type": "plain_text",
+				"text": "Is it a question?"
+			}
+		},
+		{
 			"type": "input",
             "block_id": "guess",
-			"element": {
-				"type": "plain_text_input",
-                "action_id": "guess"
-			},
 			"label": {
 				"type": "plain_text",
 				"text": "Your guess"
+			},
+			"element": {
+				"type": "plain_text_input",
+                "action_id": "guess",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Write something"
+				}
 			}
 		}
 	]

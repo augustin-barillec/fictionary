@@ -6,11 +6,11 @@ import app.utils as ut
 class Game:
     def __init__(
             self,
-            game_id,
+            db,
+            publisher,
             surface_prefix,
             project_id,
-            publisher,
-            db):
+            game_id):
         """This class contains the data of a game. This data is stored
         in Firestore in a document named game_id, whose path is
         /teams/team_id/games/game_id (team_id is the id of the team
@@ -56,6 +56,7 @@ class Game:
         else:
             params = self.team_dict
 
+        self.language = params['language']
         self.max_guessers_per_game = params['max_guessers_per_game']
         self.max_life_span = params['max_life_span']
         self.max_running_games_per_organizer = \
@@ -68,6 +69,7 @@ class Game:
         self.time_to_vote = params['time_to_vote']
         self.trigger_cooldown = params['trigger_cooldown']
 
+        assert self.language in ('English', 'French')
         assert self.trigger_cooldown < self.self_trigger_threshold
 
         self.exists = True

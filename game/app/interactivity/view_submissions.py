@@ -33,7 +33,7 @@ class ViewSubmissionHandler:
             'setup_submission'
         ]:
             self.game.dict[attribute] = self.game.__dict__[attribute]
-        ut.firestore.FirestoreEditor(self.game).set_game(merge=True)
+        ut.firestore.FirestoreEditor(self.game).set_game()
         self.game.stage_triggerer.trigger_pre_guess_stage()
         logger.info(f'pre_guess_stage triggered, game_id={self.game.id}')
         return flask.make_response('', 200)
@@ -54,7 +54,8 @@ class ViewSubmissionHandler:
             return resp
         guess_ts = reusable.time.get_now()
         self.game.dict['guessers'][self.user_id] = [guess_ts, guess]
-        ut.firestore.FirestoreEditor(self.game).set_game(merge=True)
+        ut.firestore.FirestoreEditor(self.game).update_game(
+            f'guessers.{self.user_id}', [guess_ts, guess])
         logger.info(f'guess recorded, guesser_id={self.user_id}, '
                     f'game_id={self.game.id}')
         return flask.make_response('', 200)
@@ -66,7 +67,8 @@ class ViewSubmissionHandler:
             return resp
         vote_ts = reusable.time.get_now()
         self.game.dict['voters'][self.user_id] = [vote_ts, vote]
-        ut.firestore.FirestoreEditor(self.game).set_game(merge=True)
+        ut.firestore.FirestoreEditor(self.game).update_game(
+            f'voters.{self.user_id}', [vote_ts, vote])
         logger.info(f'vote recorded, voter_id={self.user_id}, '
                     f'game_id={self.game.id} ')
         return flask.make_response('', 200)

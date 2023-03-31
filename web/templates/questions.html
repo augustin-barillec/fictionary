@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %} <title>{{capitalized_language}} questions</title>{% endblock %}
+{% block title %} <title>{{language}} questions</title>{% endblock %}
 {% block body %}
 <a href="/">Home</a>
-<h2 class="questions">{{capitalized_language}} questions</h2>
+<h2 class="questions">{{language}} questions</h2>
 <button id="shuffle" onclick="Shuffle()">Shuffle</button>
 <ul id="id_questions">
 {%for i in range(len_questions)%}
@@ -15,7 +15,7 @@
 {%endfor%}
 </ul>
 <script>
-    function Shuffle(event) {
+    function Shuffle() {
         var ul = document.querySelector('#id_questions');
         for (var i = ul.children.length; i >= 0; i--) {
             ul.appendChild(ul.children[Math.random() * i | 0]);

@@ -4,12 +4,12 @@ import app.utils as ut
 
 def get_questions_url(game):
     home_url = ut.firestore.get_home_url(game.db)
-    return f'{home_url}/questions_{game.parameter}'
+    return f'{home_url}/questions_{game.language}'
 
 
 def get_questions_answers(game):
     questions_dict = game.db.collection('questions').document(
-        game.parameter).get().to_dict()
+        game.language).get().to_dict()
     questions = questions_dict['questions']
     answers = questions_dict['answers']
     assert len(questions) == len(answers)

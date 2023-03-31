@@ -1,7 +1,7 @@
 {
 	"type": "modal",
-	"callback_id": "{}",
-	"private_metadata": "{}",
+	"callback_id": "callback_id",
+	"private_metadata": "answer",
 	"title": {
 		"type": "plain_text",
 		"text": "Fictionary"
@@ -16,10 +16,10 @@
 	},
 	"blocks": [
 		{
-			"type": "section",
+			"type": "header",
 			"text": {
-				"type": "mrkdwn",
-				"text": "*Set up a game*"
+				"type": "plain_text",
+				"text": "Set up a game"
 			}
 		},
 		{
@@ -34,14 +34,14 @@
 					"type": "plain_text",
 					"text": "Questions"
 				},
-				"url": "{}"
+				"url": "https://www.google.com"
 			}
 		},
 		{
+			"type": "input",
 			"dispatch_action": true,
 			"optional": true,
-			"type": "input",
-			"block_id": "{}",
+			"block_id": "pick_block_id",
 			"label": {
 				"type": "plain_text",
 				"text": "Pick a question number"
@@ -50,7 +50,7 @@
 				"type": "plain_text_input",
 				"placeholder": {
 					"type": "plain_text",
-					"text": "{}"
+					"text": "Between 1 and 300"
 				}
 			}
 		},
@@ -63,7 +63,7 @@
 		},
 		{
 			"type": "actions",
-			"block_id": "{}",
+			"block_id": "shuffle_block_id",
 			"elements": [
 				{
 					"type": "button",
@@ -78,14 +78,14 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "{}"
+				"text": "Question *8* selected:"
 			}
 		},
 		{
 			"type": "section",
 			"text": {
 				"type": "plain_text",
-				"text": "{}"
+				"text": "Is it a question?"
 			}
 		}
 	]

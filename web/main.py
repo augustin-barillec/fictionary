@@ -25,8 +25,17 @@ authorize_url_generator = slack_sdk.oauth.AuthorizeUrlGenerator(
 def home():
     installation_state = str(uuid.uuid4())
     tools.firestore.store_installation_state(db, installation_state)
+    return flask.render_template(
+        'home.html',
+        installation_state=installation_state)
+
+
+@app.route('/language_<language>_<installation_state>')
+def version(language, installation_state):
+    tools.firestore.add_language_to_installation_state(
+        db, installation_state, language)
     url = authorize_url_generator.generate(installation_state)
-    return flask.render_template('home.html', url=url)
+    return flask.redirect(url)
 
 
 @app.route('/oauth_callback')
@@ -41,13 +50,18 @@ def oauth_callback():
     installation_state = flask.request.args['state']
     installation_state_dict = tools.firestore.consume_installation_state(
         db, installation_state)
+
     still_valid = False
-    if installation_state_dict is not None and 'ts' in installation_state_dict:
+    language = None
+    if installation_state_dict is not None:
         created = installation_state_dict['ts']
+        language = installation_state_dict['language']
         expiration = created + 500
         still_valid = time.time() < expiration
     if not still_valid:
         return flask.render_template('try_again.html'), 400
+
+    assert language in ('English', 'French')
 
     client = slack_sdk.web.WebClient()
     oauth_response = client.oauth_v2_access(
@@ -57,18 +71,14 @@ def oauth_callback():
     installed_team = oauth_response.get('team', {})
     team_id = installed_team.get('id')
     bot_token = oauth_response.get('access_token')
-    bot_id = None
-    if bot_token is not None:
-        auth_test = client.auth_test(token=bot_token)
-        bot_id = auth_test['bot_id']
     app_id = oauth_response.get('app_id')
     bot_scopes = oauth_response.get('scope')
     token_type = oauth_response.get('token_type')
 
     installation_dict = {
         'app_id': app_id,
-        'bot_id': bot_id,
         'bot_scopes': bot_scopes,
+        'language': language,
         'slack_token': bot_token,
         'token_type': token_type}
     installation_dict = {
@@ -86,7 +96,7 @@ def questions_(language):
     sources = questions_dict['sources']
     return flask.render_template(
         'questions.html',
-        capitalized_language=language.capitalize(),
+        language=language,
         len_questions=len(questions),
         questions=questions,
         answers=answers,

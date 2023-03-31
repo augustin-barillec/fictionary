@@ -58,5 +58,8 @@ class FirestoreEditor:
     def __init__(self, game):
         self.game = game
 
-    def set_game(self, merge):
-        self.game.ref.set(self.game.dict, merge=merge)
+    def set_game(self):
+        self.game.ref.set(self.game.dict, merge=False)
+
+    def update_game(self, key, value):
+        self.game.ref.update({key: value})
