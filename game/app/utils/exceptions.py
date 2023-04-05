@@ -20,7 +20,6 @@ class ExceptionsHandler:
     def __init__(self, game):
         self.game = game
         self.language = self.game.language
-        self.em = ut.text.exclamation_mark[self.language]
         self.slack_operator = ut.slack.SlackOperator(self.game)
 
     def game_is_running(self, game_id, game_dict):
@@ -92,25 +91,19 @@ class ExceptionsHandler:
             self.game.vote_stage_last_trigger)
 
     def build_remind_question_truth_msg(self):
-        x1 = ut.text.Question[self.language]
-        x2 = ut.text.Answer[self.language]
         msg = (
-            f'{x1}: {self.game.question}\n\n' 
-            f'{x2}: {self.game.truth}\n\n')
+            f'{ut.text.Question[self.language]}: {self.game.question}\n\n' 
+            f'{ut.text.Answer[self.language]}: {self.game.truth}\n\n')
         return msg
 
     def build_max_nb_running_games_reached_msg(self, remind):
-        x1 = ut.text.There_is_already[self.language]
-        x2 = ut.text.There_are_already[self.language]
-        x3 = ut.text.game[self.language]
-        x4 = ut.text.games[self.language]
-        x5 = ut.text.running[self.language]
-        x6 = ut.text.This_is_the_maximal_number_allowed[self.language]
         if self.game.max_running_games == 1:
-            msg = f'{x1} {self.game.max_running_games} {x3} {x5}{self.em}'
+            msg = ut.text.There_is_already_1_running_game[self.language]
         else:
-            msg = f'{x2} {self.game.max_running_games} {x4} {x5}{self.em}'
-        msg += f' {x6}.'
+            msg = ut.text.There_are_already_n_running_games[
+                self.language].format(n=self.game.max_running_games)
+        msg += ' '
+        msg += ut.text.This_is_the_maximal_number_allowed[self.language]
         if remind:
             remind_msg = self.build_remind_question_truth_msg()
             msg = remind_msg + msg
@@ -118,15 +111,15 @@ class ExceptionsHandler:
 
     def build_max_nb_this_organizer_running_games_reached_msg(
             self, remind):
-        x1 = ut.text.You_are_already_the_organizer_of[self.language]
-        x2 = ut.text.running_game[self.language]
-        x3 = ut.text.running_games[self.language]
-        x4 = ut.text.This_is_the_maximal_number_allowed[self.language]
         if self.game.max_running_games_per_organizer == 1:
-            msg = f'{x1} {self.game.max_running_games} {x2}.'
+            msg = ut.text.You_are_already_the_organizer_of_1_running_game[
+                self.language]
         else:
-            msg = f'{x1} {self.game.max_running_games} {x3}.'
-        msg += x4
+            msg = ut.text.You_are_already_the_organizer_of_n_running_games[
+                self.language].format(
+                n=self.game.max_running_games_per_organizer)
+        msg += ' '
+        msg += ut.text.This_is_the_maximal_number_allowed[self.language]
         if remind:
             remind_msg = self.build_remind_question_truth_msg()
             msg = remind_msg + msg
@@ -134,7 +127,7 @@ class ExceptionsHandler:
 
     def build_game_is_dead_msg(self):
         if self.game_is_dead():
-            return f'{ut.text.This_game_is_dead[self.language]}{self.em}'
+            return ut.text.This_game_is_dead[self.language]
 
     def build_aborted_cause_recently_triggered_msg(self):
         return f'aborted cause recently triggered, game_id={self.game.id}'
@@ -145,10 +138,7 @@ class ExceptionsHandler:
     def build_slash_command_exception_msg(
             self, in_conversation, game_parameter, game_dicts):
         if not in_conversation:
-            msg = ut.text.This_app_is_not_in_the_conversation[
-                self.language]
-            msg += self.em
-            return msg
+            return ut.text.This_app_is_not_in_the_conversation[self.language]
         p = ['help', 'freestyle', 'automatic']
         if game_parameter not in p:
             return ut.text.Parameter_must_be_one_of[self.language]
@@ -204,15 +194,15 @@ class ExceptionsHandler:
     def build_guess_click_exception_msg(self, user_id):
         if user_id == self.game.organizer_id and \
                 self.game.parameter == 'freestyle':
-            return ut.text.as_the_organizer[self.language]
+            return ut.text.As_the_organizer[self.language]
         if user_id in self.game.guessers:
-            return ut.text.you_have_already_guessed[self.language]
+            return ut.text.You_have_already_guessed[self.language]
 
     def build_vote_click_exception_msg(self, user_id):
         if user_id not in self.game.potential_voters:
-            return ut.text.only_guessers_can_vote[self.language]
+            return ut.text.Only_guessers_can_vote[self.language]
         if user_id in self.game.voters:
-            return ut.text.you_have_already_voted[self.language]
+            return ut.text.You_have_already_voted[self.language]
 
     def handle_is_dead_exception(self, trigger_id=None, view_id=None):
         if trigger_id is not None:

@@ -42,20 +42,19 @@ def build_setup_automatic_view(
     res['close']['text'] = ut.text.Cancel[language]
     res['blocks'][0]['text']['text'] = ut.text.Set_up_a_game[language]
     res['blocks'][1]['text']['text'] = ut.text.Questions_are_visible_here[
-        language] + ut.text.colon[language]
+        language]
     res['blocks'][1]['accessory']['text']['text'] = ut.text.Questions[language]
     res['blocks'][1]['accessory']['url'] = url
     res['blocks'][2]['block_id'] = pick_block_id
     res['blocks'][2]['label']['text'] = ut.text.Pick_a_question_number[
         language]
     res['blocks'][2]['element']['placeholder'][
-        'text'] = f'{ut.text.Between_1_and[language]} {max_number}'
-    res['blocks'][3]['text']['text'] = f'*{ut.text.Or[language]}*'
+        'text'] = ut.text.Between_1_and_N[language].format(N=max_number)
+    res['blocks'][3]['text']['text'] = ut.text.Or[language]
     res['blocks'][4]['block_id'] = shuffle_block_id
     res['blocks'][4]['elements']['text']['text'] = ut.text.Shuffle[language]
-    msg = f'{ut.text.Question[language]} *{number}*'
-    msg = f'{msg} {ut.text.selected[language]}{ut.text.colon[language]}'
-    res['blocks'][5]['text']['text'] = msg
+    res['blocks'][5]['text']['text'] = ut.text.Question_n_selected[
+        language].format(n=number)
     res['blocks'][6]['text']['text'] = question
     return res
 
@@ -76,23 +75,24 @@ def build_vote_view(
         language, id_,
         own_index, own_proposal,
         votable_indexed_anonymous_proposals):
-    colon = {ut.text.colon[language]}
     res = copy.deepcopy(vote_view_template)
     res['callback_id'] = id_
     res['submit']['text'] = ut.text.Submit[language]
     res['close']['text'] = ut.text.Cancel[language]
-    msg = f'{ut.text.Your_guess[language]}{colon} {own_index}) {own_proposal}'
+    msg = ut.text.Your_guess_index_guess[language].format(
+        index=own_index, guess=own_proposal)
     res['blocks'][0]['text']['text'] = msg
     res['blocks'][2]['label']['text'] = ut.text.Your_vote[language]
     res['blocks'][2]['element']['placeholder']['text'] = \
         ut.text.Select_an_item[language]
-    votable_proposals_msg = [f'{ut.text.Voting_options}{colon}']
+    votable_proposals_msg = [ut.text.Voting_options[language]]
     option_template = res['blocks'][2]['element']['options'][0]
     vote_options = []
     for viap in votable_indexed_anonymous_proposals:
         index = viap['index']
         proposal = viap['proposal']
-        votable_proposals_msg.append(f'{index}) {proposal}')
+        votable_proposals_msg.append(ut.text.index_proposal.format(
+            index=index, proposal=proposal))
         vote_option = copy.deepcopy(option_template)
         index_str = str(index)
         vote_option['text']['text'] = index_str

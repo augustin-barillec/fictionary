@@ -38,9 +38,18 @@ def build_button_block(id_, msg):
     return res
 
 
-def build_timer_block(prefix, time_left):
+def build_timer_block(msg_template, time_left):
     time_display = ut.time.build_time_display_for_timer(time_left)
-    msg = f'{prefix}: {time_display}'
+    msg = msg_template.format(time_display=time_display)
+    return build_text_block(msg)
+
+
+def build_users_block(msg_template, no_users_msg, users):
+    if not users:
+        return no_users_msg
+    user_ids = ut.users.sort_users(users)
+    user_displays = ut.users.users_display(user_ids)
+    msg = msg_template.format(user_displays=user_displays)
     return build_text_block(msg)
 
 
@@ -48,44 +57,40 @@ class BlockBuilder:
     def __init__(self, game):
         self.game = game
         self.language = self.game.language
-        self.colon = ut.text.colon[self.language]
-        self.em = ut.text.exclamation_mark[self.language]
 
     def build_guess_timer_block(self):
-        prefix = ut.text.Time_left_to_guess[self.language]
+        msg_template = ut.text.Time_left_to_guess[self.language]
         time_left = self.game.time_left_to_guess
-        return build_timer_block(prefix, time_left)
+        return build_timer_block(msg_template, time_left)
 
     def build_vote_timer_block(self):
-        prefix = ut.text.Time_left_to_vote[self.language]
+        msg_template = ut.text.Time_left_to_vote[self.language]
         time_left = self.game.time_left_to_vote
-        return build_timer_block(prefix, time_left)
+        return build_timer_block(msg_template, time_left)
 
     def build_title_block(self):
         assert self.game.parameter in ('freestyle', 'automatic')
-        prefix = None
+        organizer_display = ut.users.user_display(self.game.organizer_id)
+        msg = None
         if self.game.parameter == 'freestyle':
-            prefix = ut.text.Freestyle_game_set_up_by[self.language]
+            msg = ut.text.Freestyle_game_set_up_by[self.language].format(
+                organizer_display=organizer_display)
         elif self.game.parameter == 'automatic':
-            prefix = ut.text.Automatic_game_set_up_by[self.language]
-        organizer = ut.users.user_display(self.game.organizer_id)
-        msg = f'{prefix} {organizer}{self.em}'
+            msg = ut.text.Automatic_game_set_up_by[self.language].format(
+                organizer_display=organizer_display)
         return build_text_block(msg)
 
     def build_question_block(self):
         return build_text_block(self.game.question)
 
     def build_preparing_guess_stage_block(self):
-        msg = f'{ut.text.Preparing_guess_stage[self.language]}...'
-        return build_text_block(msg)
+        return build_text_block(ut.text.Preparing_guess_stage[self.language])
 
     def build_preparing_vote_stage_block(self):
-        msg = f'{ut.text.Preparing_vote_stage[self.language]}...'
-        return build_text_block(msg)
+        return build_text_block(ut.text.Preparing_vote_stage[self.language])
 
     def build_computing_results_stage_block(self):
-        res = ut.text.Computing_results[self.language]
-        return build_text_block(f'{res}... :drum_with_drumsticks:')
+        return build_text_block(ut.text.Computing_results[self.language])
 
     def build_guess_button_block(self):
         id_ = self.game.surface_id_builder.build_guess_button_block_id()
@@ -99,71 +104,63 @@ class BlockBuilder:
 
     def build_nb_remaining_potential_guessers_block(self):
         nb = self.game.nb_remaining_potential_guessers
-        msg = ut.text.Potential_guessers[self.language]
-        msg = f'{msg}: {nb}'
-        return build_text_block(msg)
-
-    @staticmethod
-    def build_users_blocks(users, kind, no_users_msg):
-        msg = ut.users.build_users_msg(users, kind, no_users_msg)
+        msg = ut.text.Potential_guessers[self.language].format(nb=nb)
         return build_text_block(msg)
 
     def build_remaining_potential_voters_block(self):
         users = self.game.remaining_potential_voters
-        kind = ut.text.Potential_voters[self.language]
-        no_users_msg = f'{ut.text.Everyone_has_voted[self.language]}{self.em}'
-        return self.build_users_blocks(users, kind, no_users_msg)
+        msg_template = ut.text.Potential_voters[self.language]
+        no_users_msg = ut.text.Everyone_has_voted[self.language]
+        return build_users_block(users, msg_template, no_users_msg)
 
     def build_guessers_block(self):
         users = self.game.guessers
-        kind = ut.text.Guessers[self.language]
-        no_users_msg = f'{ut.text.No_one_has_guessed_yet[self.language]}.'
-        return self.build_users_blocks(users, kind, no_users_msg)
+        msg_template = ut.text.Guessers[self.language]
+        no_users_msg = ut.text.No_one_has_guessed_yet[self.language]
+        return build_users_block(users, msg_template, no_users_msg)
 
     def build_voters_block(self):
         users = self.game.voters
-        kind = ut.text.Voters[self.language]
-        no_users_msg = f'{ut.text.No_one_has_voted_yet}.'
-        return self.build_users_blocks(users, kind, no_users_msg)
+        msg_template = ut.text.Voters[self.language]
+        no_users_msg = ut.text.No_one_has_voted_yet[self.language]
+        return build_users_block(users, msg_template, no_users_msg)
 
     def build_indexed_anonymous_proposals_block(self):
-        msg = [f'{ut.text.Proposals[self.language]}{self.colon}']
+        msg = [ut.text.Proposals[self.language]]
         indexed_anonymous_proposals = \
             ut.proposals.ProposalsBrowser(
                 self.game).build_indexed_anonymous_proposals()
         for iap in indexed_anonymous_proposals:
             index = iap['index']
             proposal = iap['proposal']
-            msg.append(f'{index}) {proposal}')
+            msg.append(ut.text.index_proposal.format(
+                index=index, proposal=proposal))
         msg = '\n'.join(msg)
         return build_text_block(msg)
 
-    def build_own_guess_block(self, voter):
-        index, guess = ut.proposals.ProposalsBrowser(
-            self.game).build_own_indexed_guess(voter)
-        msg = f'{ut.text.Your_guess[self.language]}'
-        msg = f'{msg}: {index}) {guess}'
-        return build_text_block(msg)
-
     def build_truth_block(self):
-        msg = f'• {ut.text.Truth[self.language]}: '
         if len(self.game.frozen_guessers) <= 1:
-            msg += f'{self.game.truth}'
+            msg = ut.text.Truth_truth[self.language].format(
+                truth=self.game.truth)
         else:
             index = self.game.truth_index
-            msg += f'{index}) {self.game.truth}'
+            msg = ut.text.Truth_index_truth[self.language].format(
+                index=index, truth=self.game.truth)
         return build_text_block(msg)
 
     def build_signed_guesses_block(self, show_index):
         msg = []
         for r in self.game.results:
-            guesser = ut.users.user_display(r['guesser'])
+            guesser_display = ut.users.user_display(r['guesser'])
             index = r['index']
             guess = r['guess']
             if show_index:
-                r_msg = f'• {guesser}: {index}) {guess}'
+                r_msg = ut.text.guesser_index_guess[self.language].format(
+                    guesser_display=guesser_display,
+                    index=index, guess=guess)
             else:
-                r_msg = f'• {guesser}: {guess}'
+                r_msg = ut.text.guesser_index_guess[self.language].format(
+                    guesser_display=guesser_display, guess=guess)
             msg.append(r_msg)
         msg = '\n'.join(msg)
         return build_text_block(msg)
@@ -179,11 +176,16 @@ class BlockBuilder:
         for r in self.game.results:
             if 'vote_index' not in r:
                 continue
-            voter = ut.users.user_display(r['guesser'])
+            voter_display = ut.users.user_display(r['guesser'])
             chosen_author = r['chosen_author']
-            if chosen_author != 'Truth':
-                chosen_author = ut.users.user_display(chosen_author)
-            r_msg = f'• {voter} -> {chosen_author}'
+            if chosen_author == 'Truth':
+                r_msg = ut.text.voter_to_truth[self.language].format(
+                    voter_display=voter_display)
+            else:
+                chosen_author_display = ut.users.user_display(chosen_author)
+                r_msg = ut.text.voter_to_chosen_author(self.language).format(
+                    voter_display=voter_display,
+                    chosen_author_display=chosen_author_display)
             msg.append(r_msg)
         msg = '\n'.join(msg)
         return build_text_block(msg)
@@ -191,14 +193,15 @@ class BlockBuilder:
     def build_scores_block(self):
         msg = []
         for r in self.game.results:
-            guesser = ut.users.user_display(r['guesser'])
+            guesser_display = ut.users.user_display(r['guesser'])
             score = r['score']
             assert score >= 0
             if score == 1:
-                p = f'{score} {ut.text.Point[self.language]}'
+                r_msg = ut.text.guesser_one_point[self.language].format(
+                    guesser_display=guesser_display)
             else:
-                p = f'{score} {ut.text.Points[self.language]}'
-            r_msg = f'• {guesser}: {p}'
+                r_msg = ut.text.guesser_points[self.language].format(
+                    score=score, guesser_display=guesser_display)
             msg.append(r_msg)
         msg = '\n'.join(msg)
         return build_text_block(msg)
@@ -208,42 +211,40 @@ class BlockBuilder:
         lv = len(self.game.frozen_voters)
         lw = len(self.game.winners)
         if lg == 0:
-            res = ut.text.No_one_played_this_game[self.language]
-            return f'{res}. :sob:'
+            return ut.text.No_one_played_this_game[self.language]
         elif lg == 1:
             g = ut.users.user_display(list(self.game.frozen_guessers)[0])
-            res = ut.text.Thanks_for_your_guess[self.language]
-            return f'{res}, {g}{self.em}'
+            res = ut.text.Thanks_for_your_guess[self.language].format(
+                guesser_display=g)
+            return res
         elif lv == 0:
-            res = ut.text.No_one_voted
-            return f'{res}. :sob:'
+            return ut.text.No_one_voted[self.language]
         elif lv == 1:
             r = self.game.results[0]
             g = ut.users.user_display(r['guesser'])
             ca = r['chosen_author']
             if ca == 'Truth':
-                res_1 = ut.text.Bravo[self.language]
-                res_2 = ut.text.You_found_the_truth[self.language]
-                return f'{res_1} {g}{self.em} {res_2}{self.em} :v:'
-            res_1 = ut.text.Hey[self.language]
-            res_2 = ut.text.At_least_you_voted
-            return f'{res_1} {g}, {res_2}{self.em} :grimacing:'
+                res = ut.text.Bravo_you_found_the_truth[self.language].format(
+                    guesser_display=g)
+                return res
+            res = ut.text.Hey_at_least_you_voted[self.language].format(
+                guesser_display=g)
+            return res
         elif self.game.max_score == 0:
-            return f'{ut.text.Zero_points_scored[self.language]}{self.em}'
+            return ut.text.Zero_points_scored[self.language]
         elif lw == lv:
-            res_1 = ut.text.Well[self.language]
-            res_2 = ut.text.It_s_a_draw[self.language]
-            return f'{res_1}, {res_2}{self.em} :scales:'
+            return ut.text.Well_its_a_draw[self.language]
         elif lw == 1:
             w = ut.users.user_display(self.game.winners[0])
-            res = ut.text.And_the_winner_is[self.language]
-            return f'{res} {w}{self.em} :first_place_medal:'
+            return ut.text.And_the_winner_is[self.language].format(
+                winner_display=w)
         elif lw > 1:
             ws = [ut.users.user_display(w) for w in self.game.winners]
-            msg_aux = ','.join(ws[:-1])
-            msg_aux += f' {ut.text.And_[self.language]} {ws[-1]}'
-            res = ut.text.And_the_winners_are[self.language]
-            return f'{res} {msg_aux}{self.em} :clap:'
+            ws = ', '.join(ws[:-1])
+            ws += f' {ut.text.and_[self.language]} {ws[-1]}'
+            res = ut.text.And_the_winners_are[self.language].format(
+                winners_display_comma_final_and=ws)
+            return res
 
     def build_conclusion_block(self):
         msg = self.build_conclusion_msg()

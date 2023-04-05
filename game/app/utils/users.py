@@ -5,22 +5,14 @@ def compute_remaining_potential_voters(potential_voters, voters):
     return res
 
 
-def user_display(user_id):
-    return f'<@{user_id}>'
-
-
-def user_displays(user_ids):
-    return ' '.join([user_display(id_) for id_ in user_ids])
-
-
 def sort_users(users):
     user_ids = sorted(users, key=lambda k: users[k][0])
     return user_ids
 
 
-def build_users_msg(users, kind, no_users_msg):
-    if not users:
-        return no_users_msg
-    user_ids = sort_users(users)
-    msg = f'{kind}: {user_displays(user_ids)}'
-    return msg
+def user_display(user_id):
+    return f'<@{user_id}>'
+
+
+def users_display(user_ids):
+    return ' '.join([user_display(id_) for id_ in user_ids])
