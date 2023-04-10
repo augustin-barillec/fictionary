@@ -73,29 +73,30 @@ def build_view_response(view):
     return res
 
 
-def open_exception_view(slack_client, trigger_id, msg):
-    exception_view = ut.views.build_exception_view(msg)
+def open_exception_view(slack_client, language, trigger_id, msg):
+    exception_view = ut.views.build_exception_view(language, msg)
     open_view(slack_client, trigger_id, exception_view)
 
 
-def update_exception_view(slack_client, view_id, msg):
-    exception_view = ut.views.build_exception_view(msg)
+def update_exception_view(slack_client, language, view_id, msg):
+    exception_view = ut.views.build_exception_view(language, msg)
     update_view(slack_client, view_id, exception_view)
 
 
-def push_exception_view(slack_client, trigger_id, msg):
-    exception_view = ut.views.build_exception_view(msg)
+def push_exception_view(slack_client, language, trigger_id, msg):
+    exception_view = ut.views.build_exception_view(language, msg)
     push_view(slack_client, trigger_id, exception_view)
 
 
-def build_exception_view_response(msg):
-    exception_view = ut.views.build_exception_view(msg)
+def build_exception_view_response(language, msg):
+    exception_view = ut.views.build_exception_view(language, msg)
     return build_view_response(exception_view)
 
 
 class SlackOperator:
     def __init__(self, game):
         self.game = game
+        self.language = self.game.language
         self.slack_client = self.game.slack_client
         self.block_builder = ut.blocks.BlockBuilder(game)
         self.view_builder = ut.views.ViewBuilder(game)
@@ -153,19 +154,19 @@ class SlackOperator:
 
     def open_exception_view(self, trigger_id, msg):
         msg = self.add_tag_to_text(msg)
-        open_exception_view(self.slack_client, trigger_id, msg)
+        open_exception_view(self.slack_client, self.language, trigger_id, msg)
 
     def update_exception_view(self, view_id, msg):
         msg = self.add_tag_to_text(msg)
-        update_exception_view(self.slack_client, view_id, msg)
+        update_exception_view(self.slack_client, self.language, view_id, msg)
 
     def push_exception_view(self, trigger_id, msg):
         msg = self.add_tag_to_text(msg)
-        push_exception_view(self.slack_client, trigger_id, msg)
+        push_exception_view(self.slack_client, self.language, trigger_id, msg)
 
     def build_exception_view_response(self, msg):
         msg = self.add_tag_to_text(msg)
-        return build_exception_view_response(msg)
+        return build_exception_view_response(self.language, msg)
 
     def update_upper(self, blocks):
         self.update_message(blocks, self.game.upper_ts)

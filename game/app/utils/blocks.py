@@ -44,12 +44,13 @@ def build_timer_block(msg_template, time_left):
     return build_text_block(msg)
 
 
-def build_users_block(msg_template, no_users_msg, users):
+def build_users_block(msg_template, users, no_users_msg):
     if not users:
-        return no_users_msg
-    user_ids = ut.users.sort_users(users)
-    user_displays = ut.users.users_display(user_ids)
-    msg = msg_template.format(user_displays=user_displays)
+        msg = no_users_msg
+    else:
+        user_ids = ut.users.sort_users(users)
+        user_displays = ut.users.users_display(user_ids)
+        msg = msg_template.format(user_displays=user_displays)
     return build_text_block(msg)
 
 
@@ -108,22 +109,22 @@ class BlockBuilder:
         return build_text_block(msg)
 
     def build_remaining_potential_voters_block(self):
-        users = self.game.remaining_potential_voters
         msg_template = ut.text.Potential_voters[self.language]
+        users = self.game.remaining_potential_voters
         no_users_msg = ut.text.Everyone_has_voted[self.language]
-        return build_users_block(users, msg_template, no_users_msg)
+        return build_users_block(msg_template, users, no_users_msg)
 
     def build_guessers_block(self):
-        users = self.game.guessers
         msg_template = ut.text.Guessers[self.language]
+        users = self.game.guessers
         no_users_msg = ut.text.No_one_has_guessed_yet[self.language]
-        return build_users_block(users, msg_template, no_users_msg)
+        return build_users_block(msg_template,users, no_users_msg)
 
     def build_voters_block(self):
-        users = self.game.voters
         msg_template = ut.text.Voters[self.language]
+        users = self.game.voters
         no_users_msg = ut.text.No_one_has_voted_yet[self.language]
-        return build_users_block(users, msg_template, no_users_msg)
+        return build_users_block(msg_template, users, no_users_msg)
 
     def build_indexed_anonymous_proposals_block(self):
         msg = [ut.text.Proposals[self.language]]
@@ -133,7 +134,7 @@ class BlockBuilder:
         for iap in indexed_anonymous_proposals:
             index = iap['index']
             proposal = iap['proposal']
-            msg.append(ut.text.index_proposal.format(
+            msg.append(ut.text.index_proposal[self.language].format(
                 index=index, proposal=proposal))
         msg = '\n'.join(msg)
         return build_text_block(msg)
@@ -159,7 +160,7 @@ class BlockBuilder:
                     guesser_display=guesser_display,
                     index=index, guess=guess)
             else:
-                r_msg = ut.text.guesser_index_guess[self.language].format(
+                r_msg = ut.text.guesser_guess[self.language].format(
                     guesser_display=guesser_display, guess=guess)
             msg.append(r_msg)
         msg = '\n'.join(msg)
@@ -183,7 +184,7 @@ class BlockBuilder:
                     voter_display=voter_display)
             else:
                 chosen_author_display = ut.users.user_display(chosen_author)
-                r_msg = ut.text.voter_to_chosen_author(self.language).format(
+                r_msg = ut.text.voter_to_chosen_author[self.language].format(
                     voter_display=voter_display,
                     chosen_author_display=chosen_author_display)
             msg.append(r_msg)

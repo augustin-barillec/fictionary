@@ -26,7 +26,6 @@ class ViewSubmissionHandler:
         if resp is not None:
             return resp
         self.game.setup_submission = reusable.time.get_now()
-        self.game.dict = dict()
         for attribute in [
             'question',
             'truth',

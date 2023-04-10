@@ -52,7 +52,7 @@ def build_setup_automatic_view(
         'text'] = ut.text.Between_1_and_N[language].format(N=max_number)
     res['blocks'][3]['text']['text'] = ut.text.Or[language]
     res['blocks'][4]['block_id'] = shuffle_block_id
-    res['blocks'][4]['elements']['text']['text'] = ut.text.Shuffle[language]
+    res['blocks'][4]['elements'][0]['text']['text'] = ut.text.Shuffle[language]
     res['blocks'][5]['text']['text'] = ut.text.Question_n_selected[
         language].format(n=number)
     res['blocks'][6]['text']['text'] = question
@@ -91,7 +91,7 @@ def build_vote_view(
     for viap in votable_indexed_anonymous_proposals:
         index = viap['index']
         proposal = viap['proposal']
-        votable_proposals_msg.append(ut.text.index_proposal.format(
+        votable_proposals_msg.append(ut.text.index_proposal[language].format(
             index=index, proposal=proposal))
         vote_option = copy.deepcopy(option_template)
         index_str = str(index)
