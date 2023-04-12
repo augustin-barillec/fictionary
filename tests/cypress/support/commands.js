@@ -17,8 +17,8 @@ Cypress.Commands.add('create_fake_guess', (tag, user_index) => {
   cy.run_context(`create_fake_guess ${tag} ${user_index}`)
 })
 
-Cypress.Commands.add('create_fake_running_game', organizer_index => {
-  cy.run_context(`create_fake_running_game ${organizer_index}`)
+Cypress.Commands.add('create_fake_running_game', (tag, organizer_index) => {
+  cy.run_context(`create_fake_running_game ${tag} ${organizer_index}`)
 })
 
 Cypress.Commands.add('mark_game_as_success', tag => {
@@ -46,6 +46,8 @@ Cypress.Commands.add('login', (signin_url, email, password) => {
       cy.visit(signin_url)
       cy.wait(1000)
       cy.visit(signin_url)
+      cy.wait(1000)
+      cy.get('#onetrust-accept-btn-handler').click()
       cy.wait(1000)
       cy.contains('sign in with a password instead').click()
       cy.wait(1000)
@@ -83,12 +85,8 @@ Cypress.Commands.add('slash_freestyle', tag => {
   cy.slash_command(tag, 'freestyle')
 })
 
-Cypress.Commands.add('slash_english', tag => {
-  cy.slash_command(tag, 'english')
-})
-
-Cypress.Commands.add('slash_french', tag => {
-  cy.slash_command(tag, 'french')
+Cypress.Commands.add('slash_automatic', tag => {
+  cy.slash_command(tag, 'automatic')
 })
 
 Cypress.Commands.add('write_question_truth', (question, truth) => {

@@ -64,7 +64,7 @@ Potential_voters = {
 }
 
 Everyone_has_voted = {
-    ENGLISH: 'Every one has voted!',
+    ENGLISH: 'Everyone has voted!',
     FRENCH: 'Tout le monde a voté !'
 }
 
@@ -164,7 +164,7 @@ Bravo_you_found_the_truth = {
 }
 
 Hey_at_least_you_voted = {
-    ENGLISH: 'Hey {guesser_display}! At least you voted! :grimacing:',
+    ENGLISH: 'Hey {guesser_display}, at least you voted! :grimacing:',
     FRENCH: 'Hé {guesser_display}! Au moins vous avez voté ! :grimacing:'
 }
 

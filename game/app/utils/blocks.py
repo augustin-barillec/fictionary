@@ -241,10 +241,10 @@ class BlockBuilder:
                 winner_display=w)
         elif lw > 1:
             ws = [ut.users.user_display(w) for w in self.game.winners]
-            ws = ', '.join(ws[:-1])
-            ws += f' {ut.text.and_[self.language]} {ws[-1]}'
+            res = ', '.join(ws[:-1])
+            res += f' {ut.text.and_[self.language]} {ws[-1]}'
             res = ut.text.And_the_winners_are[self.language].format(
-                winners_display_comma_final_and=ws)
+                winners_display_comma_final_and=res)
             return res
 
     def build_conclusion_block(self):

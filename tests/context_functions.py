@@ -8,9 +8,9 @@ def setup_channels(
         slack_client,
         channels_ref,
         channel_names,
-        channel_to_params,
-        channel_to_user_indexes,
-        channel_to_app_kicked,
+        channel_name_to_params,
+        channel_name_to_user_indexes,
+        channel_name_to_app_kicked,
         cypress_user_id,
         app_user_id,
         user_ids):
@@ -18,9 +18,9 @@ def setup_channels(
     channel_name_to_channel_id = dict()
     for channel_name in channel_names:
         logger.info(f'Setting {channel_name}...')
-        params = channel_to_params[channel_name]
-        user_indexes = channel_to_user_indexes[channel_name]
-        app_kicked = channel_to_app_kicked[channel_name]
+        params = channel_name_to_params[channel_name]
+        user_indexes = channel_name_to_user_indexes[channel_name]
+        app_kicked = channel_name_to_app_kicked[channel_name]
         channels = utils.slack.list_channels(slack_client)
         if not utils.slack.channel_exists(channels, channel_name):
             channel_id = utils.slack.create_channel(slack_client, channel_name)
@@ -59,12 +59,12 @@ def create_fake_guess(games_ref, tag, user_id):
             game_ref.set(data, merge=True)
 
 
-def create_fake_running_game(games_ref, organizer_id):
+def create_fake_running_game(games_ref, tag, organizer_id):
     slash_datetime_compact = reusable.time.get_now_compact_format()
     game_id = reusable.ids.build_game_id(
         slash_datetime_compact, 'team_id',
         'channel_id', organizer_id, 'trigger_id')
-    game_dict = {'setup_submission': reusable.time.get_now(), 'tag': 'tag'}
+    game_dict = {'setup_submission': reusable.time.get_now(), 'tag': tag}
     game_ref = games_ref.document(game_id)
     game_ref.set(game_dict, merge=False)
 

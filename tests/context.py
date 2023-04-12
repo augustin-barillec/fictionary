@@ -17,6 +17,7 @@ create_fake_guess_parser.add_argument('tag')
 create_fake_guess_parser.add_argument('user_index', type=int)
 create_fake_running_game_parser = subparsers.add_parser(
     'create_fake_running_game')
+create_fake_running_game_parser.add_argument('tag')
 create_fake_running_game_parser.add_argument('organizer_index', type=int)
 mark_game_as_success_parser = subparsers.add_parser('mark_game_as_success')
 mark_game_as_success_parser.add_argument('tag')
@@ -43,10 +44,10 @@ if args.command == 'setup_channels':
     cf.setup_channels(
         slack_client,
         channels_ref,
-        channels.channel_names,
-        channels.channel_to_params,
-        channels.channel_to_user_indexes,
-        channels.channel_to_app_kicked,
+        channels.names,
+        channels.name_to_params,
+        channels.name_to_user_indexes,
+        channels.name_to_app_kicked,
         cypress_user_id,
         app_user_id,
         user_ids)
@@ -59,7 +60,7 @@ elif args.command == 'create_fake_guess':
     cf.create_fake_guess(games_ref, args.tag, user_id)
 elif args.command == 'create_fake_running_game':
     organizer_id = user_ids[args.organizer_index]
-    cf.create_fake_running_game(games_ref, organizer_id)
+    cf.create_fake_running_game(games_ref, args.tag, organizer_id)
 elif args.command == 'mark_game_as_success':
     cf.mark_game_as_success(games_ref, args.tag)
 elif args.command == 'delete_game':
