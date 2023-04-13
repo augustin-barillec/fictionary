@@ -53,10 +53,9 @@ def create_fake_guess(games_ref, tag, user_id):
     for game_id in game_dicts:
         game_dict = game_dicts[game_id]
         if game_dict['tag'] == tag:
-            now = reusable.time.get_now()
-            data = {'guessers': {user_id: [now, 'fake_guess']}}
             game_ref = games_ref.document(game_id)
-            game_ref.set(data, merge=True)
+            now = reusable.time.get_now()
+            game_ref.update({f'guessers.{user_id}': [now, 'fake_guess']})
 
 
 def create_fake_running_game(games_ref, tag, organizer_id):

@@ -103,7 +103,7 @@ class ExceptionsHandler:
             msg = ut.text.There_are_already_n_running_games[
                 self.language].format(n=self.game.max_running_games)
         msg += ' '
-        msg += ut.text.This_is_the_maximal_number_allowed[self.language]
+        msg += ut.text.This_is_the_maximum_number_allowed[self.language]
         if remind:
             remind_msg = self.build_remind_question_truth_msg()
             msg = remind_msg + msg
@@ -119,7 +119,7 @@ class ExceptionsHandler:
                 self.language].format(
                 n=self.game.max_running_games_per_organizer)
         msg += ' '
-        msg += ut.text.This_is_the_maximal_number_allowed[self.language]
+        msg += ut.text.This_is_the_maximum_number_allowed[self.language]
         if remind:
             remind_msg = self.build_remind_question_truth_msg()
             msg = remind_msg + msg

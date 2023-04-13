@@ -5,7 +5,7 @@ describe('main', () => {
         cy.login_from_user_index(conf, 0)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.slash_freestyle('tag')
-        cy.contains('Please invite me first to this conversation!')
+        cy.contains('This app is not in the conversation!')
       })
     })
   })

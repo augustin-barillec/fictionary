@@ -293,9 +293,9 @@ There_are_already_n_running_games = {
     FRENCH: 'Il y a déjà {n} parties en cours!'
 }
 
-This_is_the_maximal_number_allowed = {
-    ENGLISH: 'This is the maximal number allowed.',
-    FRENCH: "C'est le nombre maximal autorisé."
+This_is_the_maximum_number_allowed = {
+    ENGLISH: 'This is the maximum number allowed.',
+    FRENCH: "C'est le nombre maximum autorisé."
 }
 
 You_are_already_the_organizer_of_1_running_game = {
@@ -319,12 +319,12 @@ This_app_is_not_in_the_conversation = {
 }
 
 Parameter_must_be_one_of = {
-    ENGLISH: 'Parameter must be one of help, freestyle or automatic',
-    FRENCH: 'Le paramètre doit être help, freestyle ou automatic'
+    ENGLISH: 'Parameter must be one of help, freestyle or automatic.',
+    FRENCH: 'Le paramètre doit être help, freestyle ou automatic.'
 }
 
 guessing_deadline_has_passed = {
-    ENGLISH: ('Your guess: {guess}\n\nIt will not taken into account '
+    ENGLISH: ('Your guess: {guess}\n\nIt will not be taken into account '
               'because the guessing deadline has passed!'),
     FRENCH: ('Votre devinage: {guess}\n\nIl ne sera pas pris en compte '
              'car la limite de temps de devinage est passée!')
@@ -335,12 +335,12 @@ already_too_many_guessers = {
               'It will not be taken into account '
               'because there are already '
               '{max_guessers_per_game} guessers. '
-              'This is the maximal number allowed for a game.'),
+              'This is the maximum number allowed for a game.'),
     FRENCH: ('Votre devinage: {guess}\n\n'
              'Il ne sera pas pris en compte '
              'car il y a déjà '
              '{max_guessers_per_game} devineurs. '
-             "C'est le nombre maximal autorisée par partie.")
+             "C'est le nombre maximum autorisée par partie.")
 }
 
 voting_deadline_has_passed = {
