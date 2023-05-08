@@ -8,6 +8,19 @@ This_is_an_app_for_Slack = {
              'Toutes les informations sont disponibles <{home_url}|ici.>')
 }
 ###############################################################################
+you_can_now_vote = {
+    ENGLISH: 'Hey {user_display}, you can now vote in the Fictionary game '
+             'organized by {organizer_display}!',
+    FRENCH: 'Hé {user_display}, vous pouvez maintenant voter pour la partie '
+            'de Fictionary organisée par {organizer_display} !'
+}
+
+game_is_over = {
+    ENGLISH: 'The Fictionary game organized by {organizer_display} is over!',
+    FRENCH: 'La partie de Fictionary organisée par {organizer_display} '
+            'est terminée !'
+}
+###############################################################################
 Time_left_to_guess = {
     ENGLISH: 'Time left to guess: {time_display}',
     FRENCH: 'Temps restant pour deviner : {time_display}'
@@ -133,6 +146,11 @@ voter_to_chosen_author = {
     FRENCH: '• {voter_display} -> {chosen_author_display}',
 }
 
+guesser_zero_points = {
+    ENGLISH: '• {guesser_display}: 0 points',
+    FRENCH: '• {guesser_display} : 0 point'
+}
+
 guesser_one_point = {
     ENGLISH: '• {guesser_display}: 1 point',
     FRENCH: '• {guesser_display} : 1 point'
@@ -165,12 +183,12 @@ Bravo_you_found_the_truth = {
 
 Hey_at_least_you_voted = {
     ENGLISH: 'Hey {guesser_display}, at least you voted! :grimacing:',
-    FRENCH: 'Hé {guesser_display}! Au moins vous avez voté ! :grimacing:'
+    FRENCH: 'Hé {guesser_display}, au moins vous avez voté ! :grimacing:'
 }
 
 Zero_points_scored = {
     ENGLISH: 'Zero points scored!',
-    FRENCH: 'Zero points marqués !'
+    FRENCH: 'Zero point marqué !'
 }
 
 Well_its_a_draw = {
@@ -269,7 +287,7 @@ Write_something = {
 }
 
 Your_vote = {
-    ENGLISH: 'Your_vote',
+    ENGLISH: 'Your vote',
     FRENCH: 'Votre vote'
 }
 
@@ -305,7 +323,7 @@ You_are_already_the_organizer_of_1_running_game = {
 
 You_are_already_the_organizer_of_n_running_games = {
     ENGLISH: 'You are already the organizer of {n} running games.',
-    FRENCH: "Vous êtes déjà l'organisateur de n parties en cours."
+    FRENCH: "Vous êtes déjà l'organisateur de {n} parties en cours."
 }
 
 This_game_is_dead = {
@@ -327,7 +345,7 @@ guessing_deadline_has_passed = {
     ENGLISH: ('Your guess: {guess}\n\nIt will not be taken into account '
               'because the guessing deadline has passed!'),
     FRENCH: ('Votre devinage: {guess}\n\nIl ne sera pas pris en compte '
-             'car la limite de temps de devinage est passée!')
+             'car la limite de temps de devinage est passée !')
 }
 
 already_too_many_guessers = {
@@ -340,7 +358,7 @@ already_too_many_guessers = {
              'Il ne sera pas pris en compte '
              'car il y a déjà '
              '{max_guessers_per_game} devineurs. '
-             "C'est le nombre maximum autorisée par partie.")
+             "C'est le nombre maximal autorisé par partie.")
 }
 
 voting_deadline_has_passed = {
@@ -349,7 +367,7 @@ voting_deadline_has_passed = {
               'because the voting deadline has passed!'),
     FRENCH: ('Votre vote: proposition {vote}.\n\n'
              'Il ne sera pas pris en compte '
-             'parce que la limite de temps de vote est passée!')
+             'parce que la limite de temps de vote est passée !')
 }
 
 Input_must_be_a_integer = {

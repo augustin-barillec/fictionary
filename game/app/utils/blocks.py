@@ -197,7 +197,10 @@ class BlockBuilder:
             guesser_display = ut.users.user_display(r['guesser'])
             score = r['score']
             assert score >= 0
-            if score == 1:
+            if score == 0:
+                r_msg = ut.text.guesser_zero_points[self.language].format(
+                    guesser_display=guesser_display)
+            elif score == 1:
                 r_msg = ut.text.guesser_one_point[self.language].format(
                     guesser_display=guesser_display)
             else:

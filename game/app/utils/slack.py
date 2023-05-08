@@ -107,6 +107,7 @@ class SlackOperator:
         self.no_crash_post_ephemeral = no_crash(self.post_ephemeral)
         self.no_crash_update_upper = no_crash(self.update_upper)
         self.no_crash_update_lower = no_crash(self.update_lower)
+        self.organizer_display = ut.users.user_display(self.game.organizer_id)
 
     def add_tag_to_text(self, text):
         if self.tagging:
@@ -203,16 +204,16 @@ class SlackOperator:
 
     def send_vote_reminders(self):
         for u in self.game.potential_voters:
-            msg = (
-                f'Hey {ut.users.user_display(u)}, '
-                'you can now vote in the Fictionary game organized '
-                f'by {ut.users.user_display(self.game.organizer_id)}!')
+            user_display = ut.users.user_display(u)
+            msg = ut.text.you_can_now_vote.format(
+                user_display=user_display,
+                organizer_display=self.organizer_display)
             self.no_crash_post_ephemeral(u, msg)
 
     def send_is_over_notifications(self):
         for u in self.game.frozen_guessers:
-            msg = ('The Fictionary game organized by '
-                   f'{ut.users.user_display(self.game.organizer_id)} is over!')
+            msg = ut.text.game_is_over.format(
+                organizer_display=self.organizer_display)
             self.no_crash_post_ephemeral(u, msg)
 
     def post_pre_guess_stage_upper(self):
