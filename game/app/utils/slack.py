@@ -205,14 +205,14 @@ class SlackOperator:
     def send_vote_reminders(self):
         for u in self.game.potential_voters:
             user_display = ut.users.user_display(u)
-            msg = ut.text.you_can_now_vote.format(
+            msg = ut.text.you_can_now_vote[self.language].format(
                 user_display=user_display,
                 organizer_display=self.organizer_display)
             self.no_crash_post_ephemeral(u, msg)
 
     def send_is_over_notifications(self):
         for u in self.game.frozen_guessers:
-            msg = ut.text.game_is_over.format(
+            msg = ut.text.game_is_over[self.language].format(
                 organizer_display=self.organizer_display)
             self.no_crash_post_ephemeral(u, msg)
 

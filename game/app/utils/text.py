@@ -4,7 +4,7 @@ FRENCH = 'French'
 This_is_an_app_for_Slack = {
     ENGLISH: ('This is an app for Slack to play fictionary. '
               'All information is available <{home_url}|here.>'),
-    FRENCH: ("Ceci est une app pour Slack pour jouer au fictionary. "
+    FRENCH: ("Ceci est une application pour Slack pour jouer au fictionary. "
              'Toutes les informations sont disponibles <{home_url}|ici.>')
 }
 ###############################################################################
