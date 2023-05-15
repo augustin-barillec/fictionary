@@ -188,7 +188,7 @@ class ExceptionsHandler:
             return ut.text.Input_must_be_a_integer[self.language]
         if number_picked not in range(1, max_number + 1):
             msg = ut.text.not_between[self.language].format(
-                number_picked=number_picked, max_number=max_number)
+                max_number=max_number)
             return msg
 
     def build_guess_click_exception_msg(self, user_id):

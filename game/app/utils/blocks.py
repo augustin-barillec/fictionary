@@ -232,7 +232,8 @@ class BlockBuilder:
                     guesser_display=g)
                 return res
             res = ut.text.Hey_at_least_you_voted[self.language].format(
-                guesser_display=g)
+                guesser_display=g,
+                chosen_author_display=ut.users.user_display(ca))
             return res
         elif self.game.max_score == 0:
             return ut.text.Zero_points_scored[self.language]
