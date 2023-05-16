@@ -43,12 +43,12 @@ Automatic_game_set_up_by = {
 }
 
 Preparing_guess_stage = {
-    ENGLISH: 'Game preparation...',
+    ENGLISH: 'Setting up the game...',
     FRENCH: 'Préparation du jeu...'
 }
 
 Preparing_vote_stage = {
-    ENGLISH: 'Preparation of the voting stage...',
+    ENGLISH: 'Setting up the voting stage...',
     FRENCH: "Préparation de l'étape de vote..."
 }
 
@@ -163,8 +163,8 @@ guesser_points = {
 }
 
 No_one_played_this_game = {
-    ENGLISH: 'No one played this game. :sob:',
-    FRENCH: "No one has submitted an answer. :sob:"
+    ENGLISH: 'No one has submitted an answer. :sob:',
+    FRENCH: "Personne n'a proposé de réponse. :sob:"
 }
 
 Thanks_for_your_guess = {
@@ -186,7 +186,7 @@ Bravo_you_found_the_truth = {
 
 Hey_at_least_you_voted = {
     ENGLISH: "Too bad {guesser_display}, you voted for "
-             "{chosen_author_display}'s answer!",
+             "{chosen_author_display}'s answer! :grimacing:",
     FRENCH: 'Dommage {guesser_display}, vous avez voté pour la réponse '
             'de {chosen_author_display} ! :grimacing:'
 }
@@ -307,12 +307,12 @@ Voting_options = {
 }
 ###############################################################################
 There_is_already_1_running_game = {
-    ENGLISH: 'There is already 1 game in progress!',
+    ENGLISH: 'There is already 1 game in progress.',
     FRENCH: 'Il y a déjà 1 partie en cours.'
 }
 
 There_are_already_n_running_games = {
-    ENGLISH: 'There are already {n} games in progress!',
+    ENGLISH: 'There are already {n} games in progress.',
     FRENCH: 'Il y a déjà {n} parties en cours.'
 }
 
@@ -332,8 +332,8 @@ You_are_already_the_organizer_of_n_running_games = {
 }
 
 This_game_is_dead = {
-    ENGLISH: 'This game is deactivated!',
-    FRENCH: 'Cette partie est désactivée !'
+    ENGLISH: 'This game is deactivated.',
+    FRENCH: 'Cette partie est désactivée.'
 }
 
 This_app_is_not_in_the_conversation = {
@@ -344,8 +344,8 @@ This_app_is_not_in_the_conversation = {
 Parameter_must_be_one_of = {
     ENGLISH: 'The command parameter must be one '
              'of help, freestyle or automatic.',
-    FRENCH: 'Le paramètre de la commande doit être '
-            '"help", "freestyle" ou "automatic".'
+    FRENCH: "Le paramètre de la commande doit être l'un des suivants : "
+            'help, freestyle ou automatic.'
 }
 
 guessing_deadline_has_passed = {
@@ -372,7 +372,7 @@ already_too_many_guessers = {
 voting_deadline_has_passed = {
     ENGLISH: ('Your vote: proposal {vote}.\n\n'
               'It will not be taken into account '
-              'because the time limit for voting has passed!'),
+              'because the time limit for voting has passed.'),
     FRENCH: ('Votre vote pour la réponse {vote} ne sera pas pris en compte '
              'car la limite de temps pour voter est passée.')
 }
@@ -405,6 +405,6 @@ Only_guessers_can_vote = {
 }
 
 You_have_already_voted = {
-    ENGLISH: 'You have already voted!',
+    ENGLISH: 'You have already voted.',
     FRENCH: 'Vous avez déjà voté.'
 }
