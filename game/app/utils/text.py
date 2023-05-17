@@ -11,15 +11,15 @@ This_is_an_app_for_Slack = {
 ###############################################################################
 you_can_now_vote = {
     ENGLISH: 'Hey {user_display}, you can now vote in the Fictionary game '
-             'created by {organizer_display}!',
+             'created by {organizer_display}.',
     FRENCH: 'Hé {user_display}, vous pouvez maintenant voter dans la partie '
-            'de Fictionary créée par {organizer_display} !'
+            'de Fictionary créée par {organizer_display}.'
 }
 
 game_is_over = {
-    ENGLISH: 'The Fictionary game created by {organizer_display} is over!',
+    ENGLISH: 'The Fictionary game created by {organizer_display} is over.',
     FRENCH: 'La partie de Fictionary créée par {organizer_display} '
-            'est terminée !'
+            'est terminée.'
 }
 ###############################################################################
 Time_left_to_guess = {
@@ -33,13 +33,13 @@ Time_left_to_vote = {
 }
 
 Freestyle_game_set_up_by = {
-    ENGLISH: 'Question and answer written by {organizer_display}!',
-    FRENCH: 'Question et réponse écrites par {organizer_display} !'
+    ENGLISH: 'Question and answer written by {organizer_display}.',
+    FRENCH: 'Question et réponse écrites par {organizer_display}.'
 }
 
 Automatic_game_set_up_by = {
-    ENGLISH: 'Question selected by {organizer_display}!',
-    FRENCH: 'Question choisie par {organizer_display} !'
+    ENGLISH: 'Question selected by {organizer_display}.',
+    FRENCH: 'Question choisie par {organizer_display}.'
 }
 
 Preparing_guess_stage = {
@@ -78,8 +78,8 @@ Potential_voters = {
 }
 
 Everyone_has_voted = {
-    ENGLISH: 'Everyone has voted!',
-    FRENCH: 'Tout le monde a voté !'
+    ENGLISH: 'Everyone has voted.',
+    FRENCH: 'Tout le monde a voté.'
 }
 
 Guessers = {
@@ -168,8 +168,8 @@ No_one_played_this_game = {
 }
 
 Thanks_for_your_guess = {
-    ENGLISH: 'Thanks for your proposal, {guesser_display}!',
-    FRENCH: 'Merci pour votre proposition, {guesser_display} !'
+    ENGLISH: 'Thanks for your proposal, {guesser_display}.',
+    FRENCH: 'Merci pour votre proposition, {guesser_display}.'
 }
 
 No_one_voted = {
@@ -186,19 +186,19 @@ Bravo_you_found_the_truth = {
 
 Hey_at_least_you_voted = {
     ENGLISH: "Too bad {guesser_display}, you voted for "
-             "{chosen_author_display}'s answer! :grimacing:",
+             "{chosen_author_display}'s answer. :grimacing:",
     FRENCH: 'Dommage {guesser_display}, vous avez voté pour la réponse '
-            'de {chosen_author_display} ! :grimacing:'
+            'de {chosen_author_display}. :grimacing:'
 }
 
 Zero_points_scored = {
-    ENGLISH: 'No points have been scored!',
-    FRENCH: "Aucun point n'a été marqué !"
+    ENGLISH: 'No points have been scored.',
+    FRENCH: "Aucun point n'a été marqué."
 }
 
 Well_its_a_draw = {
-    ENGLISH: "Well, it's a draw! :scales:",
-    FRENCH: "Et bien, c'est un match nul ! :scales:"
+    ENGLISH: "Well, it's a draw. :scales:",
+    FRENCH: "Et bien, c'est un match nul. :scales:"
 }
 
 And_the_winner_is = {
@@ -337,7 +337,7 @@ This_game_is_dead = {
 }
 
 This_app_is_not_in_the_conversation = {
-    ENGLISH: 'Fictionary is not in the conversation!',
+    ENGLISH: 'Fictionary is not in the conversation.',
     FRENCH: "L'application Fictionary n'est pas dans la conversation."
 }
 
@@ -350,7 +350,7 @@ Parameter_must_be_one_of = {
 
 guessing_deadline_has_passed = {
     ENGLISH: ('Your answer: {guess}\n\nIt will not be taken into account '
-              'because the time limit for answering has passed!'),
+              'because the time limit for answering has passed.'),
     FRENCH: ('Votre réponse: {guess}\n\nElle ne sera pas prise en compte '
              'car la limite de temps pour répondre est passée.')
 }
