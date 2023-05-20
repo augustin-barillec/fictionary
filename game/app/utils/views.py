@@ -27,7 +27,11 @@ def build_setup_freestyle_view(language, id_):
     res['close']['text'] = ut.text.Cancel[language]
     res['blocks'][0]['text']['text'] = ut.text.Set_up_a_game[language]
     res['blocks'][1]['label']['text'] = ut.text.Question[language]
+    res['blocks'][1]['element']['placeholder']['text'] = \
+        ut.text.Write_something[language]
     res['blocks'][2]['label']['text'] = ut.text.Answer[language]
+    res['blocks'][2]['element']['placeholder']['text'] = \
+        ut.text.Write_something[language]
     return res
 
 

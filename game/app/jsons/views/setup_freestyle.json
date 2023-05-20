@@ -30,7 +30,11 @@
 			},
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "question"
+				"action_id": "question",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Write something"
+				}
 			}
 		},
 		{
@@ -42,7 +46,11 @@
 			},
 			"element": {
 				"type": "plain_text_input",
-				"action_id": "truth"
+				"action_id": "truth",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Write something"
+				}
 			}
 		}
 	]

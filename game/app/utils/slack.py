@@ -38,9 +38,9 @@ def auth_test(slack_client):
     return tools.slack_api.auth_test(slack_client)
 
 
-def post_message(slack_client, channel_id, blocks):
+def post_message(slack_client, channel_id, blocks, alternative_text):
     return tools.slack_api.chat_postmessage(
-        slack_client, channel_id, blocks)
+        slack_client, channel_id, blocks, alternative_text)
 
 
 def post_ephemeral(slack_client, channel_id, user_id, msg):
@@ -48,8 +48,9 @@ def post_ephemeral(slack_client, channel_id, user_id, msg):
         slack_client, channel_id, user_id, msg)
 
 
-def update_message(slack_client, channel_id, blocks, ts):
-    tools.slack_api.chat_update(slack_client, channel_id, blocks, ts)
+def update_message(slack_client, channel_id, blocks, ts, alternative_text):
+    tools.slack_api.chat_update(
+        slack_client, channel_id, blocks, ts, alternative_text)
 
 
 def open_view(slack_client, trigger_id, view):
@@ -130,7 +131,8 @@ class SlackOperator:
     def post_message(self, blocks):
         blocks = self.add_tag_to_blocks(blocks)
         return post_message(
-            self.slack_client, self.game.channel_id, blocks)
+            self.slack_client, self.game.channel_id, blocks,
+            ut.text.New_message[self.language])
 
     def post_ephemeral(self, user_id, msg):
         msg = self.add_tag_to_text(msg)
@@ -139,7 +141,9 @@ class SlackOperator:
 
     def update_message(self, blocks, ts):
         blocks = self.add_tag_to_blocks(blocks)
-        update_message(self.slack_client, self.game.channel_id, blocks, ts)
+        update_message(
+            self.slack_client, self.game.channel_id, blocks, ts,
+            ut.text.Message_updated[self.language])
 
     def open_view(self, trigger_id, view):
         view = self.add_tag_to_view(view)

@@ -38,8 +38,8 @@ def build_button_block(id_, msg):
     return res
 
 
-def build_timer_block(msg_template, time_left):
-    time_display = ut.time.build_time_display_for_timer(time_left)
+def build_timer_block(language, msg_template, time_left):
+    time_display = ut.time.build_time_display_for_timer(language, time_left)
     msg = msg_template.format(time_display=time_display)
     return build_text_block(msg)
 
@@ -62,12 +62,12 @@ class BlockBuilder:
     def build_guess_timer_block(self):
         msg_template = ut.text.Time_left_to_guess[self.language]
         time_left = self.game.time_left_to_guess
-        return build_timer_block(msg_template, time_left)
+        return build_timer_block(self.language, msg_template, time_left)
 
     def build_vote_timer_block(self):
         msg_template = ut.text.Time_left_to_vote[self.language]
         time_left = self.game.time_left_to_vote
-        return build_timer_block(msg_template, time_left)
+        return build_timer_block(self.language, msg_template, time_left)
 
     def build_title_block(self):
         assert self.game.parameter in ('freestyle', 'automatic')

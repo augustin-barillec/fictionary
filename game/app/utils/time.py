@@ -1,4 +1,5 @@
 import datetime
+import app.utils as ut
 
 
 def compute_deadline(start_datetime, time_left):
@@ -13,9 +14,10 @@ def seconds_to_minutes_seconds(seconds):
     return seconds // 60, seconds % 60
 
 
-def build_time_display_for_timer(seconds):
+def build_time_display_for_timer(language, seconds):
     if seconds < 0:
-        return '0min 0s'
+        return ut.text.time_display[language].format(minutes=0, seconds=0)
     minutes, seconds = seconds_to_minutes_seconds(seconds)
     seconds_approx = seconds - seconds % 5
-    return f'{minutes}min {seconds_approx}s'
+    return ut.text.time_display[language].format(
+        minutes=minutes, seconds=seconds_approx)

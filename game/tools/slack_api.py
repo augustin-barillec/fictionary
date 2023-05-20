@@ -2,11 +2,11 @@ def auth_test(slack_client):
     return slack_client.auth_test()
 
 
-def chat_postmessage(slack_client, channel_id, blocks):
+def chat_postmessage(slack_client, channel_id, blocks, alternative_text):
     return slack_client.chat_postMessage(
         channel=channel_id,
         blocks=blocks,
-        text='New message')
+        text=alternative_text)
 
 
 def chat_postephemeral(slack_client, channel_id, user_id, msg):
@@ -16,12 +16,12 @@ def chat_postephemeral(slack_client, channel_id, user_id, msg):
         text=msg)
 
 
-def chat_update(slack_client, channel_id, blocks, ts):
+def chat_update(slack_client, channel_id, blocks, ts, alternative_text):
     return slack_client.chat_update(
         channel=channel_id,
         blocks=blocks,
         ts=ts,
-        text='Message updated')
+        text=alternative_text)
 
 
 def views_open(slack_client, trigger_id, view):

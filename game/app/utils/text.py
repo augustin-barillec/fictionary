@@ -1,19 +1,32 @@
 ENGLISH = 'English'
 FRENCH = 'French'
 ###############################################################################
+# help
 This_is_an_app_for_Slack = {
     ENGLISH: ('Fictionary is an application for Slack to play fictionary. '
-              'All information is available <{home_url}|here.>'),
+              "More information is available on "
+              "the app's <{home_url}|website>."),
     FRENCH: ('Fictionary est une application permettant de jouer au jeu '
-             'du dictionnaire sur Slack. Toutes les informations sont '
-             'disponibles <{home_url}|ici.>')
+             "du dictionnaire sur Slack. Plus d'informations "
+             "sont disponibles sur le <{home_url}|site> de l'application. ")
 }
 ###############################################################################
+# slack
+New_message = {
+    ENGLISH: 'New message',
+    FRENCH: 'Nouveau message'
+}
+
+Message_updated = {
+    ENGLISH: 'Message updated',
+    FRENCH: 'Message mis à jour'
+}
+
 you_can_now_vote = {
     ENGLISH: 'Hey {user_display}, you can now vote in the Fictionary game '
-             'created by {organizer_display}.',
+             'created by {organizer_display}!',
     FRENCH: 'Hé {user_display}, vous pouvez maintenant voter dans la partie '
-            'de Fictionary créée par {organizer_display}.'
+            'de Fictionary créée par {organizer_display} !'
 }
 
 game_is_over = {
@@ -22,6 +35,7 @@ game_is_over = {
             'est terminée.'
 }
 ###############################################################################
+# blocks
 Time_left_to_guess = {
     ENGLISH: 'Time left to answer: {time_display}',
     FRENCH: 'Temps restant pour répondre : {time_display}'
@@ -33,13 +47,13 @@ Time_left_to_vote = {
 }
 
 Freestyle_game_set_up_by = {
-    ENGLISH: 'Question and answer written by {organizer_display}.',
-    FRENCH: 'Question et réponse écrites par {organizer_display}.'
+    ENGLISH: 'Question and answer written by {organizer_display}!',
+    FRENCH: 'Question et réponse écrites par {organizer_display} !'
 }
 
 Automatic_game_set_up_by = {
-    ENGLISH: 'Question selected by {organizer_display}.',
-    FRENCH: 'Question choisie par {organizer_display}.'
+    ENGLISH: 'Question selected by {organizer_display}!',
+    FRENCH: 'Question choisie par {organizer_display} !'
 }
 
 Preparing_guess_stage = {
@@ -78,8 +92,8 @@ Potential_voters = {
 }
 
 Everyone_has_voted = {
-    ENGLISH: 'Everyone has voted.',
-    FRENCH: 'Tout le monde a voté.'
+    ENGLISH: 'Everyone has voted!',
+    FRENCH: 'Tout le monde a voté !'
 }
 
 Guessers = {
@@ -168,8 +182,8 @@ No_one_played_this_game = {
 }
 
 Thanks_for_your_guess = {
-    ENGLISH: 'Thanks for your proposal, {guesser_display}.',
-    FRENCH: 'Merci pour votre proposition, {guesser_display}.'
+    ENGLISH: 'Thanks for your proposal, {guesser_display}!',
+    FRENCH: 'Merci pour votre proposition, {guesser_display} !'
 }
 
 No_one_voted = {
@@ -192,13 +206,13 @@ Hey_at_least_you_voted = {
 }
 
 Zero_points_scored = {
-    ENGLISH: 'No points have been scored.',
-    FRENCH: "Aucun point n'a été marqué."
+    ENGLISH: 'No points have been scored!',
+    FRENCH: "Aucun point n'a été marqué !"
 }
 
 Well_its_a_draw = {
-    ENGLISH: "Well, it's a draw. :scales:",
-    FRENCH: "Et bien, c'est un match nul. :scales:"
+    ENGLISH: "Well, it's a draw! :scales:",
+    FRENCH: "Match nul ! :scales:"
 }
 
 And_the_winner_is = {
@@ -216,6 +230,7 @@ And_the_winners_are = {
     FRENCH: 'Et les gagnants sont {winners_display_comma_final_and} ! :clap:'
 }
 ###############################################################################
+# views
 Close = {
     ENGLISH: 'Close',
     FRENCH: 'Fermer'
@@ -305,7 +320,7 @@ Voting_options = {
     ENGLISH: 'Voting options:',
     FRENCH: 'Options de vote :'
 }
-###############################################################################
+# exceptions
 There_is_already_1_running_game = {
     ENGLISH: 'There is already 1 game in progress.',
     FRENCH: 'Il y a déjà 1 partie en cours.'
@@ -343,9 +358,9 @@ This_app_is_not_in_the_conversation = {
 
 Parameter_must_be_one_of = {
     ENGLISH: 'The command parameter must be one '
-             'of help, freestyle or automatic.',
+             'of freestyle, automatic or help.',
     FRENCH: "Le paramètre de la commande doit être l'un des suivants : "
-            'help, freestyle ou automatic.'
+            'freestyle, automatic ou help.'
 }
 
 guessing_deadline_has_passed = {
@@ -407,4 +422,10 @@ Only_guessers_can_vote = {
 You_have_already_voted = {
     ENGLISH: 'You have already voted.',
     FRENCH: 'Vous avez déjà voté.'
+}
+###############################################################################
+# time
+time_display = {
+    ENGLISH: '{minutes}min {seconds}s',
+    FRENCH: '{minutes}min {seconds}s'
 }
