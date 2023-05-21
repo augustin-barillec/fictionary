@@ -45,10 +45,10 @@ context.build_game_func = build_game
 
 def slash_command(request):
     """This HTTP Cloud Function is triggered when a user sends the slash
-    command "/fictionary" followed by one the four following parameters:
-    "help", "freestyle", "french" or "english".
+    command "/fictionary" followed by one the three following parameters:
+    "help", "freestyle", "automatic".
 
-    With the last three parameters, a game is stored in Firestore with
+    With the last two parameters, a game is stored in Firestore with
     the following attributes: version, parameter and tag. The tag is used
     during the Cypress tests for tagging messages. Thus, they can be
     identified during the tests.
@@ -59,8 +59,8 @@ def slash_command(request):
     "/fictionary freestyle" opens a game setup view where the user has to
     come up with the question and the answer.
 
-    "/fictionary english" or "/fictionary french" opens a game setup view
-    where the user can pick a question from a bank question.
+    "/fictionary automatic" opens a game setup view where the user can pick
+    a question from a question bank.
     """
     body = request.get_data()
     headers = request.headers

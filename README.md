@@ -1,6 +1,8 @@
 # Fictionary
 
-Fictionary is a Slack app to play [fictionary](https://en.wikipedia.org/wiki/Fictionary).
+Fictionary is an application for Slack to play [fictionary](https://en.wikipedia.org/wiki/Fictionary).
+
+It has a English version and a French version.
 
 This app runs on a single GCP project_id.
 
@@ -52,10 +54,12 @@ the following:
 The slash_command and interactivity Cloud Functions are HTTP Functions. The 
 others are triggered by Pub/Sub topics. 
 
-The slash_commmand function handles the slash command "/fictionary". It has 4 
-parameters: "help", "freestyle", "english" and "french". The first one displays 
-information about the app. The last three open a view for the user to configure 
-and start a game.
+The slash_commmand function handles the slash command "/fictionary". It has 3 
+parameters: "help", "freestyle" and "automatic". The first one displays 
+information about the app. The second one opens a view for the user to start 
+a game with his own question and his own answer. The third one opens a view
+for the user to start a game with a question that he selects from a 
+question bank.
 
 The interactivity function handles all the user interactions with Slack objects 
 of a game: game setup view configuration and submission, guess button click and 
@@ -130,7 +134,7 @@ features:
     - command: /fictionary
       url: the url of the slash_command function
       description: Start a fictionary game!
-      usage_hint: "[help, freestyle, english, french]"
+      usage_hint: "[help, freestyle, automatic]"
       should_escape: false
 oauth_config:
   scopes:
@@ -211,6 +215,7 @@ In the document /teams/T store the following information (these parameters
 are only used by the games of T):
 
 ```yaml
+language: English
 max_guessers_per_game: 20
 max_life_span: 3600
 max_running_games: 5
