@@ -60,12 +60,12 @@ class BlockBuilder:
         self.language = self.game.language
 
     def build_guess_timer_block(self):
-        msg_template = ut.text.Time_left_to_guess[self.language]
+        msg_template = ut.text.time_left_to_answer[self.language]
         time_left = self.game.time_left_to_guess
         return build_timer_block(self.language, msg_template, time_left)
 
     def build_vote_timer_block(self):
-        msg_template = ut.text.Time_left_to_vote[self.language]
+        msg_template = ut.text.time_left_to_vote[self.language]
         time_left = self.game.time_left_to_vote
         return build_timer_block(self.language, msg_template, time_left)
 
@@ -74,10 +74,10 @@ class BlockBuilder:
         organizer_display = ut.users.user_display(self.game.organizer_id)
         msg = None
         if self.game.parameter == 'freestyle':
-            msg = ut.text.Freestyle_game_set_up_by[self.language].format(
+            msg = ut.text.question_and_answer_written_by[self.language].format(
                 organizer_display=organizer_display)
         elif self.game.parameter == 'automatic':
-            msg = ut.text.Automatic_game_set_up_by[self.language].format(
+            msg = ut.text.question_selected_by[self.language].format(
                 organizer_display=organizer_display)
         return build_text_block(msg)
 
@@ -85,49 +85,51 @@ class BlockBuilder:
         return build_text_block(self.game.question)
 
     def build_preparing_guess_stage_block(self):
-        return build_text_block(ut.text.Preparing_guess_stage[self.language])
+        return build_text_block(ut.text.setting_up_the_game[self.language])
 
     def build_preparing_vote_stage_block(self):
-        return build_text_block(ut.text.Preparing_vote_stage[self.language])
+        return build_text_block(ut.text.setting_up_the_voting_stage[
+                                    self.language])
 
     def build_computing_results_stage_block(self):
-        return build_text_block(ut.text.Computing_results[self.language])
+        return build_text_block(ut.text.computing_results[self.language])
 
     def build_guess_button_block(self):
         id_ = self.game.surface_id_builder.build_guess_button_block_id()
-        msg = ut.text.Guess[self.language]
+        msg = ut.text.answer[self.language]
         return build_button_block(id_, msg)
 
     def build_vote_button_block(self):
         id_ = self.game.surface_id_builder.build_vote_button_block_id()
-        msg = ut.text.Vote[self.language]
+        msg = ut.text.vote[self.language]
         return build_button_block(id_, msg)
 
     def build_nb_remaining_potential_guessers_block(self):
         nb = self.game.nb_remaining_potential_guessers
-        msg = ut.text.Potential_guessers[self.language].format(nb=nb)
+        msg = ut.text.remaining_spots[self.language].format(nb=nb)
         return build_text_block(msg)
 
     def build_remaining_potential_voters_block(self):
-        msg_template = ut.text.Potential_voters[self.language]
+        msg_template = ut.text.eligible_to_vote[self.language]
         users = self.game.remaining_potential_voters
-        no_users_msg = ut.text.Everyone_has_voted[self.language]
+        no_users_msg = ut.text.every_one_has_voted[self.language]
         return build_users_block(msg_template, users, no_users_msg)
 
     def build_guessers_block(self):
-        msg_template = ut.text.Guessers[self.language]
+        msg_template = ut.text.players_who_proposed_an_answer[self.language]
         users = self.game.guessers
-        no_users_msg = ut.text.No_one_has_guessed_yet[self.language]
+        no_users_msg = ut.text.no_one_has_submitted_an_answer_yet[
+            self.language]
         return build_users_block(msg_template,users, no_users_msg)
 
     def build_voters_block(self):
-        msg_template = ut.text.Voters[self.language]
+        msg_template = ut.text.players_who_voted[self.language]
         users = self.game.voters
-        no_users_msg = ut.text.No_one_has_voted_yet[self.language]
+        no_users_msg = ut.text.no_one_has_voted_yet[self.language]
         return build_users_block(msg_template, users, no_users_msg)
 
     def build_indexed_anonymous_proposals_block(self):
-        msg = [ut.text.Proposals[self.language]]
+        msg = [ut.text.proposals[self.language]]
         indexed_anonymous_proposals = \
             ut.proposals.ProposalsBrowser(
                 self.game).build_indexed_anonymous_proposals()
@@ -141,11 +143,11 @@ class BlockBuilder:
 
     def build_truth_block(self):
         if len(self.game.frozen_guessers) <= 1:
-            msg = ut.text.Truth_truth[self.language].format(
+            msg = ut.text.game_answer_truth[self.language].format(
                 truth=self.game.truth)
         else:
             index = self.game.truth_index
-            msg = ut.text.Truth_index_truth[self.language].format(
+            msg = ut.text.game_answer_index_truth[self.language].format(
                 index=index, truth=self.game.truth)
         return build_text_block(msg)
 
@@ -180,7 +182,7 @@ class BlockBuilder:
             voter_display = ut.users.user_display(r['guesser'])
             chosen_author = r['chosen_author']
             if chosen_author == 'Truth':
-                r_msg = ut.text.voter_to_truth[self.language].format(
+                r_msg = ut.text.voter_to_game_answer[self.language].format(
                     voter_display=voter_display)
             else:
                 chosen_author_display = ut.users.user_display(chosen_author)
@@ -215,39 +217,39 @@ class BlockBuilder:
         lv = len(self.game.frozen_voters)
         lw = len(self.game.winners)
         if lg == 0:
-            return ut.text.No_one_played_this_game[self.language]
+            return ut.text.no_one_has_submitted_an_answer[self.language]
         elif lg == 1:
             g = ut.users.user_display(list(self.game.frozen_guessers)[0])
-            res = ut.text.Thanks_for_your_guess[self.language].format(
+            res = ut.text.thanks_for_your_proposal[self.language].format(
                 guesser_display=g)
             return res
         elif lv == 0:
-            return ut.text.No_one_voted[self.language]
+            return ut.text.no_one_voted[self.language]
         elif lv == 1:
             r = self.game.results[0]
             g = ut.users.user_display(r['guesser'])
             ca = r['chosen_author']
             if ca == 'Truth':
-                res = ut.text.Bravo_you_found_the_truth[self.language].format(
+                res = ut.text.well_done[self.language].format(
                     guesser_display=g)
                 return res
-            res = ut.text.Hey_at_least_you_voted[self.language].format(
+            res = ut.text.too_bad[self.language].format(
                 guesser_display=g,
                 chosen_author_display=ut.users.user_display(ca))
             return res
         elif self.game.max_score == 0:
-            return ut.text.Zero_points_scored[self.language]
+            return ut.text.no_points[self.language]
         elif lw == lv:
-            return ut.text.Well_its_a_draw[self.language]
+            return ut.text.draw[self.language]
         elif lw == 1:
             w = ut.users.user_display(self.game.winners[0])
-            return ut.text.And_the_winner_is[self.language].format(
+            return ut.text.and_the_winner_is[self.language].format(
                 winner_display=w)
         elif lw > 1:
             ws = [ut.users.user_display(w) for w in self.game.winners]
             res = ', '.join(ws[:-1])
             res += f' {ut.text.and_[self.language]} {ws[-1]}'
-            res = ut.text.And_the_winners_are[self.language].format(
+            res = ut.text.and_the_winners_are[self.language].format(
                 winners_display_comma_final_and=res)
             return res
 

@@ -15,7 +15,7 @@ vote_view_template = get_view('vote.json')
 
 def build_exception_view(language, msg):
     res = copy.deepcopy(exception_view_template)
-    res['close']['text'] = ut.text.Close[language]
+    res['close']['text'] = ut.text.close[language]
     res['blocks'][0]['text']['text'] = msg
     return res
 
@@ -23,13 +23,13 @@ def build_exception_view(language, msg):
 def build_setup_freestyle_view(language, id_):
     res = copy.deepcopy(setup_freestyle_view_template)
     res['callback_id'] = id_
-    res['submit']['text'] = ut.text.Submit[language]
-    res['close']['text'] = ut.text.Cancel[language]
-    res['blocks'][0]['text']['text'] = ut.text.Set_up_a_game[language]
-    res['blocks'][1]['label']['text'] = ut.text.Question[language]
+    res['submit']['text'] = ut.text.submit[language]
+    res['close']['text'] = ut.text.cancel[language]
+    res['blocks'][0]['text']['text'] = ut.text.set_up_a_game[language]
+    res['blocks'][1]['label']['text'] = ut.text.question[language]
     res['blocks'][1]['element']['placeholder']['text'] = \
         ut.text.Write_something[language]
-    res['blocks'][2]['label']['text'] = ut.text.Answer[language]
+    res['blocks'][2]['label']['text'] = ut.text.answer[language]
     res['blocks'][2]['element']['placeholder']['text'] = \
         ut.text.Write_something[language]
     return res
@@ -42,22 +42,23 @@ def build_setup_automatic_view(
     res = copy.deepcopy(setup_automatic_view_template)
     res['callback_id'] = id_
     res['private_metadata'] = answer
-    res['submit']['text'] = ut.text.Submit[language]
-    res['close']['text'] = ut.text.Cancel[language]
-    res['blocks'][0]['text']['text'] = ut.text.Set_up_a_game[language]
-    res['blocks'][1]['text']['text'] = ut.text.Questions_are_visible_here[
+    res['submit']['text'] = ut.text.submit[language]
+    res['close']['text'] = ut.text.cancel[language]
+    res['blocks'][0]['text']['text'] = ut.text.set_up_a_game[language]
+    res['blocks'][1]['text']['text'] = ut.text.questions_are_visible_here[
         language]
-    res['blocks'][1]['accessory']['text']['text'] = ut.text.Questions[language]
+    res['blocks'][1]['accessory']['text']['text'] = ut.text.questions[language]
     res['blocks'][1]['accessory']['url'] = url
     res['blocks'][2]['block_id'] = pick_block_id
-    res['blocks'][2]['label']['text'] = ut.text.Pick_a_question_number[
+    res['blocks'][2]['label']['text'] = ut.text.pick_a_question_number[
         language]
     res['blocks'][2]['element']['placeholder'][
-        'text'] = ut.text.Between_1_and_N[language].format(N=max_number)
-    res['blocks'][3]['text']['text'] = ut.text.Or[language]
+        'text'] = ut.text.between_1_and_N[language].format(N=max_number)
+    res['blocks'][3]['text']['text'] = ut.text.or_[language]
     res['blocks'][4]['block_id'] = shuffle_block_id
-    res['blocks'][4]['elements'][0]['text']['text'] = ut.text.Shuffle[language]
-    res['blocks'][5]['text']['text'] = ut.text.Question_n_selected[
+    res['blocks'][4]['elements'][0]['text']['text'] = \
+        ut.text.draw_a_question_at_random[language]
+    res['blocks'][5]['text']['text'] = ut.text.question_n_selected[
         language].format(n=number)
     res['blocks'][6]['text']['text'] = question
     return res
@@ -66,12 +67,12 @@ def build_setup_automatic_view(
 def build_guess_view(language, id_, question):
     res = copy.deepcopy(guess_view_template)
     res['callback_id'] = id_
-    res['submit']['text'] = ut.text.Submit[language]
-    res['close']['text'] = ut.text.Cancel[language]
+    res['submit']['text'] = ut.text.submit[language]
+    res['close']['text'] = ut.text.cancel[language]
     res['blocks'][0]['text']['text'] = question
-    res['blocks'][1]['label']['text'] = ut.text.Your_guess[language]
+    res['blocks'][1]['label']['text'] = ut.text.your_answer[language]
     res['blocks'][1]['element']['placeholder']['text'] = \
-        ut.text.Write_something[language]
+        ut.text.write_something[language]
     return res
 
 
@@ -81,15 +82,15 @@ def build_vote_view(
         votable_indexed_anonymous_proposals):
     res = copy.deepcopy(vote_view_template)
     res['callback_id'] = id_
-    res['submit']['text'] = ut.text.Submit[language]
-    res['close']['text'] = ut.text.Cancel[language]
-    msg = ut.text.Your_guess_index_guess[language].format(
+    res['submit']['text'] = ut.text.submit[language]
+    res['close']['text'] = ut.text.cancel[language]
+    msg = ut.text.your_guess_index_guess[language].format(
         index=own_index, guess=own_proposal)
     res['blocks'][0]['text']['text'] = msg
-    res['blocks'][2]['label']['text'] = ut.text.Your_vote[language]
+    res['blocks'][2]['label']['text'] = ut.text.your_vote[language]
     res['blocks'][2]['element']['placeholder']['text'] = \
-        ut.text.Select_an_item[language]
-    votable_proposals_msg = [ut.text.Voting_options[language]]
+        ut.text.select_an_item[language]
+    votable_proposals_msg = [ut.text.voting_options[language]]
     option_template = res['blocks'][2]['element']['options'][0]
     vote_options = []
     for viap in votable_indexed_anonymous_proposals:

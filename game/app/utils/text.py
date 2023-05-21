@@ -2,7 +2,7 @@ ENGLISH = 'English'
 FRENCH = 'French'
 ###############################################################################
 # help
-This_is_an_app_for_Slack = {
+is_an_application = {
     ENGLISH: ('Fictionary is an application for Slack to play fictionary. '
               "More information is available on "
               "the app's <{home_url}|website>."),
@@ -12,12 +12,12 @@ This_is_an_app_for_Slack = {
 }
 ###############################################################################
 # slack
-New_message = {
+new_message = {
     ENGLISH: 'New message',
     FRENCH: 'Nouveau message'
 }
 
-Message_updated = {
+message_updated = {
     ENGLISH: 'Message updated',
     FRENCH: 'Message mis à jour'
 }
@@ -36,87 +36,87 @@ game_is_over = {
 }
 ###############################################################################
 # blocks
-Time_left_to_guess = {
+time_left_to_answer = {
     ENGLISH: 'Time left to answer: {time_display}',
     FRENCH: 'Temps restant pour répondre : {time_display}'
 }
 
-Time_left_to_vote = {
+time_left_to_vote = {
     ENGLISH: 'Time left to vote: {time_display}',
     FRENCH: 'Temps restant pour voter : {time_display}'
 }
 
-Freestyle_game_set_up_by = {
+question_and_answer_written_by = {
     ENGLISH: 'Question and answer written by {organizer_display}!',
     FRENCH: 'Question et réponse écrites par {organizer_display} !'
 }
 
-Automatic_game_set_up_by = {
+question_selected_by = {
     ENGLISH: 'Question selected by {organizer_display}!',
     FRENCH: 'Question choisie par {organizer_display} !'
 }
 
-Preparing_guess_stage = {
+setting_up_the_game = {
     ENGLISH: 'Setting up the game...',
     FRENCH: 'Préparation du jeu...'
 }
 
-Preparing_vote_stage = {
+setting_up_the_voting_stage = {
     ENGLISH: 'Setting up the voting stage...',
     FRENCH: "Préparation de l'étape de vote..."
 }
 
-Computing_results = {
+computing_results = {
     ENGLISH: 'Computing results... :drum_with_drumsticks:',
     FRENCH: 'Calcul des résultats... :drum_with_drumsticks:'
 }
 
-Guess = {
+answer = {
     ENGLISH: 'Answer',
     FRENCH: 'Répondre'
 }
 
-Vote = {
+vote = {
     ENGLISH: 'Vote',
     FRENCH: 'Voter'
 }
 
-Potential_guessers = {
+remaining_spots = {
     ENGLISH: 'Remaining spots: {nb}',
     FRENCH: 'Places restantes : {nb}'
 }
 
-Potential_voters = {
+eligible_to_vote = {
     ENGLISH: 'Players eligible to vote: {user_displays}',
     FRENCH: 'Joueurs pouvant voter : {user_displays}'
 }
 
-Everyone_has_voted = {
+every_one_has_voted = {
     ENGLISH: 'Everyone has voted!',
     FRENCH: 'Tout le monde a voté !'
 }
 
-Guessers = {
+players_who_proposed_an_answer = {
     ENGLISH: 'Players who proposed an answer: {user_displays}',
     FRENCH: 'Joueurs ayant proposé une réponse : {user_displays}'
 }
 
-No_one_has_guessed_yet = {
+no_one_has_submitted_an_answer_yet = {
     ENGLISH: 'No one has submitted an answer yet.',
     FRENCH: "Personne n'a encore proposé de réponse."
 }
 
-Voters = {
+players_who_voted = {
     ENGLISH: 'Players who voted: {user_displays}',
     FRENCH: 'Joueurs ayant voté : {user_displays}'
 }
 
-No_one_has_voted_yet = {
+no_one_has_voted_yet = {
     ENGLISH: 'No one has voted yet.',
     FRENCH: "Personne n'a encore voté."
 }
 
-Proposals = {
+proposals = {
     ENGLISH: 'Proposals:',
     FRENCH: 'Propositions :'
 }
@@ -126,17 +126,13 @@ index_proposal = {
     FRENCH: '{index}) {proposal}'
 }
 
-Your_guess_index_guess = {
-    ENGLISH: 'Your answer: {index}) {guess}',
-    FRENCH: 'Votre réponse : {index}) {guess}'
-}
 
-Truth_truth = {
+game_answer_truth = {
     ENGLISH: "• Game's answer: {truth}",
     FRENCH: '• Réponse du jeu : {truth}'
 }
 
-Truth_index_truth = {
+game_answer_index_truth = {
     ENGLISH: "• Game's answer: {index}) {truth}",
     FRENCH: '• Réponse du jeu : {index}) {truth}'
 }
@@ -151,7 +147,7 @@ guesser_guess = {
     FRENCH: '• {guesser_display} : {guess}'
 }
 
-voter_to_truth = {
+voter_to_game_answer = {
     ENGLISH: "• {voter_display} -> Game's answer",
     FRENCH: '• {voter_display} -> Réponse du jeu'
 }
@@ -176,46 +172,46 @@ guesser_points = {
     FRENCH: '• {guesser_display} : {score} points'
 }
 
-No_one_played_this_game = {
+no_one_has_submitted_an_answer = {
     ENGLISH: 'No one has submitted an answer. :sob:',
     FRENCH: "Personne n'a proposé de réponse. :sob:"
 }
 
-Thanks_for_your_guess = {
+thanks_for_your_proposal = {
     ENGLISH: 'Thanks for your proposal, {guesser_display}!',
     FRENCH: 'Merci pour votre proposition, {guesser_display} !'
 }
 
-No_one_voted = {
+no_one_voted = {
     ENGLISH: 'No one voted. :sob:',
     FRENCH: "Personne n'a voté. :sob:"
 }
 
-Bravo_you_found_the_truth = {
+well_done = {
     ENGLISH: 'Well done {guesser_display}, '
              "you have voted for the game's answer! :v:",
     FRENCH: 'Bravo {guesser_display}, '
             'vous avez voté pour la réponse du jeu ! :v:'
 }
 
-Hey_at_least_you_voted = {
+too_bad = {
     ENGLISH: "Too bad {guesser_display}, you voted for "
              "{chosen_author_display}'s answer. :grimacing:",
     FRENCH: 'Dommage {guesser_display}, vous avez voté pour la réponse '
             'de {chosen_author_display}. :grimacing:'
 }
 
-Zero_points_scored = {
+no_points = {
     ENGLISH: 'No points have been scored!',
     FRENCH: "Aucun point n'a été marqué !"
 }
 
-Well_its_a_draw = {
+draw = {
     ENGLISH: "Well, it's a draw! :scales:",
     FRENCH: "Match nul ! :scales:"
 }
 
-And_the_winner_is = {
+and_the_winner_is = {
     ENGLISH: 'And the winner is {winner_display}! :first_place_medal:',
     FRENCH: '{winner_display} remporte la partie ! :first_place_medal:'
 }
@@ -225,152 +221,153 @@ and_ = {
     FRENCH: 'et'
 }
 
-And_the_winners_are = {
+and_the_winners_are = {
     ENGLISH: 'And the winners are {winners_display_comma_final_and}! :clap:',
     FRENCH: 'Et les gagnants sont {winners_display_comma_final_and} ! :clap:'
 }
 ###############################################################################
 # views
-Close = {
+close = {
     ENGLISH: 'Close',
     FRENCH: 'Fermer'
 }
 
-Submit = {
+submit = {
     ENGLISH: 'Submit',
     FRENCH: 'Soumettre'
 }
 
-Cancel = {
+cancel = {
     ENGLISH: 'Cancel',
     FRENCH: 'Annuler'
 }
 
-Set_up_a_game = {
+set_up_a_game = {
     ENGLISH: 'Set up a game',
     FRENCH: 'Créer une partie'
 }
 
-Question = {
+question = {
     ENGLISH: 'Question',
     FRENCH: 'Question'
 }
 
-Answer = {
-    ENGLISH: 'Answer',
-    FRENCH: 'Réponse'
-}
-
-Questions_are_visible_here = {
+questions_are_visible_here = {
     ENGLISH: 'Questions are visible here:',
     FRENCH: 'Les questions sont visibles ici :'
 }
 
-Questions = {
+questions = {
     ENGLISH: 'Questions',
     FRENCH: 'Questions'
 }
 
-Pick_a_question_number = {
+pick_a_question_number = {
     ENGLISH: 'Pick up a question number',
     FRENCH: 'Choisir un numéro de question'
 }
 
-Between_1_and_N = {
+between_1_and_N = {
     ENGLISH: 'Between 1 and {N}',
     FRENCH: 'Entre 1 et {N}'
 }
 
-Or = {
+or_ = {
     ENGLISH: '*Or*',
     FRENCH: '*Ou*'
 }
 
-Shuffle = {
+draw_a_question_at_random = {
     ENGLISH: 'Draw a question at random',
     FRENCH: 'Tirer une question au hasard'
 }
 
-Question_n_selected = {
+question_n_selected = {
     ENGLISH: 'Question *{n}* selected:',
     FRENCH: 'Question *{n}* sélectionnée :'
 }
 
-Your_guess = {
+your_answer = {
     ENGLISH: 'Your answer',
     FRENCH: 'Votre réponse'
 }
 
-Write_something = {
+write_something = {
     ENGLISH: 'Write something',
     FRENCH: 'Écrire quelque chose'
 }
 
-Your_vote = {
+your_guess_index_guess = {
+    ENGLISH: 'Your answer: {index}) {guess}',
+    FRENCH: 'Votre réponse : {index}) {guess}'
+}
+
+your_vote = {
     ENGLISH: 'Your vote',
     FRENCH: 'Votre vote'
 }
 
-Select_an_item = {
+select_an_item = {
     ENGLISH: 'Select an item',
     FRENCH: 'Sélectionner un élément'
 }
 
-Voting_options = {
+voting_options = {
     ENGLISH: 'Voting options:',
     FRENCH: 'Options de vote :'
 }
+###############################################################################
 # exceptions
-There_is_already_1_running_game = {
+there_is_already_1_game_in_progress = {
     ENGLISH: 'There is already 1 game in progress.',
     FRENCH: 'Il y a déjà 1 partie en cours.'
 }
 
-There_are_already_n_running_games = {
+there_are_already_n_games_in_progress = {
     ENGLISH: 'There are already {n} games in progress.',
     FRENCH: 'Il y a déjà {n} parties en cours.'
 }
 
-This_is_the_maximum_number_allowed = {
+this_is_the_maximum_number_allowed = {
     ENGLISH: 'This is the maximum allowed number.',
     FRENCH: "C'est le nombre maximal autorisé."
 }
 
-You_are_already_the_organizer_of_1_running_game = {
+you_are_already_the_creator_of_1_game_in_progress = {
     ENGLISH: 'You are already the creator of one game in progress.',
     FRENCH: "Vous êtes déjà le créateur d'une partie en cours."
 }
 
-You_are_already_the_organizer_of_n_running_games = {
+you_are_already_the_organizer_of_n_games_in_progress = {
     ENGLISH: 'You are already the creator of {n} running games.',
     FRENCH: "Vous êtes déjà le créateur de {n} parties en cours."
 }
 
-This_game_is_dead = {
+this_game_is_deactivated = {
     ENGLISH: 'This game is deactivated.',
     FRENCH: 'Cette partie est désactivée.'
 }
 
-This_app_is_not_in_the_conversation = {
+is_not_in_the_conversation = {
     ENGLISH: 'Fictionary is not in the conversation.',
     FRENCH: "L'application Fictionary n'est pas dans la conversation."
 }
 
-Parameter_must_be_one_of = {
+parameter_must_be_one_of = {
     ENGLISH: 'The command parameter must be one '
              'of freestyle, automatic or help.',
     FRENCH: "Le paramètre de la commande doit être l'un des suivants : "
             'freestyle, automatic ou help.'
 }
 
-guessing_deadline_has_passed = {
+time_limit_for_answering_has_passed = {
     ENGLISH: ('Your answer: {guess}\n\nIt will not be taken into account '
               'because the time limit for answering has passed.'),
     FRENCH: ('Votre réponse: {guess}\n\nElle ne sera pas prise en compte '
              'car la limite de temps pour répondre est passée.')
 }
 
-already_too_many_guessers = {
+already_max_players = {
     ENGLISH: ('Your guess: {guess}\n\n'
               'It will not be taken into account '
               'because there are already '
@@ -384,7 +381,7 @@ already_too_many_guessers = {
              "C'est le nombre maximal autorisé par partie.")
 }
 
-voting_deadline_has_passed = {
+time_limit_for_voting_has_passed = {
     ENGLISH: ('Your vote: proposal {vote}.\n\n'
               'It will not be taken into account '
               'because the time limit for voting has passed.'),
@@ -392,7 +389,7 @@ voting_deadline_has_passed = {
              'car la limite de temps pour voter est passée.')
 }
 
-Input_must_be_a_integer = {
+input_must_be_a_integer = {
     ENGLISH: 'The input provided must be an integer.',
     FRENCH: "L'entrée renseignée doit être un entier."
 }
@@ -402,24 +399,24 @@ not_between = {
     FRENCH: "L'entier renseigné doit être compris entre 1 et {max_number}."
 }
 
-As_the_organizer = {
+since_you_wrote = {
     ENGLISH: 'Since you wrote the question and answer for this game, '
              'you cannot participate in it.',
     FRENCH: 'Comme vous avez écrit la question et la réponse de cette partie, '
             'vous ne pouvez pas y participer.'
 }
 
-You_have_already_guessed = {
+you_have_already_submitted = {
     ENGLISH: 'You have already submitted an answer.',
     FRENCH: 'Vous avez déjà proposé une réponse.'
 }
 
-Only_guessers_can_vote = {
+only_players_who_submitted_an_answer_can_vote = {
     ENGLISH: 'Only players who have submitted an answer can vote.',
     FRENCH: 'Seuls les joueurs ayant proposé une réponse peuvent voter.'
 }
 
-You_have_already_voted = {
+you_have_already_voted = {
     ENGLISH: 'You have already voted.',
     FRENCH: 'Vous avez déjà voté.'
 }

@@ -132,7 +132,7 @@ class SlackOperator:
         blocks = self.add_tag_to_blocks(blocks)
         return post_message(
             self.slack_client, self.game.channel_id, blocks,
-            ut.text.New_message[self.language])
+            ut.text.new_message[self.language])
 
     def post_ephemeral(self, user_id, msg):
         msg = self.add_tag_to_text(msg)
@@ -143,7 +143,7 @@ class SlackOperator:
         blocks = self.add_tag_to_blocks(blocks)
         update_message(
             self.slack_client, self.game.channel_id, blocks, ts,
-            ut.text.Message_updated[self.language])
+            ut.text.message_updated[self.language])
 
     def open_view(self, trigger_id, view):
         view = self.add_tag_to_view(view)
