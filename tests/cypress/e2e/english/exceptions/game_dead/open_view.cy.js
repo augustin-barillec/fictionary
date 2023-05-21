@@ -16,7 +16,7 @@ describe('main', () => {
         cy.wait(10000)
         cy.guess_click(tag)
 
-        cy.contains(`${tag}: This game is dead!`)
+        cy.contains(`${tag}: This game is deactivated.`)
       })
     })
   })

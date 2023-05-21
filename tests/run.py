@@ -22,12 +22,12 @@ team_ref = teams_ref.document(team_id)
 games_ref = team_ref.collection('games')
 sources = [
     'small.cy.js',
-    'english/endings/bravo.cy.js',
-    'english/endings/hey.cy.js',
+    'english/endings/draw.cy.js',
     'english/endings/no_guesses.cy.js',
     'english/endings/no_votes.cy.js',
     'english/endings/thanks.cy.js',
-    'english/endings/well.cy.js',
+    'english/endings/too_bad.cy.js',
+    'english/endings/well_done.cy.js',
     'english/endings/winner.cy.js',
     'english/endings/winners.cy.js',
     'english/endings/zero.cy.js',

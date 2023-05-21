@@ -25,7 +25,7 @@ describe('main', () => {
         cy.vote(tag, '0')
         cy.vote_click(tag)
 
-        cy.contains(`${tag}: You have already voted!`)
+        cy.contains(`${tag}: You have already voted.`)
       })
     })
   })

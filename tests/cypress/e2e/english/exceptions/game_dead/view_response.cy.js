@@ -13,7 +13,7 @@ describe('main', () => {
 
         cy.submit_view()
 
-        cy.contains('This game is dead!')
+        cy.contains('This game is deactivated.')
       })
     })
   })

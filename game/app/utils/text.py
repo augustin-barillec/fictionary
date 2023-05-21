@@ -318,11 +318,6 @@ voting_options = {
 }
 ###############################################################################
 # exceptions
-there_is_already_1_game_in_progress = {
-    ENGLISH: 'There is already 1 game in progress.',
-    FRENCH: 'Il y a déjà 1 partie en cours.'
-}
-
 there_are_already_n_games_in_progress = {
     ENGLISH: 'There are already {n} games in progress.',
     FRENCH: 'Il y a déjà {n} parties en cours.'
@@ -334,7 +329,7 @@ this_is_the_maximum_number_allowed = {
 }
 
 you_are_already_the_creator_of_1_game_in_progress = {
-    ENGLISH: 'You are already the creator of one game in progress.',
+    ENGLISH: 'You are already the creator of 1 game in progress.',
     FRENCH: "Vous êtes déjà le créateur d'une partie en cours."
 }
 

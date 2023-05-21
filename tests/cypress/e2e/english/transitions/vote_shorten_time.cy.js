@@ -28,7 +28,7 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.vote(tag, '0')
 
-        cy.contains(`${tag}: The Fictionary game organized by @A0 is over!`)
+        cy.contains(`${tag}: The Fictionary game created by @A0 is over.`)
       })
     })
   })

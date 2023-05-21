@@ -10,12 +10,12 @@ default_params['time_to_guess'] = 180
 default_params['time_to_vote'] = 180
 
 suffixes = [
-    'ending_bravo',
-    'ending_hey',
+    'english_draw',
     'ending_no_guesses',
     'ending_no_votes',
     'ending_thanks',
-    'ending_well',
+    'ending_too_bad',
+    'ending_well_done',
     'ending_winner',
     'ending_winners',
     'ending_zero',
@@ -57,6 +57,8 @@ for s in suffixes:
 suffix_to_params['ending_bravo']['max_guessers_per_game'] = 2
 suffix_to_params['ending_bravo']['time_to_vote'] = 20
 
+suffix_to_params['ending_draw']['max_guessers_per_game'] = 2
+
 suffix_to_params['ending_hey']['max_guessers_per_game'] = 2
 suffix_to_params['ending_hey']['time_to_vote'] = 20
 
@@ -66,8 +68,6 @@ suffix_to_params['ending_no_votes']['max_guessers_per_game'] = 2
 suffix_to_params['ending_no_votes']['time_to_vote'] = 0
 
 suffix_to_params['ending_thanks']['time_to_guess'] = 20
-
-suffix_to_params['ending_well']['max_guessers_per_game'] = 2
 
 suffix_to_params['ending_winner']['max_guessers_per_game'] = 2
 

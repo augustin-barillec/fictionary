@@ -28,7 +28,7 @@ describe('main', () => {
         cy.submit_view()
 
         cy.contains(`${tag}: Your vote: proposal 2`)
-        cy.contains(`${tag}: It will not be taken into account because the voting deadline has passed!`)
+        cy.contains(`${tag}: It will not be taken into account because the time limit for voting has passed.`)
       })
     })
   })

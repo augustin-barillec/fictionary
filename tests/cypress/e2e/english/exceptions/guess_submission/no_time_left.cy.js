@@ -18,8 +18,8 @@ describe('main', () => {
         cy.wait(20000)
         cy.submit_view()
 
-        cy.contains(`${tag}: Your guess: g1`)
-        cy.contains(`${tag}: It will not be taken into account because the guessing deadline has passed!`)
+        cy.contains(`${tag}: Your answer: g1`)
+        cy.contains(`${tag}: It will not be taken into account because the time limit for answering has passed.`)
       })
     })
   })

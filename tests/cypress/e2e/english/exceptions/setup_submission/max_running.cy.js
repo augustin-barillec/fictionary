@@ -22,7 +22,7 @@ describe('main', () => {
 
         cy.contains(`${tag1}: Question: question`)
         cy.contains(`${tag1}: Answer: truth`)
-        cy.contains(`${tag1}: There are already 4 running games! This is the maximum number allowed.`)
+        cy.contains(`${tag1}: There are already 4 games in progress. This is the maximum allowed number.`)
 
         cy.mark_game_as_success(tag2)
         cy.mark_game_as_success(tag3)

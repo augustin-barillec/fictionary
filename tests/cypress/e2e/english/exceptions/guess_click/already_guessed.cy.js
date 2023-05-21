@@ -16,7 +16,7 @@ describe('main', () => {
         cy.guess(tag, 'g1')
         cy.guess_click(tag)
 
-        cy.contains(`${tag}: You have already guessed!`)
+        cy.contains(`${tag}: You have already submitted an answer.`)
       })
     })
   })

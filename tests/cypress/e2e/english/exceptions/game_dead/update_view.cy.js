@@ -7,7 +7,7 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.slash_automatic(tag)
         cy.get('[placeholder*="Between"]').click().type('1 {enter}')
-        cy.contains(`${tag}: This game is dead`)
+        cy.contains(`${tag}: This game is deactivated.`)
       })
     })
   })

@@ -12,7 +12,7 @@ describe('main', () => {
         cy.create_fake_running_game(tag2, 0)
 
         cy.slash_freestyle('tag')
-        cy.contains('You are already the organizer of 2 running games. This is the maximum number allowed.')
+        cy.contains('You are already the creator of 2 running games. This is the maximum allowed number.')
 
         cy.mark_game_as_success(tag1)
         cy.mark_game_as_success(tag2)

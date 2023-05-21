@@ -25,7 +25,7 @@ describe('main', () => {
         cy.vote(tag, '0')
 
         cy.wait(20000)
-        cy.contains(`${tag}: The Fictionary game organized by @A0 is over!`)
+        cy.contains(`${tag}: The Fictionary game created by @A0 is over.`)
       })
     })
   })

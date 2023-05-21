@@ -5,7 +5,7 @@ describe('main', () => {
         cy.login_from_user_index(conf, 0)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.slash_freestyle('tag')
-        cy.contains('This app is not in the conversation!')
+        cy.contains('Fictionary is not in the conversation.')
       })
     })
   })

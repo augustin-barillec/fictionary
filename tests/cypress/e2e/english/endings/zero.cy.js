@@ -35,7 +35,7 @@ describe('main', () => {
 
         cy.wait(30000)
 
-        cy.contains(`${tag}: Freestyle game set up by @A0!`)
+        cy.contains(`${tag}: Question and answer written by @A0!`)
         cy.contains(`${tag}: question`)
         cy.contains(`${tag}: • Truth: 4) truth`)
         cy.contains(`${tag}: • @A1: 1) g1`)
@@ -46,7 +46,7 @@ describe('main', () => {
         cy.contains(`${tag}: • @A1: 0 points`)
         cy.contains(`${tag}: • @A2: 0 points`)
         cy.contains(`${tag}: • @A3: 0 points`)
-        cy.contains(`${tag}: Zero points scored!`)
+        cy.contains(`${tag}: No points have been scored!`)
       })
     })
   })

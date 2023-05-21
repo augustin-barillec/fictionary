@@ -7,7 +7,7 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.slash_automatic(tag)
         cy.get('[placeholder*="Between"]').click().type('10000 {enter}')
-        cy.contains(`${tag}: 10000 is not between 1 and`)
+        cy.contains(`${tag}: The entered integer must be between 1 and`)
       })
     })
   })

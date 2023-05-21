@@ -26,7 +26,7 @@ describe('main', () => {
         cy.wait(30000)
         cy.vote_click(tag)
 
-        cy.contains(`${tag}: Only guessers can vote!`)
+        cy.contains(`${tag}: Only players who have submitted an answer can vote.`)
       })
     })
   })

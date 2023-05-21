@@ -97,11 +97,8 @@ class ExceptionsHandler:
         return msg
 
     def build_max_nb_running_games_reached_msg(self, remind):
-        if self.game.max_running_games == 1:
-            msg = ut.text.there_is_already_1_game_in_progress[self.language]
-        else:
-            msg = ut.text.there_are_already_n_games_in_progress[
-                self.language].format(n=self.game.max_running_games)
+        msg = ut.text.there_are_already_n_games_in_progress[
+            self.language].format(n=self.game.max_running_games)
         msg += ' '
         msg += ut.text.this_is_the_maximum_number_allowed[self.language]
         if remind:
