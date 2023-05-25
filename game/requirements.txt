@@ -2,6 +2,6 @@ firebase-admin==6.*
 flask==2.*
 google-cloud-bigquery==3.*
 google-cloud-pubsub==2.*
-pandas==1.*
-pyarrow==11.*
+pandas==2.*
+pyarrow==12.*
 slack-sdk==3.*
