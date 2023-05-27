@@ -10,12 +10,12 @@ default_params['time_to_guess'] = 180
 default_params['time_to_vote'] = 180
 
 suffixes = [
-    'english_draw',
+    'ending_draw',
     'ending_no_guesses',
     'ending_no_votes',
-    'ending_thanks',
-    'ending_too_bad',
-    'ending_well_done',
+    'ending_one_guesser',
+    'ending_one_voter_loser',
+    'ending_one_voter_winner',
     'ending_winner',
     'ending_winners',
     'ending_zero',
@@ -54,20 +54,20 @@ for s in suffixes:
     suffix_to_user_indexes[s] = [0, 1, 2, 3]
     suffix_to_app_kicked[s] = False
 
-suffix_to_params['ending_bravo']['max_guessers_per_game'] = 2
-suffix_to_params['ending_bravo']['time_to_vote'] = 20
-
 suffix_to_params['ending_draw']['max_guessers_per_game'] = 2
 
-suffix_to_params['ending_hey']['max_guessers_per_game'] = 2
-suffix_to_params['ending_hey']['time_to_vote'] = 20
-
 suffix_to_params['ending_no_guesses']['time_to_guess'] = 0
+
+suffix_to_params['ending_one_guesser']['time_to_guess'] = 20
 
 suffix_to_params['ending_no_votes']['max_guessers_per_game'] = 2
 suffix_to_params['ending_no_votes']['time_to_vote'] = 0
 
-suffix_to_params['ending_thanks']['time_to_guess'] = 20
+suffix_to_params['ending_one_voter_winner']['max_guessers_per_game'] = 2
+suffix_to_params['ending_one_voter_winner']['time_to_vote'] = 20
+
+suffix_to_params['ending_one_voter_loser']['max_guessers_per_game'] = 2
+suffix_to_params['ending_one_voter_loser']['time_to_vote'] = 20
 
 suffix_to_params['ending_winner']['max_guessers_per_game'] = 2
 

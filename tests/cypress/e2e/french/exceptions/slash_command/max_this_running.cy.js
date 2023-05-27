@@ -1,0 +1,22 @@
+describe('main', () => {
+  it('main', () => {
+    cy.get_conf().then((conf) => {
+      cy.get_channel_id('english_exception_slash_command_max_this_running').then((channel_id) => {
+        const tag1 = Cypress._.random(100000, 999999)
+        const tag2 = Cypress._.random(100000, 999999)
+
+        cy.login_from_user_index(conf, 0)
+        cy.go_to_channel_from_channel_id(conf, channel_id)
+
+        cy.create_fake_running_game(tag1, 0)
+        cy.create_fake_running_game(tag2, 0)
+
+        cy.slash_freestyle('tag')
+        cy.contains('You are already the creator of 2 running games. This is the maximum allowed number.')
+
+        cy.mark_game_as_success(tag1)
+        cy.mark_game_as_success(tag2)
+      })
+    })
+  })
+})

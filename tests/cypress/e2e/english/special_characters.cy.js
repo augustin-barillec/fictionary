@@ -15,27 +15,27 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess(tag, '是')
+        cy.guess_english(tag, '是')
 
         cy.login_from_user_index(conf, 2)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess(tag, '🌍, 🍞, 🚗, 📞, 🎉')
+        cy.guess_english(tag, '🌍, 🍞, 🚗, 📞, 🎉')
 
         cy.login_from_user_index(conf, 3)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess(tag, 'g3')
+        cy.guess_english(tag, 'g3')
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.vote(tag, '0')
+        cy.vote_english(tag, '0')
 
         cy.login_from_user_index(conf, 2)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.vote(tag, '0')
+        cy.vote_english(tag, '0')
 
         cy.login_from_user_index(conf, 3)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.vote(tag, '2')
+        cy.vote_english(tag, '2')
 
         cy.wait(15000)
         cy.contains(`${tag}: The Fictionary game created by @A0 is over.`)

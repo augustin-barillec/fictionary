@@ -14,19 +14,19 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess(tag, 'g1')
+        cy.guess_english(tag, 'g1')
 
         cy.login_from_user_index(conf, 2)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess(tag, 'g2')
+        cy.guess_english(tag, 'g2')
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.vote(tag, '0')
+        cy.vote_english(tag, '0')
 
         cy.login_from_user_index(conf, 2)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.vote(tag, '0')
+        cy.vote_english(tag, '0')
 
         cy.wait(10000)
 
@@ -39,7 +39,7 @@ describe('main', () => {
         cy.contains(`${tag}: • @A2 -> @A1`)
         cy.contains(`${tag}: • @A1: 2 points`)
         cy.contains(`${tag}: • @A2: 2 points`)
-        cy.contains(`${tag}: Well, it's a draw! ⚖️`)
+        cy.contains(`${tag}: Well, it's a draw!`)
       })
     })
   })

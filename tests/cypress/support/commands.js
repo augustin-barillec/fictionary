@@ -104,22 +104,36 @@ Cypress.Commands.add('organize_freestyle_game', (tag, question, truth) => {
   cy.submit_view()
 })
 
-Cypress.Commands.add('guess_click', tag => {
-  cy.contains(`${tag}: Guess`).click()
+Cypress.Commands.add('guess_click_english', tag => {
+  cy.contains(`${tag}: Answer`).click()
+})
+
+Cypress.Commands.add('guess_click_french', tag => {
+  cy.contains(`${tag}: Répondre`).click()
 })
 
 Cypress.Commands.add('guess_type', guess => {
    cy.get('#guess-guess').click().type(guess).should('have.value', guess)
 })
 
-Cypress.Commands.add('guess', (tag, guess) => {
-  cy.guess_click(tag)
+Cypress.Commands.add('guess_english', (tag, guess) => {
+  cy.guess_click_english(tag)
   cy.guess_type(guess)
   cy.submit_view()
 })
 
-Cypress.Commands.add('vote_click', tag => {
+Cypress.Commands.add('guess_french', (tag, guess) => {
+  cy.guess_click_french(tag)
+  cy.guess_type(guess)
+  cy.submit_view()
+})
+
+Cypress.Commands.add('vote_click_english', tag => {
   cy.contains(`${tag}: Vote`).click()
+})
+
+Cypress.Commands.add('vote_click_french', tag => {
+  cy.contains(`${tag}: Voter`).click()
 })
 
 Cypress.Commands.add('vote_select', vote => {
@@ -127,8 +141,14 @@ Cypress.Commands.add('vote_select', vote => {
   cy.get(`#vote-vote_option_${vote} > .c-select_options_list__option_label > .p-block-kit-select_options`).click()
 })
 
-Cypress.Commands.add('vote', (tag, vote) => {
-  cy.vote_click(tag)
+Cypress.Commands.add('vote_english', (tag, vote) => {
+  cy.vote_click_english(tag)
+  cy.vote_select(vote)
+  cy.submit_view()
+})
+
+Cypress.Commands.add('vote_french', (tag, vote) => {
+  cy.vote_click_french(tag)
   cy.vote_select(vote)
   cy.submit_view()
 })
