@@ -25,7 +25,7 @@ def build_setup_freestyle_view(language, id_):
     res['callback_id'] = id_
     res['submit']['text'] = ut.text.submit[language]
     res['close']['text'] = ut.text.cancel[language]
-    res['blocks'][0]['text']['text'] = ut.text.set_up_a_game[language]
+    res['blocks'][0]['text']['text'] = ut.text.create_a_game[language]
     res['blocks'][1]['label']['text'] = ut.text.question[language]
     res['blocks'][1]['element']['placeholder']['text'] = \
         ut.text.write_something[language]
@@ -44,7 +44,7 @@ def build_setup_automatic_view(
     res['private_metadata'] = answer
     res['submit']['text'] = ut.text.submit[language]
     res['close']['text'] = ut.text.cancel[language]
-    res['blocks'][0]['text']['text'] = ut.text.set_up_a_game[language]
+    res['blocks'][0]['text']['text'] = ut.text.create_a_game[language]
     res['blocks'][1]['text']['text'] = ut.text.questions_are_visible_here[
         language]
     res['blocks'][1]['accessory']['text']['text'] = ut.text.questions[language]

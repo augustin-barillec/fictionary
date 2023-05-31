@@ -85,14 +85,14 @@ class BlockBuilder:
         return build_text_block(self.game.question)
 
     def build_preparing_guess_stage_block(self):
-        return build_text_block(ut.text.setting_up_the_game[self.language])
+        return build_text_block(ut.text.loading_the_game[self.language])
 
     def build_preparing_vote_stage_block(self):
-        return build_text_block(ut.text.setting_up_the_voting_stage[
-                                    self.language])
+        return build_text_block(
+            ut.text.loading_the_voting_stage[self.language])
 
     def build_computing_results_stage_block(self):
-        return build_text_block(ut.text.computing_results[self.language])
+        return build_text_block(ut.text.loading_the_results[self.language])
 
     def build_guess_button_block(self):
         id_ = self.game.surface_id_builder.build_guess_button_block_id()
@@ -112,11 +112,11 @@ class BlockBuilder:
     def build_remaining_potential_voters_block(self):
         msg_template = ut.text.eligible_to_vote[self.language]
         users = self.game.remaining_potential_voters
-        no_users_msg = ut.text.every_one_has_voted[self.language]
+        no_users_msg = ut.text.all_players_have_voted[self.language]
         return build_users_block(msg_template, users, no_users_msg)
 
     def build_guessers_block(self):
-        msg_template = ut.text.players_who_proposed_an_answer[self.language]
+        msg_template = ut.text.players_who_have_answered[self.language]
         users = self.game.guessers
         no_users_msg = ut.text.no_one_has_submitted_an_answer_yet[
             self.language]
@@ -217,7 +217,7 @@ class BlockBuilder:
         lv = len(self.game.frozen_voters)
         lw = len(self.game.winners)
         if lg == 0:
-            return ut.text.no_one_has_submitted_an_answer[self.language]
+            return ut.text.no_one_submitted_an_answer[self.language]
         elif lg == 1:
             g = ut.users.user_display(list(self.game.frozen_guessers)[0])
             res = ut.text.thanks_for_your_proposal[self.language].format(
@@ -230,7 +230,7 @@ class BlockBuilder:
             g = ut.users.user_display(r['guesser'])
             ca = r['chosen_author']
             if ca == 'Truth':
-                res = ut.text.well_done[self.language].format(
+                res = ut.text.congrats[self.language].format(
                     guesser_display=g)
                 return res
             res = ut.text.too_bad[self.language].format(
@@ -243,13 +243,13 @@ class BlockBuilder:
             return ut.text.draw[self.language]
         elif lw == 1:
             w = ut.users.user_display(self.game.winners[0])
-            return ut.text.and_the_winner_is[self.language].format(
+            return ut.text.is_the_winner[self.language].format(
                 winner_display=w)
         elif lw > 1:
             ws = [ut.users.user_display(w) for w in self.game.winners]
             res = ', '.join(ws[:-1])
             res += f' {ut.text.and_[self.language]} {ws[-1]}'
-            res = ut.text.and_the_winners_are[self.language].format(
+            res = ut.text.are_the_winners[self.language].format(
                 winners_display_comma_final_and=res)
             return res
 
