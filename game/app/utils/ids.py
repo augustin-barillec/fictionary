@@ -63,8 +63,8 @@ class SurfaceIdBuilder:
     def build_pick_block_id(self):
         return self.build_surface_id('pick_block')
 
-    def build_shuffle_block_id(self):
-        return self.build_surface_id('shuffle_block')
+    def build_draw_block_id(self):
+        return self.build_surface_id('draw_block')
 
     def build_guess_view_id(self):
         return self.build_surface_id('guess_view')

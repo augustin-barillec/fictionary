@@ -18,14 +18,14 @@
 			"type": "section",
 			"text": {
 				"type": "plain_text",
-				"text": "Your guess: 3) proposal_3"
+				"text": "Your guess: 3) answer_3"
 			}
 		},
 		{
 			"type": "section",
 			"text": {
 				"type": "plain_text",
-				"text": "Voting options:\n1) proposal_1\n2) proposal_2\n4) proposal_4"
+				"text": "Voting options:\n1) answer_1\n2) answer_2\n4) answer_4"
 			}
 		},
 		{

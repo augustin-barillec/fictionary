@@ -46,7 +46,7 @@ describe('main', () => {
         cy.contains(`${tag}: • @A1: 0 points`)
         cy.contains(`${tag}: • @A2: 0 points`)
         cy.contains(`${tag}: • @A3: 0 points`)
-        cy.contains(`${tag}: No points have been scored!`)
+        cy.contains(`${tag}: No points were scored!`)
       })
     })
   })

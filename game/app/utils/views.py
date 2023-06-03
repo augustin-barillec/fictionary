@@ -37,7 +37,7 @@ def build_setup_freestyle_view(language, id_):
 
 def build_setup_automatic_view(
         language, url, max_number,
-        id_, pick_block_id, shuffle_block_id,
+        id_, pick_block_id, draw_block_id,
         number, question, answer):
     res = copy.deepcopy(setup_automatic_view_template)
     res['callback_id'] = id_
@@ -55,7 +55,7 @@ def build_setup_automatic_view(
     res['blocks'][2]['element']['placeholder'][
         'text'] = ut.text.between_1_and_N[language].format(N=max_number)
     res['blocks'][3]['text']['text'] = ut.text.or_[language]
-    res['blocks'][4]['block_id'] = shuffle_block_id
+    res['blocks'][4]['block_id'] = draw_block_id
     res['blocks'][4]['elements'][0]['text']['text'] = \
         ut.text.draw_a_question_at_random[language]
     res['blocks'][5]['text']['text'] = ut.text.question_n_selected[
@@ -151,10 +151,10 @@ class ViewBuilder:
         language = self.language
         id_ = self.surface_id_builder.build_setup_automatic_view_id()
         pick_block_id = self.surface_id_builder.build_pick_block_id()
-        shuffle_block_id = self.surface_id_builder.build_shuffle_block_id()
+        draw_block_id = self.surface_id_builder.build_draw_block_id()
         return build_setup_automatic_view(
             language, url, max_number,
-            id_, pick_block_id, shuffle_block_id,
+            id_, pick_block_id, draw_block_id,
             number, question, answer)
 
     def build_guess_view(self):

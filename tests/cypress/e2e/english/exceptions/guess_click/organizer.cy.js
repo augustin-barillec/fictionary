@@ -6,7 +6,7 @@ describe('main', () => {
         cy.login_from_user_index(conf, 0)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.organize_freestyle_game(tag, 'question', 'truth')
-        cy.guess_click(tag)
+        cy.guess_click_english(tag)
         cy.contains(`${tag}: Since you wrote the question and the answer for this game, you cannot participate in it.`)
       })
     })

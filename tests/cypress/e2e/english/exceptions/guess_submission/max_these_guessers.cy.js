@@ -13,7 +13,7 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess_click(tag)
+        cy.guess_click_english(tag)
         cy.guess_type('g1')
 
         cy.create_fake_guess(tag, 2)
@@ -22,7 +22,7 @@ describe('main', () => {
         cy.submit_view()
 
         cy.contains(`${tag}: Your answer: g1`)
-        cy.contains(`${tag}: It will not be taken into account because there are already 2 players who have submitted an answer. This is the maximum allowed number for a game.`)
+        cy.contains(`${tag}: It will not be taken into account because there are already 2 players who submitted an answer. This is the maximum allowed number for a game.`)
       })
     })
   })

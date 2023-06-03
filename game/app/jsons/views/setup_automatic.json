@@ -50,7 +50,7 @@
 				"type": "plain_text_input",
 				"placeholder": {
 					"type": "plain_text",
-					"text": "Between 1 and 300"
+					"text": "between 1 and 300"
 				}
 			}
 		},
@@ -63,13 +63,13 @@
 		},
 		{
 			"type": "actions",
-			"block_id": "shuffle_block_id",
+			"block_id": "draw_block_id",
 			"elements": [
 				{
 					"type": "button",
 					"text": {
 						"type": "plain_text",
-						"text": "Shuffle"
+						"text": "Draw a question at random"
 					}
 				}
 			]

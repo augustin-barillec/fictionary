@@ -27,7 +27,7 @@ describe('main', () => {
         cy.contains(`${tag}: • Game's answer: 3) truth`)
         cy.contains(`${tag}: • @A1: 1) g1`)
         cy.contains(`${tag}: • @A2: 2) g2`)
-        cy.contains(`${tag}: No one voted. 😭`)
+        cy.contains(`${tag}: No one voted.`)
       })
     })
   })

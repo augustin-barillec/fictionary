@@ -41,7 +41,7 @@ class BlockActionHandler:
                     f'user_id={self.user_id}, game_id={self.game.id}')
         return flask.make_response('', 200)
 
-    def handle_shuffle_click(self):
+    def handle_draw_click(self):
         url = ut.questions.get_questions_url(self.game)
         questions, answers = ut.questions.get_questions_answers(self.game)
         max_number = len(questions)
@@ -49,7 +49,7 @@ class BlockActionHandler:
             questions, answers)
         self.slack_operator.update_setup_automatic_view(
             self.view_id, url, max_number, number_random, question, answer)
-        logger.info(f'question {number_random} shuffled, '
+        logger.info(f'question {number_random} drawn at random, '
                     f'user_id={self.user_id}, game_id={self.game.id}')
         return flask.make_response('', 200)
 
@@ -77,7 +77,7 @@ class BlockActionHandler:
         c1 = self.action_block_id.startswith(
                 self.context.surface_prefix + '#pick_block')
         c2 = self.action_block_id.startswith(
-                self.context.surface_prefix + '#shuffle_block')
+                self.context.surface_prefix + '#draw_block')
         c3 = self.action_block_id.startswith(
                 self.context.surface_prefix + '#guess_button_block')
         c4 = self.action_block_id.startswith(
@@ -94,7 +94,7 @@ class BlockActionHandler:
         elif c1:
             return self.handle_pick_submission()
         elif c2:
-            return self.handle_shuffle_click()
+            return self.handle_draw_click()
         elif c3:
             return self.handle_guess_click()
         elif c4:

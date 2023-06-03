@@ -13,7 +13,7 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess_click(tag)
+        cy.guess_click_english(tag)
         cy.guess_type('g1')
         cy.wait(20000)
         cy.submit_view()

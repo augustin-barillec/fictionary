@@ -188,7 +188,7 @@ no_one_voted = {
 }
 
 congrats = {
-    ENGLISH: "Congrats, {guesser_display}! "
+    ENGLISH: "Congrats, {guesser_display}, "
              "You voted for the game's answer! :v:",
     FRENCH: "Bravo {guesser_display}, "
             "vous avez voté pour la réponse du jeu ! :v:"
@@ -223,7 +223,7 @@ and_ = {
 
 are_the_winners = {
     ENGLISH: "{winners_display_comma_final_and} are the winners! :clap:",
-    FRENCH: "Et les gagnants sont {winners_display_comma_final_and} ! :clap:"
+    FRENCH: "Les gagnants sont {winners_display_comma_final_and} ! :clap:"
 }
 ###############################################################################
 # views
@@ -367,20 +367,21 @@ already_max_players = {
               "It will not be taken into account "
               "because there are already "
               "{max_guessers_per_game} players "
-              "who have submitted an answer. "
+              "who submitted an answer. "
               "This is the maximum allowed number for a game."),
     FRENCH: ("Votre réponse: {guess}\n\n"
              "Elle ne sera pas prise en compte "
              "car il y a déjà {max_guessers_per_game} "
-             "joueurs qui ont proposé une réponse. "
+             "joueurs qui ont répondu. "
              "C'est le nombre maximal autorisé par partie.")
 }
 
 time_limit_for_voting_has_passed = {
-    ENGLISH: ("Your vote: proposal {vote}.\n\n"
+    ENGLISH: ("Your vote: answer {vote}.\n\n"
               "It will not be taken into account "
               "because the time limit for voting has passed."),
-    FRENCH: ("Votre vote pour la réponse {vote} ne sera pas pris en compte "
+    FRENCH: ("Votre vote: réponse {vote}. \n\n" 
+             "Il ne sera pas pris en compte "
              "car la limite de temps pour voter est passée.")
 }
 

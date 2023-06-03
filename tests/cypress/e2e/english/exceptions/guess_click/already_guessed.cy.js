@@ -14,9 +14,9 @@ describe('main', () => {
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.guess_english(tag, 'g1')
-        cy.guess_click(tag)
+        cy.guess_click_english(tag)
 
-        cy.contains(`${tag}: You have already submitted an answer.`)
+        cy.contains(`${tag}: You already submitted an answer.`)
       })
     })
   })

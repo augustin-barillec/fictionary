@@ -37,7 +37,7 @@ describe('main', () => {
         cy.contains(`${tag}: • @A2 -> @A1`)
         cy.contains(`${tag}: • @A1: 3 points`)
         cy.contains(`${tag}: • @A2: 0 points`)
-        cy.contains(`${tag}: And the winner is @A1! 🥇`)
+        cy.contains(`${tag}: @A1 is the winner!`)
       })
     })
   })
