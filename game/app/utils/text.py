@@ -116,9 +116,9 @@ no_one_has_voted_yet = {
     FRENCH: "Personne n'a encore voté."
 }
 
-proposals = {
-    ENGLISH: "Proposals:",
-    FRENCH: "Propositions :"
+answers = {
+    ENGLISH: "Answers:",
+    FRENCH: "Réponses :"
 }
 
 index_proposal = {
@@ -177,9 +177,9 @@ no_one_submitted_an_answer = {
     FRENCH: "Personne n'a proposé de réponse. :sob:"
 }
 
-thanks_for_your_proposal = {
-    ENGLISH: "Thanks for your proposal, {guesser_display}!",
-    FRENCH: "Merci pour votre proposition, {guesser_display} !"
+thanks_for_your_answer = {
+    ENGLISH: "Thanks for your answer, {guesser_display}!",
+    FRENCH: "Merci pour votre réponse, {guesser_display} !"
 }
 
 no_one_voted = {

@@ -128,7 +128,7 @@ class BlockBuilder:
         return build_users_block(msg_template, users, no_users_msg)
 
     def build_indexed_anonymous_proposals_block(self):
-        msg = [ut.text.proposals[self.language]]
+        msg = [ut.text.answers[self.language]]
         indexed_anonymous_proposals = \
             ut.proposals.ProposalsBrowser(
                 self.game).build_indexed_anonymous_proposals()
@@ -219,7 +219,7 @@ class BlockBuilder:
             return ut.text.no_one_submitted_an_answer[self.language]
         elif lg == 1:
             g = ut.users.user_display(list(self.game.frozen_guessers)[0])
-            res = ut.text.thanks_for_your_proposal[self.language].format(
+            res = ut.text.thanks_for_your_answer[self.language].format(
                 guesser_display=g)
             return res
         elif lv == 0:
