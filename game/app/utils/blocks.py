@@ -116,10 +116,9 @@ class BlockBuilder:
         return build_users_block(msg_template, users, no_users_msg)
 
     def build_guessers_block(self):
-        msg_template = ut.text.players_who_have_answered[self.language]
+        msg_template = ut.text.players[self.language]
         users = self.game.guessers
-        no_users_msg = ut.text.no_one_has_submitted_an_answer_yet[
-            self.language]
+        no_users_msg = ut.text.no_one_has_answered_yet[self.language]
         return build_users_block(msg_template,users, no_users_msg)
 
     def build_voters_block(self):

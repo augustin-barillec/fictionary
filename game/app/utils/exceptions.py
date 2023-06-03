@@ -193,11 +193,11 @@ class ExceptionsHandler:
                 self.game.parameter == 'freestyle':
             return ut.text.since_you_wrote[self.language]
         if user_id in self.game.guessers:
-            return ut.text.you_have_already_submitted[self.language]
+            return ut.text.you_already_submitted[self.language]
 
     def build_vote_click_exception_msg(self, user_id):
         if user_id not in self.game.potential_voters:
-            return ut.text.only_players_who_submitted_an_answer_can_vote[
+            return ut.text.only_players_who_have_submitted_an_answer_can_vote[
                 self.language]
         if user_id in self.game.voters:
             return ut.text.you_have_already_voted[self.language]

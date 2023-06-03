@@ -73,7 +73,7 @@ loading_the_results = {
 
 answer = {
     ENGLISH: "Answer",
-    FRENCH: "Répondre"
+    FRENCH: "Réponse"
 }
 
 vote = {
@@ -96,14 +96,14 @@ all_players_have_voted = {
     FRENCH: "Tout les joueurs ont voté !"
 }
 
-players_who_have_answered = {
-    ENGLISH: "Players who have answered:: {user_displays}",
-    FRENCH: "Joueurs ayant proposé une réponse : {user_displays}"
+players = {
+    ENGLISH: "Players: {user_displays}",
+    FRENCH: "Joueurs : {user_displays}"
 }
 
-no_one_has_submitted_an_answer_yet = {
-    ENGLISH: "No one has submitted an answer yet.",
-    FRENCH: "Personne n'a encore proposé de réponse."
+no_one_has_answered_yet = {
+    ENGLISH: "No one has answered yet.",
+    FRENCH: "Personne n'a encore répondu."
 }
 
 players_who_voted = {
@@ -173,7 +173,7 @@ guesser_points = {
 }
 
 no_one_submitted_an_answer = {
-    ENGLISH: "No one has submitted an answer. :sob:",
+    ENGLISH: "No one submitted an answer. :sob:",
     FRENCH: "Personne n'a proposé de réponse. :sob:"
 }
 
@@ -202,7 +202,7 @@ too_bad = {
 }
 
 no_points = {
-    ENGLISH: "No points have been scored!",
+    ENGLISH: "No points were scored!",
     FRENCH: "Aucun point n'a été marqué !"
 }
 
@@ -263,13 +263,13 @@ questions = {
 }
 
 pick_a_question_number = {
-    ENGLISH: "Pick up a question number",
+    ENGLISH: "Pick a question number",
     FRENCH: "Choisir un numéro de question"
 }
 
 between_1_and_N = {
-    ENGLISH: "Between 1 and {N}",
-    FRENCH: "Entre 1 et {N}"
+    ENGLISH: "between 1 and {N}",
+    FRENCH: "entre 1 et {N}"
 }
 
 or_ = {
@@ -401,12 +401,12 @@ since_you_wrote = {
             "vous ne pouvez pas y participer."
 }
 
-you_have_already_submitted = {
-    ENGLISH: "You have already submitted an answer.",
+you_already_submitted = {
+    ENGLISH: "You already submitted an answer.",
     FRENCH: "Vous avez déjà proposé une réponse."
 }
 
-only_players_who_submitted_an_answer_can_vote = {
+only_players_who_have_submitted_an_answer_can_vote = {
     ENGLISH: "Only players who have submitted an answer can vote.",
     FRENCH: "Seuls les joueurs ayant proposé une réponse peuvent voter."
 }
