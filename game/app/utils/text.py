@@ -188,8 +188,8 @@ no_one_voted = {
 }
 
 congrats = {
-    ENGLISH: "Congrats, {guesser_display}, "
-             "You voted for the game's answer! :v:",
+    ENGLISH: "Congrats {guesser_display}, "
+             "you voted for the game's answer! :v:",
     FRENCH: "Bravo {guesser_display}, "
             "vous avez voté pour la réponse du jeu ! :v:"
 }
@@ -363,7 +363,7 @@ time_limit_for_answering_has_passed = {
 }
 
 already_max_players = {
-    ENGLISH: ("Your guess: {guess}\n\n"
+    ENGLISH: ("Your answer: {guess}\n\n"
               "It will not be taken into account "
               "because there are already "
               "{max_guessers_per_game} players "
@@ -396,7 +396,7 @@ not_between = {
 }
 
 since_you_wrote = {
-    ENGLISH: "Since you wrote the question and answer for this game, "
+    ENGLISH: "Since you wrote the question and the answer for this game, "
              "you cannot participate in it.",
     FRENCH: "Comme vous avez écrit la question et la réponse de cette partie, "
             "vous ne pouvez pas y participer."

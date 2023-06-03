@@ -7,7 +7,7 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.slash_automatic(tag)
         cy.contains('Questions are visible here:')
-        cy.get('[placeholder*="Between"]').click().type('1 {enter}')
+        cy.get('[placeholder*="between"]').click().type('1 {enter}')
         cy.contains('Question 1 selected:')
         cy.submit_view()
         cy.contains(`${tag}: Question selected by @A0!`)

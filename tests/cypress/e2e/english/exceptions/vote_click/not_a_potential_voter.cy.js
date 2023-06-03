@@ -24,7 +24,7 @@ describe('main', () => {
         cy.login_from_user_index(conf, 3)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.wait(30000)
-        cy.vote_click(tag)
+        cy.vote_click_english(tag)
 
         cy.contains(`${tag}: Only players who have submitted an answer can vote.`)
       })

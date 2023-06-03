@@ -90,10 +90,15 @@ class ExceptionsHandler:
         return self.stage_was_recently_trigger(
             self.game.vote_stage_last_trigger)
 
-    def build_remind_question_truth_msg(self):
-        msg = (
-            f'{ut.text.question[self.language]}: {self.game.question}\n\n' 
-            f'{ut.text.answer[self.language]}: {self.game.truth}\n\n')
+    def build_remind_msg(self):
+        assert self.game.parameter in ('freestyle', 'automatic')
+        if self.game.parameter == 'freestyle':
+            msg = (
+                f'{ut.text.question[self.language]}: {self.game.question}\n\n' 
+                f'{ut.text.answer[self.language]}: {self.game.truth}\n\n')
+        else:
+            msg = \
+                f'{ut.text.question[self.language]}: {self.game.question}\n\n'
         return msg
 
     def build_max_nb_running_games_reached_msg(self, remind):
@@ -102,7 +107,7 @@ class ExceptionsHandler:
         msg += ' '
         msg += ut.text.this_is_the_maximum_number_allowed[self.language]
         if remind:
-            remind_msg = self.build_remind_question_truth_msg()
+            remind_msg = self.build_remind_msg()
             msg = remind_msg + msg
         return msg
 
@@ -118,7 +123,7 @@ class ExceptionsHandler:
         msg += ' '
         msg += ut.text.this_is_the_maximum_number_allowed[self.language]
         if remind:
-            remind_msg = self.build_remind_question_truth_msg()
+            remind_msg = self.build_remind_msg()
             msg = remind_msg + msg
         return msg
 

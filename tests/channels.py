@@ -64,10 +64,10 @@ suffix_to_params['ending_no_votes']['max_guessers_per_game'] = 2
 suffix_to_params['ending_no_votes']['time_to_vote'] = 0
 
 suffix_to_params['ending_one_voter_winner']['max_guessers_per_game'] = 2
-suffix_to_params['ending_one_voter_winner']['time_to_vote'] = 20
+suffix_to_params['ending_one_voter_winner']['time_to_vote'] = 25
 
 suffix_to_params['ending_one_voter_loser']['max_guessers_per_game'] = 2
-suffix_to_params['ending_one_voter_loser']['time_to_vote'] = 20
+suffix_to_params['ending_one_voter_loser']['time_to_vote'] = 25
 
 suffix_to_params['ending_winner']['max_guessers_per_game'] = 2
 
@@ -87,7 +87,7 @@ suffix_to_params['exception_setup_submission_max_running'][
     'max_running_games'] = 4
 
 suffix_to_params['exception_setup_submission_max_this_running'][
-    'max_running_games_per_organizer'] = 2
+    'max_running_games_per_organizer'] = 1
 
 suffix_to_params['exception_slash_command_max_running'][
     'max_running_games'] = 3

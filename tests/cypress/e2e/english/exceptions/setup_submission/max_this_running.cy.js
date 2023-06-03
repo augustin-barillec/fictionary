@@ -7,19 +7,17 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 0)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.slash_freestyle(tag1)
-        cy.write_question_truth('question', 'truth')
+        cy.slash_automatic(tag1)
+        cy.get('[placeholder*="between"]').click().type('1 {enter}')
 
         cy.create_fake_running_game(tag2, 0)
 
         cy.submit_view()
 
-        cy.contains(`${tag1}: Question: question`)
-        cy.contains(`${tag1}: Answer: truth`)
-        cy.contains(`${tag1}: You are already the creator of 1 game in progress. This is the maximum number allowed.`)
+        cy.contains(`${tag1}: Question:`)
+        cy.contains(`${tag1}: You are already the creator of 1 game in progress. This is the maximum allowed number.`)
 
         cy.mark_game_as_success(tag2)
-        cy.mark_game_as_success(tag3)
       })
     })
   })

@@ -6,7 +6,7 @@ describe('main', () => {
         cy.login_from_user_index(conf, 0)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.slash_automatic(tag)
-        cy.get('[placeholder*="Between"]').click().type('toto {enter}')
+        cy.get('[placeholder*="between"]').click().type('toto {enter}')
         cy.contains(`${tag}: The input provided must be an integer.`)
       })
     })

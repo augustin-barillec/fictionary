@@ -22,7 +22,7 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.vote_click(tag)
+        cy.vote_click_english(tag)
         cy.vote_select('0')
         cy.wait(20000)
         cy.submit_view()

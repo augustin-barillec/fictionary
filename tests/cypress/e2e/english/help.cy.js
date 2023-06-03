@@ -7,7 +7,7 @@ describe('main', () => {
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.create_fake_running_game(tag, 0)
         cy.slash_help('tag')
-        cy.contains("Fictionary is an app designed to fictionary on Slack. More information is available on the app's website.")
+        cy.contains("Fictionary is an app designed to play fictionary on Slack. More information is available on the app's website.")
         cy.mark_game_as_success(tag)
       })
     })

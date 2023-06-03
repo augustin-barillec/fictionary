@@ -23,7 +23,7 @@ describe('main', () => {
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.vote_english(tag, '0')
-        cy.vote_click(tag)
+        cy.vote_click_english(tag)
 
         cy.contains(`${tag}: You have already voted.`)
       })
