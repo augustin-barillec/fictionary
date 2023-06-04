@@ -3,7 +3,7 @@ FRENCH = 'French'
 ###############################################################################
 # help
 is_an_application = {
-    ENGLISH: ("Fictionary is an app designed to play fictionary on Slack. "
+    ENGLISH: ("Fictionary is an app to play fictionary on Slack. "
               "More information is available on "
               "the app's <{home_url}|website>."),
     FRENCH: ("Fictionary est une application permettant de jouer au jeu "
