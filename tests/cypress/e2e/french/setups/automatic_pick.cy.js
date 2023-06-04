@@ -6,7 +6,7 @@ describe('main', () => {
         cy.login_from_user_index(conf, 0)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.slash_automatic(tag)
-        cy.contains('Questions are visible here:')
+        cy.contains('Les questions sont visibles ici :')
         cy.get('[placeholder*="entre"]').click().type('1 {enter}')
         cy.contains('Question 1 sélectionnée :')
         cy.submit_view()

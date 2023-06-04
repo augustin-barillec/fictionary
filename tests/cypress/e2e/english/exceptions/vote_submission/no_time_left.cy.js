@@ -27,7 +27,7 @@ describe('main', () => {
         cy.wait(20000)
         cy.submit_view()
 
-        cy.contains(`${tag}: Your vote: answer 2`)
+        cy.contains(`${tag}: Your vote: answer 2.`)
         cy.contains(`${tag}: It will not be taken into account because the time limit for voting has passed.`)
       })
     })
