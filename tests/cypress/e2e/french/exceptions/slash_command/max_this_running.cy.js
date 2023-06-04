@@ -1,7 +1,7 @@
 describe('main', () => {
   it('main', () => {
     cy.get_conf().then((conf) => {
-      cy.get_channel_id('english_exception_slash_command_max_this_running').then((channel_id) => {
+      cy.get_channel_id('french_exception_slash_command_max_this_running').then((channel_id) => {
         const tag1 = Cypress._.random(100000, 999999)
         const tag2 = Cypress._.random(100000, 999999)
 
