@@ -71,9 +71,9 @@ loading_the_results = {
     FRENCH: "Chargement des résultats... :drum_with_drumsticks:"
 }
 
-answer = {
+answer_verb = {
     ENGLISH: "Answer",
-    FRENCH: "Réponse"
+    FRENCH: "Répondre"
 }
 
 vote = {
@@ -250,6 +250,11 @@ create_a_game = {
 question = {
     ENGLISH: "Question",
     FRENCH: "Question"
+}
+
+answer_noun = {
+    ENGLISH: "Answer",
+    FRENCH: "Réponse"
 }
 
 questions_are_visible_here = {

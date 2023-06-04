@@ -29,7 +29,7 @@ def build_setup_freestyle_view(language, id_):
     res['blocks'][1]['label']['text'] = ut.text.question[language]
     res['blocks'][1]['element']['placeholder']['text'] = \
         ut.text.write_something[language]
-    res['blocks'][2]['label']['text'] = ut.text.answer[language]
+    res['blocks'][2]['label']['text'] = ut.text.answer_noun[language]
     res['blocks'][2]['element']['placeholder']['text'] = \
         ut.text.write_something[language]
     return res

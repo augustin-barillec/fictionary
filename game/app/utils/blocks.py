@@ -96,7 +96,7 @@ class BlockBuilder:
 
     def build_guess_button_block(self):
         id_ = self.game.surface_id_builder.build_guess_button_block_id()
-        msg = ut.text.answer[self.language]
+        msg = ut.text.answer_verb[self.language]
         return build_button_block(id_, msg)
 
     def build_vote_button_block(self):
