@@ -23,6 +23,9 @@ games_ref = team_ref.collection('games')
 sources = [
     'small.cy.js',
 
+    'english/exceptions/setup_submission/max_this_running.cy.js',
+    'french/exceptions/setup_submission/max_this_running.cy.js',
+
     'english/endings/draw.cy.js',
     'english/endings/no_guesses.cy.js',
     'english/endings/no_votes.cy.js',
@@ -42,7 +45,6 @@ sources = [
     'english/exceptions/pick_submission/not_between.cy.js',
     'english/exceptions/pick_submission/not_integer.cy.js',
     'english/exceptions/setup_submission/max_running.cy.js',
-    'english/exceptions/setup_submission/max_this_running.cy.js',
     'english/exceptions/slash_command/invalid_parameter.cy.js',
     'english/exceptions/slash_command/max_running.cy.js',
     'english/exceptions/slash_command/max_this_running.cy.js',
@@ -79,7 +81,6 @@ sources = [
     'french/exceptions/pick_submission/not_between.cy.js',
     'french/exceptions/pick_submission/not_integer.cy.js',
     'french/exceptions/setup_submission/max_running.cy.js',
-    'french/exceptions/setup_submission/max_this_running.cy.js',
     'french/exceptions/slash_command/invalid_parameter.cy.js',
     'french/exceptions/slash_command/max_running.cy.js',
     'french/exceptions/slash_command/max_this_running.cy.js',
