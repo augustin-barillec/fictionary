@@ -77,7 +77,7 @@ class BlockBuilder:
             msg = ut.text.question_and_answer_written_by[self.language].format(
                 organizer_display=organizer_display)
         elif self.game.parameter == 'automatic':
-            msg = ut.text.question_selected_by[self.language].format(
+            msg = ut.text.question_chosen_by[self.language].format(
                 organizer_display=organizer_display)
         return build_text_block(msg)
 
@@ -216,7 +216,7 @@ class BlockBuilder:
         lv = len(self.game.frozen_voters)
         lw = len(self.game.winners)
         if lg == 0:
-            return ut.text.no_one_submitted_an_answer[self.language]
+            return ut.text.no_one_answered[self.language]
         elif lg == 1:
             g = ut.users.user_display(list(self.game.frozen_guessers)[0])
             res = ut.text.thanks_for_your_answer[self.language].format(

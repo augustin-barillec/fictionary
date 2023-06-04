@@ -97,8 +97,12 @@ class ExceptionsHandler:
                 f'{ut.text.question[self.language]}: {self.game.question}\n\n' 
                 f'{ut.text.answer[self.language]}: {self.game.truth}\n\n')
         else:
-            msg = \
-                f'{ut.text.question[self.language]}: {self.game.question}\n\n'
+            questions_url = ut.questions.get_questions_url(self.game)
+            its_number_is_visible = ut.text.its_number_is_visible[
+                self.language].format(questions_url=questions_url)
+            msg = (
+                f'{ut.text.question[self.language]}: {self.game.question}\n\n' 
+                f'{its_number_is_visible}\n\n')
         return msg
 
     def build_max_nb_running_games_reached_msg(self, remind):
@@ -198,11 +202,11 @@ class ExceptionsHandler:
                 self.game.parameter == 'freestyle':
             return ut.text.since_you_wrote[self.language]
         if user_id in self.game.guessers:
-            return ut.text.you_already_submitted[self.language]
+            return ut.text.you_have_already_answered[self.language]
 
     def build_vote_click_exception_msg(self, user_id):
         if user_id not in self.game.potential_voters:
-            return ut.text.only_players_who_have_submitted_an_answer_can_vote[
+            return ut.text.only_players_who_answered_can_vote[
                 self.language]
         if user_id in self.game.voters:
             return ut.text.you_have_already_voted[self.language]

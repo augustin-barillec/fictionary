@@ -14,8 +14,8 @@ describe('main', () => {
         cy.submit_view()
 
         cy.contains(`${tag1}: Question:`)
-        cy.contains(`${tag1}: Its number is visible on the web page of the question bank.`)
-        cy.contains(`${tag1}: You are already the creator of 1 game in progress. This is the maximum allowed number.`)
+        cy.contains(`${tag1}: Son numéro est visible sur la page web de la banque de questions.`)
+        cy.contains(`${tag1}: Vous êtes déjà le créateur d'1 partie en cours. C'est le nombre maximal autorisé.`)
 
         cy.mark_game_as_success(tag2)
       })

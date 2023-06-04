@@ -15,18 +15,18 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess_english(tag, 'g1')
+        cy.guess_french(tag, 'g1')
 
         cy.login_from_user_index(conf, 2)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess_english(tag, 'g2')
+        cy.guess_french(tag, 'g2')
 
         cy.login_from_user_index(conf, 3)
         cy.go_to_channel_from_channel_id(conf, channel_id)
         cy.wait(30000)
-        cy.vote_click_english(tag)
+        cy.vote_click_french(tag)
 
-        cy.contains(`${tag}: Only players who answered can vote.`)
+        cy.contains(`${tag}: Seuls les joueurs ayant répondu peuvent voter.`)
       })
     })
   })

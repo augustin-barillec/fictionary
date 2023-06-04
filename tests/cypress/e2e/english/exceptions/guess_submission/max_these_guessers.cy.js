@@ -22,7 +22,7 @@ describe('main', () => {
         cy.submit_view()
 
         cy.contains(`${tag}: Your answer: g1`)
-        cy.contains(`${tag}: It will not be taken into account because there are already 2 players who submitted an answer. This is the maximum allowed number for a game.`)
+        cy.contains(`${tag}: It will not be taken into account because there are already 2 players who answered. This is the maximum allowed number for a game.`)
       })
     })
   })

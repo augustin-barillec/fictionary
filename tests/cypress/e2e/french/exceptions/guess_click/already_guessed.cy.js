@@ -13,10 +13,10 @@ describe('main', () => {
 
         cy.login_from_user_index(conf, 1)
         cy.go_to_channel_from_channel_id(conf, channel_id)
-        cy.guess_english(tag, 'g1')
-        cy.guess_click_english(tag)
+        cy.guess_french(tag, 'g1')
+        cy.guess_click_french(tag)
 
-        cy.contains(`${tag}: You have already answered.`)
+        cy.contains(`${tag}: Vous avez déjà répondu.`)
       })
     })
   })

@@ -51,8 +51,8 @@ question_and_answer_written_by = {
     FRENCH: "Question et réponse écrites par {organizer_display} !"
 }
 
-question_selected_by = {
-    ENGLISH: "Question selected by {organizer_display}!",
+question_chosen_by = {
+    ENGLISH: "Question chosen by {organizer_display}!",
     FRENCH: "Question choisie par {organizer_display} !"
 }
 
@@ -172,9 +172,9 @@ guesser_points = {
     FRENCH: "• {guesser_display} : {score} points"
 }
 
-no_one_submitted_an_answer = {
-    ENGLISH: "No one submitted an answer. :sob:",
-    FRENCH: "Personne n'a proposé de réponse. :sob:"
+no_one_answered = {
+    ENGLISH: "No one answered. :sob:",
+    FRENCH: "Personne n'a répondu. :sob:"
 }
 
 thanks_for_your_answer = {
@@ -318,6 +318,13 @@ voting_options = {
 }
 ###############################################################################
 # exceptions
+its_number_is_visible = {
+    ENGLISH: ("Its number is visible on the web page of the question "
+              "<{questions_url}|bank>."),
+    FRENCH: ("Son numéro est visible sur la page web de la "
+             "<{questions_url}|banque> de questions")
+}
+
 there_are_already_n_games_in_progress = {
     ENGLISH: "There are already {n} games in progress.",
     FRENCH: "Il y a déjà {n} parties en cours."
@@ -330,7 +337,7 @@ this_is_the_maximum_number_allowed = {
 
 you_are_already_the_creator_of_1_game_in_progress = {
     ENGLISH: "You are already the creator of 1 game in progress.",
-    FRENCH: "Vous êtes déjà le créateur d'une partie en cours."
+    FRENCH: "Vous êtes déjà le créateur d'1 partie en cours."
 }
 
 you_are_already_the_organizer_of_n_games_in_progress = {
@@ -358,7 +365,7 @@ parameter_must_be_one_of = {
 time_limit_for_answering_has_passed = {
     ENGLISH: ("Your answer: {guess}\n\nIt will not be taken into account "
               "because the time limit for answering has passed."),
-    FRENCH: ("Votre réponse: {guess}\n\nElle ne sera pas prise en compte "
+    FRENCH: ("Votre réponse : {guess}\n\nElle ne sera pas prise en compte "
              "car la limite de temps pour répondre est passée.")
 }
 
@@ -366,10 +373,9 @@ already_max_players = {
     ENGLISH: ("Your answer: {guess}\n\n"
               "It will not be taken into account "
               "because there are already "
-              "{max_guessers_per_game} players "
-              "who submitted an answer. "
+              "{max_guessers_per_game} players who answered. "
               "This is the maximum allowed number for a game."),
-    FRENCH: ("Votre réponse: {guess}\n\n"
+    FRENCH: ("Votre réponse : {guess}\n\n"
              "Elle ne sera pas prise en compte "
              "car il y a déjà {max_guessers_per_game} "
              "joueurs qui ont répondu. "
@@ -380,7 +386,7 @@ time_limit_for_voting_has_passed = {
     ENGLISH: ("Your vote: answer {vote}.\n\n"
               "It will not be taken into account "
               "because the time limit for voting has passed."),
-    FRENCH: ("Votre vote: réponse {vote}. \n\n" 
+    FRENCH: ("Votre vote : réponse {vote}. \n\n" 
              "Il ne sera pas pris en compte "
              "car la limite de temps pour voter est passée.")
 }
@@ -402,14 +408,14 @@ since_you_wrote = {
             "vous ne pouvez pas y participer."
 }
 
-you_already_submitted = {
-    ENGLISH: "You already submitted an answer.",
-    FRENCH: "Vous avez déjà proposé une réponse."
+you_have_already_answered = {
+    ENGLISH: "You have already answered.",
+    FRENCH: "Vous avez déjà répondu."
 }
 
-only_players_who_have_submitted_an_answer_can_vote = {
-    ENGLISH: "Only players who have submitted an answer can vote.",
-    FRENCH: "Seuls les joueurs ayant proposé une réponse peuvent voter."
+only_players_who_answered_can_vote = {
+    ENGLISH: "Only players who answered can vote.",
+    FRENCH: "Seuls les joueurs ayant répondu peuvent voter."
 }
 
 you_have_already_voted = {
