@@ -327,7 +327,7 @@ its_number_is_visible = {
     ENGLISH: ("Its number is visible on the web page of the question "
               "<{questions_url}|bank>."),
     FRENCH: ("Son numéro est visible sur la page web de la "
-             "<{questions_url}|banque> de questions")
+             "<{questions_url}|banque> de questions.")
 }
 
 there_are_already_n_games_in_progress = {

@@ -95,7 +95,7 @@ class ExceptionsHandler:
         if self.game.parameter == 'freestyle':
             msg = (
                 f'{ut.text.question[self.language]}: {self.game.question}\n\n' 
-                f'{ut.text.answer[self.language]}: {self.game.truth}\n\n')
+                f'{ut.text.answer_noun[self.language]}: {self.game.truth}\n\n')
         else:
             questions_url = ut.questions.get_questions_url(self.game)
             its_number_is_visible = ut.text.its_number_is_visible[
