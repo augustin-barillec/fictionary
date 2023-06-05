@@ -92,7 +92,7 @@ eligible_to_vote = {
 }
 
 all_players_have_voted = {
-    ENGLISH: "All players have voted!!",
+    ENGLISH: "All players have voted!",
     FRENCH: "Tout les joueurs ont voté !"
 }
 
