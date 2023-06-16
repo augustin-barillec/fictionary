@@ -30,7 +30,8 @@ def deploy_function(project_id, region, port, pre_sleep_duration):
     --project {project_id} \
     --region {region} \
     --docker-registry artifact-registry \
-    --runtime python310 \
+    --runtime python311 \
+    --security-level secure-always \
     --timeout 540s \
     --trigger-{trigger_type} {min_instances} \
     --set-env-vars PROJECT_ID={project_id} 2>&1 | tee {filepath}
