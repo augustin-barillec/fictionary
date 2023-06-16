@@ -31,9 +31,8 @@ def deploy_function(project_id, region, port, pre_sleep_duration):
     --region {region} \
     --docker-registry artifact-registry \
     --runtime python311 \
-    --security-level secure-always \
     --timeout 540s \
-    --trigger-{trigger_type} {min_instances} \
+    --trigger-{trigger_type} {min_instances} {security_level} \
     --set-env-vars PROJECT_ID={project_id} 2>&1 | tee {filepath}
     """
     function_name = tools.ports.port_to_function_name[port]
@@ -42,11 +41,13 @@ def deploy_function(project_id, region, port, pre_sleep_duration):
     if signature_type == 'http':
         trigger_type = 'http'
         min_instances = '--min-instances 1'
+        security_level = '--security-level secure-always'
     else:
         topic_name = tools.pubsub_names.topic.format(
             function_name=function_name)
         trigger_type = f'topic {topic_name}'
         min_instances = ''
+        security_level = ''
     filepath = tools.local_paths.cloud_deploy_function_file.format(port=port)
     command = command_template.format(
         function_name=function_name,
@@ -54,6 +55,7 @@ def deploy_function(project_id, region, port, pre_sleep_duration):
         region=region,
         trigger_type=trigger_type,
         min_instances=min_instances,
+        security_level=security_level,
         filepath=filepath)
     subprocess.run(command, shell=True)
     with open(filepath) as f:
