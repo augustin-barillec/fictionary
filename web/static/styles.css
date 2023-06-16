@@ -28,11 +28,10 @@ h2 {
     font-weight: 600;
 }
 
-h2.questions, h2.privacy_policy, h2.thank_you, h2.try_again{
+h2.questions, h2.privacy_policy, h2.terms_of_service, h2.thank_you, h2.try_again{
     color: var(--primary-color);
     text-align: center;
 }
-
 
 a {
     color: var(--primary-color);
@@ -92,6 +91,17 @@ iframe {
 #footnote {
     font-style: italic;
     text-align: center;
+}
+
+footer {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+footer a {
+    color: black;
+    padding: 0 0.5rem;
 }
 
 #shuffle {

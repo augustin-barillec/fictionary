@@ -108,5 +108,10 @@ def privacy_policy():
     return flask.render_template('privacy_policy.html')
 
 
+@app.route('/terms_of_service')
+def terms_of_service():
+    return flask.render_template('terms_of_service.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5100)
