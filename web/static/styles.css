@@ -96,7 +96,7 @@ iframe {
 footer {
     margin-top: 1rem;
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
 }
 
 footer a {
@@ -114,8 +114,13 @@ footer a {
   body {
     zoom: 100%;
   }
+
   iframe {
     width: 650px;
     height: 365px;
+  }
+
+  footer {
+    font-size: 0.8rem;
   }
 }
