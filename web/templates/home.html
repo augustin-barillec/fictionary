@@ -2,7 +2,7 @@
 {% block title %}<title>Fictionary</title>{% endblock %}
 {% block body %}
 <h1>Fictionary</h1>
-<div id="pitch">An app to play <a href="https://en.wikipedia.org/wiki/Fictionary" >fictionary</a> on Slack.</div>
+<div id="pitch">An app to play <a href="https://en.wikipedia.org/wiki/Fictionary">fictionary</a> on Slack.</div>
 <h2>Demo</h2>
 <p>
 	<iframe src="https://www.youtube.com/embed/71_WyPFQz8Q"></iframe>
@@ -10,13 +10,13 @@
 <h2>Installation</h2>
 <div class="container_inline_flex">
 	<label id="label_languages" for="languages">Languages:</label>
-	<select id="languages" onchange="WriteLanguageSelected()" >
+	<select id="languages" onchange="WriteLanguageSelected()">
 		<option selected>English</option>
 		<option>French</option>
 	</select>
 </div>
 <div class="container_inline_flex">
-	<div id="language" ></div>
+	<div id="language"></div>
 	<a id="add_to_slack"><img alt="Add to Slack" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"/></a>
 </div>
 <div id="question_bank"></div>
@@ -41,10 +41,11 @@
 	<p>Made with ❤️ by Augustin Barillec</p>
 </div>
 <footer>
-	<a href="mailto:augustin.barillec@yokyok.ninja" >Support </a>
-	<a href=https://github.com/augustin-barillec/fictionary >Github</a>
-	<a href="/privacy_policy" >Privacy policy</a>
-	<a href="/terms_of_service" >Terms of service</a>
+	<a href="mailto:augustin.barillec@yokyok.ninja">Support</a>
+	<a href="https://join.slack.com/t/fictionary-games/shared_invite/zt-1y0pbxfmb-CCZYGQydaQlkWql6pT_ZRw">Slack</a>
+	<a href=https://github.com/augustin-barillec/fictionary>Github</a>
+	<a href="/privacy_policy">Privacy policy</a>
+	<a href="/terms_of_service">Terms of service</a>
 </footer>
 <script>
 const languages = document.getElementById("languages");
