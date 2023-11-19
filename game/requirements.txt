@@ -3,5 +3,5 @@ flask==2.*
 google-cloud-bigquery==3.*
 google-cloud-pubsub==2.*
 pandas==2.*
-pyarrow==12.*
+pyarrow==14.*
 slack-sdk==3.*
